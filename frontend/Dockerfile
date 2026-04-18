@@ -8,9 +8,9 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-
 COPY --from=build /app/dist /usr/share/nginx/html
 
+RUN rm /etc/nginx/conf.d/default.conf
 RUN printf 'server {\n\
   listen 80;\n\
   server_name _;\n\
@@ -19,6 +19,9 @@ RUN printf 'server {\n\
 \n\
   location /assets/ {\n\
     try_files $uri =404;\n\
+    access_log off;\n\
+    expires 1y;\n\
+    add_header Cache-Control "public, immutable";\n\
   }\n\
 \n\
   location / {\n\

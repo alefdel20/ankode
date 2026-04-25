@@ -1,14 +1,16 @@
 import "./App.css";
 import ankodeLogo from "./assets/ankode-logo.png";
+import { useState } from 'react';
+import { PLANS } from './constants/plans';
+import PricingSection from './components/PricingSection';
+import CheckoutModal from './components/CheckoutModal';
 
 const CONTACT = {
-  whatsapp: "525512345678",
+  whatsapp: "525535803405",
   email: "contacto@ankode.mx",
-  phone: "+52 55 1234 5678",
 };
 
 const cleanWhatsAppNumber = CONTACT.whatsapp.replace(/\D/g, "");
-const cleanPhoneNumber = CONTACT.phone.replace(/[^\d+]/g, "");
 
 const buildWhatsAppLink = (message) =>
   `https://wa.me/${cleanWhatsAppNumber}?text=${encodeURIComponent(message)}`;
@@ -21,17 +23,15 @@ const contactEmailLink = buildMailtoLink(
   "Quiero informacion de ankode",
   "Hola, me gustaria recibir informacion sobre ankode y agendar una demo."
 );
-const phoneLink = `tel:${cleanPhoneNumber}`;
-
 const moduleCards = [
-  { title: "Ventas", icon: "sales" },
-  { title: "Inventario", icon: "inventory" },
-  { title: "Proveedores", icon: "suppliers" },
-  { title: "Credito y cobranza", icon: "credit" },
-  { title: "Finanzas basicas", icon: "finance" },
-  { title: "Recordatorios", icon: "reminders" },
-  { title: "Soporte remoto", icon: "support" },
-  { title: "Roles y accesos", icon: "access" },
+  { title: "Ventas", icon: "sales", desc: "Registra cada venta, aplica descuentos, gestiona métodos de pago y genera tu corte de caja diario." },
+  { title: "Inventario", icon: "inventory", desc: "Controla tu stock en tiempo real, recibe alertas de productos bajos y lleva el historial de movimientos." },
+  { title: "Proveedores", icon: "suppliers", desc: "Administra tus proveedores, registra órdenes de compra y da seguimiento a reabastecimientos." },
+  { title: "Credito y cobranza", icon: "credit", desc: "Vende a crédito, lleva el saldo de cada cliente y envía recordatorios de pago automáticos." },
+  { title: "Finanzas basicas", icon: "finance", desc: "Visualiza ingresos, egresos y utilidad de tu negocio en reportes claros por período." },
+  { title: "Recordatorios", icon: "reminders", desc: "Programa y automatiza recordatorios para clientes con pagos pendientes o citas próximas." },
+  { title: "Soporte remoto", icon: "support", desc: "Accede a soporte técnico sin necesidad de visitas presenciales — resolvemos desde donde estás." },
+  { title: "Roles y accesos", icon: "access", desc: "Asigna permisos específicos a cada usuario: Admin, Cajero, Almacén, Vendedor y Gerente." },
 ];
 
 const industries = [
@@ -211,18 +211,36 @@ function ModuleIcon({ name }) {
 }
 
 function App() {
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(false);
+  const [activeModule, setActiveModule] = useState(null);
+
+  const handleSelectPlan = (planId) => {
+    const plan = PLANS.find(p => p.id === planId) || null;
+    setSelectedPlan(plan);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleSubmitPayment = async (formData) => {
+    // Wired to api.ankode.cloud in Phase 3
+    console.log('Payment submitted:', formData);
+    setIsCheckoutOpen(false);
+  };
+
   return (
     <div className="site-shell">
       <header className="topbar">
         <div className="brand brand-real">
-          <img src={ankodeLogo} alt="ankode" className="brand-logo" />
+          <img src={ankodeLogo} alt="ankode" className="brand-logo" style={{ height: '32px', width: 'auto' }} />
         </div>
 
         <nav className="topnav">
           <a href="#modulos">Modulos</a>
           <a href="#giros">Por giro</a>
           <a href="#personalizacion">Personalizacion</a>
-          <a href="#faq">FAQ</a>
+          <a href="#faq">Preguntas frecuentes</a>
+          <a href="#planes">Planes</a>
         </nav>
 
         <div className="topbar-actions">
@@ -251,6 +269,7 @@ function App() {
               <a href="#modulos" className="btn btn-light">
                 Ver como funciona
               </a>
+              <a href="#planes" className="btn btn-primary">Ver planes y precios</a>
             </div>
 
             <div className="hero-microcopy">
@@ -326,11 +345,25 @@ function App() {
 
           <div className="modules-grid">
             {moduleCards.map((item) => (
-              <article key={item.title} className="module-tile">
+              <article
+                key={item.title}
+                className="module-tile"
+                style={{
+                  cursor: 'pointer',
+                  border: activeModule === item.title ? '1.5px solid var(--purple)' : '1.5px solid transparent',
+                  transition: 'border 0.2s ease',
+                }}
+                onClick={() => setActiveModule(prev => prev === item.title ? null : item.title)}
+              >
                 <div className="module-icon">
                   <ModuleIcon name={item.icon} />
                 </div>
                 <span>{item.title}</span>
+                {activeModule === item.title && (
+                  <p style={{ fontSize: '0.88rem', color: 'var(--muted)', margin: '8px 0 0', lineHeight: 1.5 }}>
+                    {item.desc}
+                  </p>
+                )}
               </article>
             ))}
           </div>
@@ -411,7 +444,7 @@ function App() {
           <div className="feature-showcase">
             <div className="feature-copy">
               <p className="eyebrow">Personalizacion</p>
-              <h2>Si tu negocio no entra en un molde, ankode tampoco.</h2>
+              <h2>Ankode se adapta a tu negocio, no al revés.</h2>
               <p>
                 Una de las principales ventajas de ankode es que puede ajustarse
                 a la forma en que realmente trabajas.
@@ -487,10 +520,16 @@ function App() {
           </div>
         </section>
 
+        <PricingSection
+          onSelectPlan={handleSelectPlan}
+          isAnnual={isAnnual}
+          onToggleAnnual={() => setIsAnnual(prev => !prev)}
+        />
+
         <section id="faq" className="section">
           <div className="section-heading center">
-            <p className="eyebrow">FAQ</p>
-            <h2>Preguntas frecuentes</h2>
+            <p className="eyebrow">Preguntas frecuentes</p>
+            <h2>Lo que más nos preguntan</h2>
             <p>Resolvemos las dudas mas comunes antes de empezar.</p>
           </div>
 
@@ -522,7 +561,6 @@ function App() {
             <div className="contact-links">
               <a href={demoLink} target="_blank" rel="noreferrer">WhatsApp: {CONTACT.whatsapp}</a>
               <a href={contactEmailLink}>Email: {CONTACT.email}</a>
-              <a href={phoneLink}>Telefono: {CONTACT.phone}</a>
             </div>
           </div>
         </section>
@@ -547,15 +585,32 @@ function App() {
             <h4>Empresa</h4>
             <a href={demoLink} target="_blank" rel="noreferrer">Solicitar demo</a>
             <a href="#faq">Preguntas frecuentes</a>
+            <a href="/legal?doc=terms" target="_blank" rel="noreferrer">Términos y condiciones</a>
+            <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer">Cancelación</a>
+            <a href="/legal?doc=privacy" target="_blank" rel="noreferrer">Privacidad de pago</a>
           </div>
           <div>
             <h4>Contacto</h4>
             <a href={demoLink} target="_blank" rel="noreferrer">WhatsApp</a>
             <a href={contactEmailLink}>Email</a>
-            <a href={phoneLink}>Telefono</a>
           </div>
         </div>
+        <div style={{ gridColumn: '1 / -1', borderTop: '1px solid var(--border)', paddingTop: 20, marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: '12px 24px', color: 'var(--muted)', fontSize: '0.85rem' }}>
+          <span>© 2025 Ankode · Todos los derechos reservados</span>
+          <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos y condiciones</a>
+          <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Política de cancelación</a>
+          <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Privacidad de pago</a>
+          <span>Pagos procesados por Openpay by BBVA</span>
+        </div>
       </footer>
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        selectedPlan={selectedPlan?.id}
+        isAnnual={isAnnual}
+        onSubmitPayment={handleSubmitPayment}
+      />
     </div>
   );
 }

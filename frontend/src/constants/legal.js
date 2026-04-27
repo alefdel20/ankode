@@ -17,7 +17,7 @@ Propiedad Intelectual: El código fuente, diseño, algoritmos, bases de datos y 
 
 4. Planes, Pagos y Facturación
 - Moneda: Precios en pesos mexicanos (MXN) con IVA incluido.
-- Procesamiento: Los pagos se realizan mediante Openpay by BBVA (certificación PCI DSS). Ankode no almacena datos de tarjetas; solo recibe un token de confirmación.
+- Procesamiento: Los pagos se realizan mediante Openpay (certificación PCI DSS). Ankode no almacena datos de tarjetas; solo recibe un token de confirmación.
 - Promociones: El plan anual (12 meses por el precio de 10) aplica según la promoción vigente al momento de la contratación, únicamente durante el primer año.
 
 5. Planes con Hardware
@@ -63,7 +63,7 @@ Responsable: Alejandro Flores Delgado · contacto@ankode.cloud
 Finalidad: Los datos recabados (nombre, correo, datos del negocio y tokens de pago) tienen como fin único la prestación del servicio SaaS y el cobro de suscripción.
 
 Transferencias: Sus datos son compartidos con:
-- Openpay by BBVA: procesamiento seguro de pagos (PCI DSS).
+- Openpay: procesamiento seguro de pagos (PCI DSS).
 - Hostinger International Ltd.: almacenamiento cifrado en base de datos.
 
 Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición enviando un correo a contacto@ankode.cloud adjuntando identificación oficial, conforme a la LFPDPPP.`,

@@ -3,7 +3,7 @@ export const LEGAL = {
 Última actualización: abril 2026
 
 1. Quiénes somos
-Ankode es una plataforma de gestión empresarial bajo el modelo SaaS, operada por Alejandro Flores Delgado, con domicilio en Ixtapaluca, Estado de México. Contacto: contacto@ankode.cloud
+Ankode es una plataforma de gestión empresarial bajo el modelo SaaS, operada por Alejandro Flores Delgado, con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México. Contacto: contacto@ankode.cloud
 
 2. Aceptación
 Al crear una cuenta, acceder o contratar cualquier plan, el usuario acepta estos términos en su totalidad.

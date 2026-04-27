@@ -155,21 +155,21 @@ const accessories = [
     id: "scanner",
     name: "Escáner de código de barras Shawty",
     desc: "Inalámbrico 1D y 2D, USB con Bluetooth y batería. Agiliza el registro de productos en caja.",
-    price: 899,
+    price: 449,
     emoji: "📡",
   },
   {
     id: "printer",
     name: "Impresora térmica de tickets SUZWIP",
     desc: "58mm, Bluetooth + USB, incluye 5 rollos de papel. Imprime tickets y comprobantes al instante.",
-    price: 1199,
+    price: 599,
     emoji: "🖨️",
   },
   {
     id: "cashbox",
     name: "Cajón de dinero Nextep NE-514",
     desc: "4 compartimentos para billetes, 8 para monedas, color negro. Resguarda tu efectivo de forma segura.",
-    price: 1199,
+    price: 999,
     emoji: "💰",
   },
 ];
@@ -300,12 +300,86 @@ function ModuleIcon({ name }) {
   }
 }
 
+function CartDrawer({ cart, onClose, onRemoveItem, onCheckout }) {
+  const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+  return (
+    <>
+      <div
+        onClick={onClose}
+        style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)',
+          zIndex: 999,
+        }}
+      />
+      <div style={{
+        position: 'fixed', top: 0, right: 0, height: '100vh',
+        width: 360, background: 'white', zIndex: 1000,
+        boxShadow: '-4px 0 24px rgba(0,0,0,0.12)',
+        display: 'flex', flexDirection: 'column', padding: 24,
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <h3 style={{ margin: 0 }}>Tu carrito</h3>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer' }}>×</button>
+        </div>
+
+        {cart.length === 0 ? (
+          <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>Tu carrito está vacío.</p>
+        ) : (
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            {cart.map(item => (
+              <div key={item.id} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '12px 0', borderBottom: '1px solid var(--border)',
+              }}>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{item.name}</div>
+                  <div style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>
+                    ${item.price.toLocaleString('es-MX')} × {item.qty}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <strong style={{ color: 'var(--purple)' }}>
+                    ${(item.price * item.qty).toLocaleString('es-MX')}
+                  </strong>
+                  <button
+                    onClick={() => onRemoveItem(item.id)}
+                    style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '1.1rem' }}
+                  >🗑️</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {cart.length > 0 && (
+          <div style={{ marginTop: 24, borderTop: '2px solid var(--border)', paddingTop: 16 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+              <strong>Total</strong>
+              <strong style={{ color: 'var(--purple)', fontSize: '1.2rem' }}>
+                ${total.toLocaleString('es-MX')} MXN
+              </strong>
+            </div>
+            <button
+              className="btn btn-primary"
+              style={{ width: '100%', cursor: 'pointer' }}
+              onClick={() => { onClose(); onCheckout(); }}
+            >
+              Proceder al pago
+            </button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
 function App() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
@@ -317,6 +391,10 @@ function App() {
       }
       return [...prev, { ...item, qty: 1 }];
     });
+  };
+
+  const handleRemoveFromCart = (id) => {
+    setCart(prev => prev.filter(item => item.id !== id));
   };
 
   const handleSelectPlan = (planId) => {
@@ -349,7 +427,7 @@ function App() {
           <button
             className="btn btn-light cart-btn"
             aria-label="Ver carrito"
-            onClick={() => {}}
+            onClick={() => setIsCartOpen(prev => !prev)}
             style={{ padding: '0 16px', gap: 8 }}
           >
             <CartIcon count={cartCount} />
@@ -753,13 +831,38 @@ function App() {
         </div>
       </footer>
 
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        selectedPlan={selectedPlan?.id}
-        isAnnual={isAnnual}
-        onSubmitPayment={handleSubmitPayment}
-      />
+      {isCheckoutOpen && (selectedPlan || cart.length > 0) && (
+        <CheckoutModal
+          isOpen={isCheckoutOpen}
+          onClose={() => setIsCheckoutOpen(false)}
+          selectedPlan={selectedPlan?.id}
+          isAnnual={isAnnual}
+          onSubmitPayment={handleSubmitPayment}
+          cart={cart}
+        />
+      )}
+
+      {isCartOpen && (
+        <CartDrawer
+          cart={cart}
+          onClose={() => setIsCartOpen(false)}
+          onRemoveItem={handleRemoveFromCart}
+          onCheckout={() => {
+            setIsCartOpen(false);
+            if (!selectedPlan) {
+              const firstPlan = cart.find(item => item.type === 'plan');
+              if (firstPlan) {
+                const planData = PLANS.find(p => p.id === firstPlan.id);
+                if (planData) setSelectedPlan(planData);
+                else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+              } else {
+                setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+              }
+            }
+            setIsCheckoutOpen(true);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -32,10 +32,10 @@ function Field({ label, children }) {
   );
 }
 
-export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual, onSubmitPayment }) {
+export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual, onSubmitPayment, cart = [] }) {
   const [extraBranches, setExtraBranches] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [cardData, setCardData] = useState({ name: '', number: '', expMonth: '', expYear: '', cvv: '', email: '', businessName: '', password: '' });
+  const [cardData, setCardData] = useState({ name: '', number: '', expMonth: '', expYear: '', cvv: '', email: '', businessName: '', businessType: '', password: '' });
   const [speiEmail, setSpeiEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -48,11 +48,18 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
   if (!isOpen) return null;
 
-  const plan = PLANS.find((p) => p.id === selectedPlan);
-  if (!plan) return null;
+  const isCartMode = selectedPlan === 'cart';
+  const hasOnlyAccessories = cart.length > 0 && cart.every(item => item.type === 'accessory');
 
-  const basePrice = isAnnual ? plan.annualPrice : plan.monthlyPrice;
-  const total = basePrice + extraBranches * plan.extraBranchPrice;
+  const plan = isCartMode
+    ? null
+    : (PLANS.find((p) => p.id === selectedPlan) ?? null);
+
+  if (!isCartMode && !plan) return null;
+
+  const cartTotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const basePrice = plan ? (isAnnual ? plan.annualPrice : plan.monthlyPrice) : 0;
+  const total = isCartMode ? cartTotal : basePrice + extraBranches * (plan.extraBranchPrice ?? 0);
 
   const handleCardChange = (field) => (e) =>
     setCardData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -62,7 +69,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
     setIsLoading(true);
     try {
       const planType = isAnnual ? 'yearly' : 'monthly';
-      const amount = isAnnual ? plan.annualPrice : plan.monthlyPrice;
+      const amount = isCartMode ? cartTotal : (isAnnual ? plan.annualPrice : plan.monthlyPrice);
 
       let cardToken = null;
       if (paymentMethod === 'card') {
@@ -85,8 +92,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         businessName: cardData.businessName || '',
         ownerName: cardData.name || '',
         password: cardData.password || '',
-        posType: plan.id,
-        planName: plan.name,
+        posType: isCartMode ? 'cart' : plan.id,
+        planName: isCartMode ? 'Carrito' : plan.name,
         paymentMethod,
       });
 
@@ -145,52 +152,86 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
           ×
         </button>
 
-        {/* Header */}
-        <div style={{ marginBottom: 24 }}>
-          <h3 style={{ margin: '0 0 4px', color: 'var(--purple)', fontSize: '1.3rem' }}>
-            {plan.name}
-          </h3>
-          <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
-            Facturación {isAnnual ? 'anual' : 'mensual'}
-          </p>
-          <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
-            ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+        {/* Header — cart mode */}
+        {isCartMode && (
+          <div style={{ marginBottom: 24 }}>
+            <h3 style={{ margin: '0 0 12px', color: 'var(--purple)', fontSize: '1.3rem' }}>
+              Resumen de compra
+            </h3>
+            <div style={{
+              background: 'var(--bg-soft)',
+              borderRadius: 14,
+              padding: '14px 16px',
+              marginBottom: 8,
+            }}>
+              {cart.map(item => (
+                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: 6 }}>
+                  <span>{item.name} × {item.qty}</span>
+                  <span style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                    ${(item.price * item.qty).toLocaleString('es-MX')}
+                  </span>
+                </div>
+              ))}
+              <div style={{ borderTop: '1px solid var(--border)', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between', fontWeight: 800 }}>
+                <span>Total</span>
+                <span style={{ color: 'var(--purple)', fontSize: '1.1rem' }}>
+                  ${cartTotal.toLocaleString('es-MX')} MXN
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Header — normal plan mode */}
+        {!isCartMode && (
+          <div style={{ marginBottom: 24 }}>
+            <h3 style={{ margin: '0 0 4px', color: 'var(--purple)', fontSize: '1.3rem' }}>
+              {plan.name}
+            </h3>
+            <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
+              Facturación {isAnnual ? 'anual' : 'mensual'}
+            </p>
+            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
+              ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+            </div>
+          </div>
+        )}
 
         <form>
-          {/* Extra branches */}
-          <Field label="Sucursales adicionales">
-            <input
-              type="number"
-              min={0}
-              step={1}
-              value={extraBranches === 0 ? '' : extraBranches}
-              placeholder="0"
-              onChange={(e) => {
-                const raw = e.target.value;
-                if (raw === '' || raw === '-') {
-                  setExtraBranches(0);
-                  return;
-                }
-                const val = Math.floor(Number(raw));
-                setExtraBranches(isNaN(val) || val < 0 ? 0 : val);
-              }}
-              onBlur={() => {
-                if (extraBranches === '' || isNaN(extraBranches)) setExtraBranches(0);
-              }}
-              style={{ ...inputStyle, width: '100%' }}
-            />
-            <div style={{ marginTop: 6, fontSize: '0.88rem', color: 'var(--muted)' }}>
-              Total:{' '}
-              <strong style={{ color: 'var(--purple)' }}>
-                ${total.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
-              </strong>
-              {extraBranches > 0 && (
-                <span> (+{extraBranches} × ${plan.extraBranchPrice.toLocaleString('es-MX')}/mes)</span>
-              )}
-            </div>
-          </Field>
+          {/* Extra branches — only in normal plan mode */}
+          {!isCartMode && (
+            <Field label="Sucursales adicionales">
+              <input
+                type="number"
+                min={0}
+                step={1}
+                value={extraBranches === 0 ? '' : extraBranches}
+                placeholder="0"
+                onChange={(e) => {
+                  const raw = e.target.value;
+                  if (raw === '' || raw === '-') {
+                    setExtraBranches(0);
+                    return;
+                  }
+                  const val = Math.floor(Number(raw));
+                  setExtraBranches(isNaN(val) || val < 0 ? 0 : val);
+                }}
+                onBlur={() => {
+                  if (extraBranches === '' || isNaN(extraBranches)) setExtraBranches(0);
+                }}
+                style={{ ...inputStyle, width: '100%' }}
+              />
+              <div style={{ marginTop: 6, fontSize: '0.88rem', color: 'var(--muted)' }}>
+                Total:{' '}
+                <strong style={{ color: 'var(--purple)' }}>
+                  ${total.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+                </strong>
+                {extraBranches > 0 && (
+                  <span> (+{extraBranches} × ${plan.extraBranchPrice.toLocaleString('es-MX')}/mes)</span>
+                )}
+              </div>
+            </Field>
+          )}
 
           {/* Payment method toggle */}
           <div style={{ marginBottom: 20 }}>
@@ -246,26 +287,49 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                   maxLength={19}
                 />
               </Field>
-              <Field label="Nombre de tu negocio">
-                <input
-                  type="text"
-                  placeholder="Ej. Veterinaria San Blas"
-                  value={cardData.businessName}
-                  onChange={handleCardChange('businessName')}
-                  style={inputStyle}
-                  autoComplete="organization"
-                />
-              </Field>
-              <Field label="Contraseña para tu cuenta (mínimo 8 caracteres)">
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  value={cardData.password}
-                  onChange={handleCardChange('password')}
-                  style={inputStyle}
-                  autoComplete="new-password"
-                />
-              </Field>
+              {!hasOnlyAccessories && (
+                <Field label="Nombre de tu negocio">
+                  <input
+                    type="text"
+                    placeholder="Ej. Veterinaria San Blas"
+                    value={cardData.businessName}
+                    onChange={handleCardChange('businessName')}
+                    style={inputStyle}
+                    autoComplete="organization"
+                  />
+                </Field>
+              )}
+              {!hasOnlyAccessories && (
+                <Field label="Tipo de negocio">
+                  <select
+                    required
+                    value={cardData.businessType}
+                    onChange={handleCardChange('businessType')}
+                    style={{ ...inputStyle, cursor: 'pointer' }}
+                  >
+                    <option value="" disabled>Selecciona tu giro</option>
+                    {[
+                      'Tienda', 'Tlapalería', 'Papelería', 'Veterinaria',
+                      'Dentista', 'Farmacia', 'Farmacia con consultorio',
+                      'Clínica chica', 'Restaurante', 'Otro',
+                    ].map(opt => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </Field>
+              )}
+              {!hasOnlyAccessories && (
+                <Field label="Contraseña para tu cuenta (mínimo 8 caracteres)">
+                  <input
+                    type="password"
+                    placeholder="••••••••"
+                    value={cardData.password}
+                    onChange={handleCardChange('password')}
+                    style={inputStyle}
+                    autoComplete="new-password"
+                  />
+                </Field>
+              )}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
                 <Field label="Mes venc.">
                   <input
@@ -386,7 +450,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
             disabled={isLoading}
             onClick={handleSubmit}
           >
-            {isLoading ? 'Procesando...' : 'Confirmar y pagar'}
+            {isLoading ? 'Procesando...' : `Confirmar y pagar — $${total.toLocaleString('es-MX')} MXN`}
           </button>
         </form>
 

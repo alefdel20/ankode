@@ -850,3 +850,17 @@ a {
     margin-top: 12px;
   }
 }
+
+@media (max-width: 768px) {
+  .accessories-grid .accessory-card {
+    flex: 0 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .accessories-grid .accessory-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

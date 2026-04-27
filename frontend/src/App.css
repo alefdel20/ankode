@@ -469,9 +469,16 @@ a {
 }
 
 .industry-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 18px;
+  justify-content: center;
+}
+
+.industry-grid .industry-card {
+  flex: 1 1 calc(33.333% - 12px);
+  max-width: calc(33.333% - 12px);
+  min-width: 260px;
 }
 
 .industry-card {
@@ -604,6 +611,81 @@ a {
   margin-top: 12px;
 }
 
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--purple);
+  color: var(--purple);
+  font-weight: 700;
+}
+
+.btn-outline:hover {
+  background: rgba(109, 74, 255, 0.06);
+}
+
+.cart-btn {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.accessories-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.accessories-grid .accessory-card {
+  flex: 0 1 calc(25% - 15px);
+  min-width: 240px;
+  max-width: 280px;
+}
+
+.accessory-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 10px 24px rgba(60, 72, 105, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.accessory-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-soft);
+}
+
+.accessory-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.accessory-body h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.accessory-body p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.93rem;
+  flex: 1;
+}
+
+.accessory-price {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--purple);
+}
+
 .cta-panel {
   padding: 52px 28px;
   text-align: center;
@@ -675,10 +757,19 @@ a {
   }
 
   .modules-grid,
-  .industry-grid,
   .steps-grid,
   .trust-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industry-grid .industry-card {
+    flex: 1 1 calc(50% - 9px);
+    max-width: calc(50% - 9px);
+  }
+
+  .accessories-grid .accessory-card {
+    min-width: 200px;
+    max-width: calc(50% - 10px);
   }
 
   .benefit-grid {
@@ -704,10 +795,19 @@ a {
   }
 
   .modules-grid,
-  .industry-grid,
   .steps-grid,
   .trust-strip {
     grid-template-columns: 1fr;
+  }
+
+  .industry-grid .industry-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .accessories-grid .accessory-card {
+    min-width: 100%;
+    max-width: 100%;
   }
 
   .hero-actions {

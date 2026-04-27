@@ -7,7 +7,7 @@ import CheckoutModal from './components/CheckoutModal';
 
 const CONTACT = {
   whatsapp: "525535803405",
-  email: "contacto@ankode.mx",
+  email: "ankodemx@gmail.com",
 };
 
 const cleanWhatsAppNumber = CONTACT.whatsapp.replace(/\D/g, "");
@@ -20,15 +20,16 @@ const buildMailtoLink = (subject, body) =>
 
 const demoLink = buildWhatsAppLink("Hola, quiero solicitar una demo de ankode.");
 const contactEmailLink = buildMailtoLink(
-  "Quiero informacion de ankode",
-  "Hola, me gustaria recibir informacion sobre ankode y agendar una demo."
+  "Quiero información de ankode",
+  "Hola, me gustaría recibir información sobre ankode y agendar una demo."
 );
+
 const moduleCards = [
   { title: "Ventas", icon: "sales", desc: "Registra cada venta, aplica descuentos, gestiona métodos de pago y genera tu corte de caja diario." },
   { title: "Inventario", icon: "inventory", desc: "Controla tu stock en tiempo real, recibe alertas de productos bajos y lleva el historial de movimientos." },
   { title: "Proveedores", icon: "suppliers", desc: "Administra tus proveedores, registra órdenes de compra y da seguimiento a reabastecimientos." },
-  { title: "Credito y cobranza", icon: "credit", desc: "Vende a crédito, lleva el saldo de cada cliente y envía recordatorios de pago automáticos." },
-  { title: "Finanzas basicas", icon: "finance", desc: "Visualiza ingresos, egresos y utilidad de tu negocio en reportes claros por período." },
+  { title: "Crédito y cobranza", icon: "credit", desc: "Vende a crédito, lleva el saldo de cada cliente y envía recordatorios de pago automáticos." },
+  { title: "Finanzas básicas", icon: "finance", desc: "Visualiza ingresos, egresos y utilidad de tu negocio en reportes claros por período." },
   { title: "Recordatorios", icon: "reminders", desc: "Programa y automatiza recordatorios para clientes con pagos pendientes o citas próximas." },
   { title: "Soporte remoto", icon: "support", desc: "Accede a soporte técnico sin necesidad de visitas presenciales — resolvemos desde donde estás." },
   { title: "Roles y accesos", icon: "access", desc: "Asigna permisos específicos a cada usuario: Admin, Cajero, Almacén, Vendedor y Gerente." },
@@ -38,9 +39,9 @@ const industries = [
   {
     id: "veterinaria",
     title: "Veterinaria",
-    desc: "Organiza ventas, productos y operacion diaria con una base flexible para crecer segun tu forma de trabajar.",
+    desc: "Organiza ventas, productos y operación diaria con una base flexible para crecer según tu forma de trabajar.",
     details:
-      "Control de inventario clinico, seguimiento de productos y operacion diaria en un mismo flujo.",
+      "Control de inventario clínico, seguimiento de productos y operación diaria en un mismo flujo.",
     image:
       "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=900&q=80",
     demoMessage: "Hola, quiero una demo de ankode para veterinaria",
@@ -48,9 +49,9 @@ const industries = [
   {
     id: "retail",
     title: "Retail",
-    desc: "Controla inventario, proveedores y ventas en tienda con mas claridad y menos errores.",
+    desc: "Controla inventario, proveedores y ventas en tienda con más claridad y menos errores.",
     details:
-      "Inventario, reposicion y ventas centralizadas para mantener orden operativo y mejor visibilidad.",
+      "Inventario, reposición y ventas centralizadas para mantener orden operativo y mejor visibilidad.",
     image:
       "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?auto=format&fit=crop&w=900&q=80",
     demoMessage: "Hola, quiero una demo de ankode para retail",
@@ -58,7 +59,7 @@ const industries = [
   {
     id: "restaurantes",
     title: "Restaurantes",
-    desc: "Centraliza venta, control interno y operacion diaria para trabajar con mayor orden.",
+    desc: "Centraliza venta, control interno y operación diaria para trabajar con mayor orden.",
     details:
       "Flujos para venta y control operativo en un solo sistema adaptable al ritmo del negocio.",
     image:
@@ -70,7 +71,7 @@ const industries = [
     title: "Farmacias",
     desc: "Ordena inventario, ventas y compras para evitar faltantes y operar con mejor control.",
     details:
-      "Seguimiento de inventario y ventas con una vista clara para tomar decisiones mas rapidas.",
+      "Seguimiento de inventario y ventas con una vista clara para tomar decisiones más rápidas.",
     image:
       "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=900&q=80",
     demoMessage: "Hola, quiero una demo de ankode para farmacia",
@@ -78,9 +79,9 @@ const industries = [
   {
     id: "consultorios",
     title: "Consultorios",
-    desc: "Organiza cobros, seguimiento y operacion administrativa en un flujo simple.",
+    desc: "Organiza cobros, seguimiento y operación administrativa en un flujo simple.",
     details:
-      "Estructura de trabajo para ordenar tareas internas y simplificar la operacion diaria.",
+      "Estructura de trabajo para ordenar tareas internas y simplificar la operación diaria.",
     image:
       "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
     demoMessage: "Hola, quiero una demo de ankode para consultorio",
@@ -89,44 +90,133 @@ const industries = [
 
 const benefits = [
   {
-    title: "Mas control",
-    text: "Ten una vision mas clara de ventas, inventario y operacion sin depender de procesos manuales.",
+    title: "Más control",
+    text: "Ten una visión más clara de ventas, inventario y operación sin depender de procesos manuales.",
   },
   {
-    title: "Mas orden",
-    text: "Centraliza tareas clave en un solo sistema y reduce la dispersion entre herramientas.",
+    title: "Más orden",
+    text: "Centraliza tareas clave en un solo sistema y reduce la dispersión entre herramientas.",
   },
   {
-    title: "Mas adaptacion",
-    text: "Si tu negocio necesita algo distinto, ankode puede ajustarse a tu operacion real.",
+    title: "Más adaptación",
+    text: "Si tu negocio necesita algo distinto, ankode puede ajustarse a tu operación real.",
   },
 ];
 
 const steps = [
-  "Conocemos tu operacion",
+  "Conocemos tu operación",
   "Revisamos lo que necesitas controlar",
   "Configuramos una propuesta acorde a tu negocio",
-  "Te acompanamos en la implementacion",
+  "Te acompañamos en la implementación",
 ];
 
 const faqs = [
   {
     q: "¿Sirve para cualquier negocio?",
-    a: "Esta pensado para adaptarse a distintos giros, especialmente veterinaria y retail.",
+    a: "Está pensado para adaptarse a distintos giros, especialmente veterinaria y retail.",
   },
   {
-    q: "¿Es dificil de usar?",
-    a: "No. La idea es que sea practico y claro para la operacion diaria.",
+    q: "¿Es difícil de usar?",
+    a: "No. La idea es que sea práctico y claro para la operación diaria.",
   },
   {
-    q: "¿Ya esta listo para restaurantes?",
-    a: "Si, puede configurarse para la operacion de este giro.",
+    q: "¿Ya está listo para restaurantes?",
+    a: "Sí, puede configurarse para la operación de este giro.",
   },
   {
     q: "¿Se puede ajustar a mi proceso?",
-    a: "Si. Esa es una de las ideas principales detras de ankode.",
+    a: "Sí. Esa es una de las ideas principales detrás de ankode.",
   },
 ];
+
+const accessories = [
+  {
+    id: "laptop",
+    name: "Laptop Asus Vivobook Go",
+    desc: "Intel Celeron N4500, 4GB RAM, 128GB SSD. Ideal para operar tu punto de venta con movilidad.",
+    price: 4999,
+    emoji: "💻",
+  },
+  {
+    id: "pc-all-in-one",
+    name: 'PC All In One 23.8" AKIOEK',
+    desc: "Intel Core i5, 8GB RAM, 256GB SSD, pantalla Full HD. Todo en uno para tu punto de venta fijo.",
+    price: 6999,
+    emoji: "🖥️",
+  },
+  {
+    id: "tablet",
+    name: 'All In One Touch Higole 10.1"',
+    desc: "RK3399, 1080p, Android 12. Pantalla táctil ideal como terminal de punto de venta fija o secundaria.",
+    price: 5199,
+    emoji: "📱",
+  },
+  {
+    id: "scanner",
+    name: "Escáner de código de barras Shawty",
+    desc: "Inalámbrico 1D y 2D, USB con Bluetooth y batería. Agiliza el registro de productos en caja.",
+    price: 899,
+    emoji: "📡",
+  },
+  {
+    id: "printer",
+    name: "Impresora térmica de tickets SUZWIP",
+    desc: "58mm, Bluetooth + USB, incluye 5 rollos de papel. Imprime tickets y comprobantes al instante.",
+    price: 1199,
+    emoji: "🖨️",
+  },
+  {
+    id: "cashbox",
+    name: "Cajón de dinero Nextep NE-514",
+    desc: "4 compartimentos para billetes, 8 para monedas, color negro. Resguarda tu efectivo de forma segura.",
+    price: 1199,
+    emoji: "💰",
+  },
+];
+
+function CartIcon({ count }) {
+  return (
+    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+      <svg
+        viewBox="0 0 24 24"
+        width="22"
+        height="22"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-label="Carrito de compras"
+      >
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      {count > 0 && (
+        <span
+          style={{
+            position: 'absolute',
+            top: -8,
+            right: -8,
+            background: 'var(--purple)',
+            color: 'white',
+            borderRadius: '999px',
+            fontSize: '0.68rem',
+            fontWeight: 800,
+            minWidth: 18,
+            height: 18,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 4px',
+          }}
+        >
+          {count}
+        </span>
+      )}
+    </div>
+  );
+}
 
 function ModuleIcon({ name }) {
   const stroke = {
@@ -215,6 +305,19 @@ function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
+  const [cart, setCart] = useState([]);
+
+  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
+
+  const handleAddToCart = (item) => {
+    setCart((prev) => {
+      const existing = prev.find((c) => c.id === item.id);
+      if (existing) {
+        return prev.map((c) => c.id === item.id ? { ...c, qty: c.qty + 1 } : c);
+      }
+      return [...prev, { ...item, qty: 1 }];
+    });
+  };
 
   const handleSelectPlan = (planId) => {
     const plan = PLANS.find(p => p.id === planId) || null;
@@ -223,7 +326,6 @@ function App() {
   };
 
   const handleSubmitPayment = async (formData) => {
-    // Wired to api.ankode.cloud in Phase 3
     console.log('Payment submitted:', formData);
     setIsCheckoutOpen(false);
   };
@@ -236,14 +338,23 @@ function App() {
         </div>
 
         <nav className="topnav">
-          <a href="#modulos">Modulos</a>
+          <a href="#modulos">Módulos</a>
           <a href="#giros">Por giro</a>
-          <a href="#personalizacion">Personalizacion</a>
+          <a href="#personalizacion">Personalización</a>
           <a href="#faq">Preguntas frecuentes</a>
           <a href="#planes">Planes</a>
         </nav>
 
         <div className="topbar-actions">
+          <button
+            className="btn btn-light cart-btn"
+            aria-label="Ver carrito"
+            onClick={() => {}}
+            style={{ padding: '0 16px', gap: 8 }}
+          >
+            <CartIcon count={cartCount} />
+            {cartCount > 0 && <span style={{ fontSize: '0.88rem', fontWeight: 700 }}>Carrito</span>}
+          </button>
           <a href={demoLink} className="btn btn-secondary" target="_blank" rel="noreferrer">
             Solicitar demo
           </a>
@@ -258,7 +369,7 @@ function App() {
               Controla tu negocio desde <span className="highlight">un solo sistema</span>
             </h1>
             <p className="hero-text">
-              Ventas, inventario, proveedores y operacion diaria en una solucion
+              Ventas, inventario, proveedores y operación diaria en una solución
               pensada para la realidad de tu negocio.
             </p>
 
@@ -267,7 +378,7 @@ function App() {
                 Solicitar demo
               </a>
               <a href="#modulos" className="btn btn-light">
-                Ver como funciona
+                Ver cómo funciona
               </a>
               <a href="#planes" className="btn btn-primary">Ver planes y precios</a>
             </div>
@@ -290,7 +401,7 @@ function App() {
               <div className="dashboard-body">
                 <div className="metric-grid">
                   <div className="metric-card metric-main">
-                    <small>Ventas del dia</small>
+                    <small>Ventas del día</small>
                     <strong>$12,480</strong>
                   </div>
                   <div className="metric-card">
@@ -298,7 +409,7 @@ function App() {
                     <strong>128 productos</strong>
                   </div>
                   <div className="metric-card">
-                    <small>Credito activo</small>
+                    <small>Crédito activo</small>
                     <strong>18 clientes</strong>
                   </div>
                 </div>
@@ -320,7 +431,7 @@ function App() {
                     <span className="warn">Bajo</span>
                   </div>
                   <div className="table-row">
-                    <span>Collar clinico</span>
+                    <span>Collar clínico</span>
                     <span>15</span>
                     <span className="ok">OK</span>
                   </div>
@@ -328,18 +439,18 @@ function App() {
               </div>
             </div>
 
-            <div className="floating-note note-green">Operacion mas clara</div>
+            <div className="floating-note note-green">Operación más clara</div>
             <div className="floating-note note-purple">Control en un solo lugar</div>
           </div>
         </section>
 
         <section id="modulos" className="section section-soft">
           <div className="section-heading center">
-            <p className="eyebrow">Modulos principales</p>
+            <p className="eyebrow">Módulos principales</p>
             <h2>Todo lo importante para operar mejor.</h2>
             <p>
-              ankode reune funciones clave para ayudarte a trabajar con mas
-              orden, mas control y menos friccion.
+              ankode reúne funciones clave para ayudarte a trabajar con más
+              orden, más control y menos fricción.
             </p>
           </div>
 
@@ -372,9 +483,9 @@ function App() {
         <section className="section split-section">
           <div className="split-copy">
             <p className="eyebrow">Problema</p>
-            <h2>No todos los negocios pueden trabajar con un sistema generico.</h2>
-            <p>
-              Muchos terminan adaptandose al software, usando procesos incomodos
+            <h2>No todos los negocios pueden trabajar con un sistema genérico.</h2>
+            <p className="text-justify">
+              Muchos terminan adaptándose al software, usando procesos incómodos
               o herramientas separadas para poder operar.
             </p>
           </div>
@@ -382,15 +493,15 @@ function App() {
           <div className="problem-stack">
             <article className="soft-card">
               <h3>Procesos dispersos</h3>
-              <p>Ventas, inventario y control interno repartidos entre varias herramientas.</p>
+              <p className="text-justify">Ventas, inventario y control interno repartidos entre varias herramientas.</p>
             </article>
             <article className="soft-card">
-              <h3>Sistemas rigidos</h3>
-              <p>No se ajustan a la forma real en que trabaja tu negocio.</p>
+              <h3>Sistemas rígidos</h3>
+              <p className="text-justify">No se ajustan a la forma real en que trabaja tu negocio.</p>
             </article>
             <article className="soft-card">
               <h3>Tiempo perdido</h3>
-              <p>Seguimientos manuales, menos claridad y mas margen de error.</p>
+              <p className="text-justify">Seguimientos manuales, menos claridad y más margen de error.</p>
             </article>
           </div>
         </section>
@@ -398,14 +509,14 @@ function App() {
         <section id="giros" className="section section-soft">
           <div className="section-heading center">
             <p className="eyebrow">Por giro</p>
-            <h2>Una solucion pensada para distintos tipos de negocio.</h2>
+            <h2>Una solución pensada para distintos tipos de negocio.</h2>
             <p>
               Cada giro tiene necesidades distintas. Por eso ankode puede
-              configurarse segun tu operacion.
+              configurarse según tu operación.
             </p>
           </div>
 
-          <div className="industry-grid">
+          <div className="industry-grid industry-grid-centered">
             {industries.map((item) => (
               <article key={item.title} className="industry-card">
                 <div
@@ -415,8 +526,8 @@ function App() {
                 <div className="industry-head">
                   <h3>{item.title}</h3>
                 </div>
-                <p>{item.desc}</p>
-                <a href={`#detalle-${item.id}`}>Quiero conocer mas</a>
+                <p className="text-justify">{item.desc}</p>
+                <a href={`#detalle-${item.id}`}>Quiero conocer más</a>
               </article>
             ))}
           </div>
@@ -425,13 +536,13 @@ function App() {
         <section className="section" id="detalle-giros">
           <div className="section-heading center">
             <p className="eyebrow">Detalle por giro</p>
-            <h2>Conoce como se aplica ankode segun tu operacion.</h2>
+            <h2>Conoce cómo se aplica ankode según tu operación.</h2>
           </div>
-          <div className="industry-grid">
+          <div className="industry-grid industry-grid-centered">
             {industries.map((item) => (
               <article key={`detail-${item.title}`} id={`detalle-${item.id}`} className="industry-card">
                 <h3>{item.title}</h3>
-                <p>{item.details}</p>
+                <p className="text-justify">{item.details}</p>
                 <a href={buildWhatsAppLink(item.demoMessage)} target="_blank" rel="noreferrer">
                   Solicitar demo para este giro
                 </a>
@@ -443,9 +554,9 @@ function App() {
         <section id="personalizacion" className="section">
           <div className="feature-showcase">
             <div className="feature-copy">
-              <p className="eyebrow">Personalizacion</p>
+              <p className="eyebrow">Personalización</p>
               <h2>Ankode se adapta a tu negocio, no al revés.</h2>
-              <p>
+              <p className="text-justify">
                 Una de las principales ventajas de ankode es que puede ajustarse
                 a la forma en que realmente trabajas.
               </p>
@@ -453,16 +564,16 @@ function App() {
 
             <div className="feature-points">
               <div className="point-card">
-                <strong>Configuracion</strong>
-                <p>Segun tu operacion real.</p>
+                <strong>Configuración</strong>
+                <p className="text-justify">Según tu operación real.</p>
               </div>
               <div className="point-card">
                 <strong>Roles y accesos</strong>
-                <p>De acuerdo con tu equipo.</p>
+                <p className="text-justify">De acuerdo con tu equipo.</p>
               </div>
               <div className="point-card">
-                <strong>Evolucion</strong>
-                <p>Conforme crece tu negocio.</p>
+                <strong>Evolución</strong>
+                <p className="text-justify">Conforme crece tu negocio.</p>
               </div>
             </div>
           </div>
@@ -471,10 +582,10 @@ function App() {
         <section className="section benefits-layout">
           <div className="section-heading">
             <p className="eyebrow">Beneficios</p>
-            <h2>Mas control para tomar mejores decisiones.</h2>
-            <p>
-              Tener informacion mas clara te ayuda a operar mejor y crecer con
-              mas orden.
+            <h2>Más control para tomar mejores decisiones.</h2>
+            <p className="text-justify">
+              Tener información más clara te ayuda a operar mejor y crecer con
+              más orden.
             </p>
           </div>
 
@@ -482,18 +593,18 @@ function App() {
             {benefits.map((item) => (
               <article key={item.title} className="benefit-card">
                 <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <p className="text-justify">{item.text}</p>
               </article>
             ))}
 
             <article className="benefit-card benefit-card-large">
-              <h3>Un sistema que se adapta a tu operacion.</h3>
-              <p>
-                ankode esta pensado para ayudarte a tener mas control sin
+              <h3>Un sistema que se adapta a tu operación.</h3>
+              <p className="text-justify">
+                ankode está pensado para ayudarte a tener más control sin
                 complicar el trabajo diario.
               </p>
               <ul>
-                <li>Centraliza la operacion en un solo lugar</li>
+                <li>Centraliza la operación en un solo lugar</li>
                 <li>Facilita el control de inventario, ventas y seguimiento</li>
                 <li>Permite organizar accesos y funciones por usuario</li>
               </ul>
@@ -503,10 +614,10 @@ function App() {
 
         <section className="section section-soft">
           <div className="section-heading center">
-            <p className="eyebrow">Como funciona</p>
+            <p className="eyebrow">Cómo funciona</p>
             <h2>Un proceso simple para comenzar.</h2>
             <p>
-              Empezamos entendiendo tu negocio para mostrarte como ankode puede ayudarte.
+              Empezamos entendiendo tu negocio para mostrarte cómo ankode puede ayudarte.
             </p>
           </div>
 
@@ -522,22 +633,61 @@ function App() {
 
         <PricingSection
           onSelectPlan={handleSelectPlan}
+          onAddToCart={handleAddToCart}
           isAnnual={isAnnual}
           onToggleAnnual={() => setIsAnnual(prev => !prev)}
         />
+
+        {/* Accesorios y Extras */}
+        <section id="accesorios" className="section section-soft">
+          <div className="section-heading center">
+            <p className="eyebrow">Accesorios y Extras</p>
+            <h2>Complementa tu plan con el equipo que necesitas.</h2>
+            <p>
+              Agrega los accesorios que mejor se adapten a tu operación y págalos por separado.
+            </p>
+          </div>
+          <div className="accessories-grid">
+            {accessories.map((item) => (
+              <article key={item.id} className="accessory-card">
+                <div style={{
+                  fontSize: '4rem',
+                  textAlign: 'center',
+                  padding: '28px 0 12px',
+                  background: 'var(--bg-soft)',
+                  borderRadius: '16px 16px 0 0',
+                }}>
+                  {item.emoji}
+                </div>
+                <div className="accessory-body">
+                  <h3>{item.name}</h3>
+                  <p className="text-justify">{item.desc}</p>
+                  <div className="accessory-price">${item.price.toLocaleString('es-MX')} MXN</div>
+                  <button
+                    className="btn btn-outline"
+                    style={{ width: '100%', marginTop: 12, cursor: 'pointer' }}
+                    onClick={() => handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' })}
+                  >
+                    Agregar al carrito
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section id="faq" className="section">
           <div className="section-heading center">
             <p className="eyebrow">Preguntas frecuentes</p>
             <h2>Lo que más nos preguntan</h2>
-            <p>Resolvemos las dudas mas comunes antes de empezar.</p>
+            <p>Resolvemos las dudas más comunes antes de empezar.</p>
           </div>
 
           <div className="faq-list">
             {faqs.map((item) => (
               <details key={item.q} className="faq-card">
                 <summary>{item.q}</summary>
-                <p>{item.a}</p>
+                <p className="text-justify">{item.a}</p>
               </details>
             ))}
           </div>
@@ -545,9 +695,8 @@ function App() {
 
         <section id="cta" className="section">
           <div className="cta-panel">
-            <p className="eyebrow">CTA final</p>
             <h2>Deja de adaptar tu negocio al sistema.</h2>
-            <p>
+            <p className="text-justify" style={{ maxWidth: 560, margin: '16px auto' }}>
               Mejor usa un sistema que pueda adaptarse a tu forma de trabajar.
             </p>
             <div className="hero-actions center-actions">
@@ -569,17 +718,17 @@ function App() {
       <footer className="footer">
         <div className="footer-brand">
           <p>
-            Sistema POS adaptable para negocios que necesitan mas control, mas
-            orden y una solucion pensada para su operacion real.
+            Sistema POS adaptable para negocios que necesitan más control, más
+            orden y una solución pensada para su operación real.
           </p>
         </div>
 
         <div className="footer-columns">
           <div>
             <h4>Producto</h4>
-            <a href="#modulos">Modulos</a>
+            <a href="#modulos">Módulos</a>
             <a href="#giros">Por giro</a>
-            <a href="#personalizacion">Personalizacion</a>
+            <a href="#personalizacion">Personalización</a>
           </div>
           <div>
             <h4>Empresa</h4>

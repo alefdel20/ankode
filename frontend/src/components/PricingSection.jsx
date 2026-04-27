@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PLANS, TERMS } from '../constants/plans';
 
-const digitalPlans = PLANS.filter((p) => ['basico', 'premium', 'all-inclusive'].includes(p.id));
+const digitalPlans = PLANS.filter((p) => ['basico', 'premium', 'enterprise', 'all-inclusive'].includes(p.id));
 const hardwarePlans = PLANS.filter((p) => ['starter', 'duo', 'pro-caja'].includes(p.id));
 
 function FeatureList({ features }) {
@@ -17,7 +17,7 @@ function FeatureList({ features }) {
   );
 }
 
-function DigitalCard({ plan, isAnnual, onSelectPlan }) {
+function DigitalCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
   const [hardwareMode, setHardwareMode] = useState('contado');
 
   const badgeBg = plan.badge === 'Más popular' ? 'var(--green)' : 'var(--purple)';
@@ -102,17 +102,17 @@ function DigitalCard({ plan, isAnnual, onSelectPlan }) {
                   transition: '0.15s ease',
                 }}
               >
-                {mode === 'contado' ? 'Contado' : 'Financiado (12 meses)'}
+                {mode === 'contado' ? 'Mensual' : 'Financiado (12 meses)'}
               </button>
             ))}
           </div>
           {hardwareMode === 'contado' ? (
             <div style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>
-              Pago inicial: <strong style={{ color: 'var(--text)' }}>${plan.hardware.contado.initialFee.toLocaleString('es-MX')}</strong>
+              Hardware incluido en el plan mensual.
             </div>
           ) : (
             <div style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>
-              Sin pago inicial · <strong style={{ color: 'var(--text)' }}>$1,682/mes</strong> los primeros 12 meses, luego <strong style={{ color: 'var(--text)' }}>$999/mes</strong>
+              Sin pago inicial · <strong style={{ color: 'var(--text)' }}>$1,682/mes</strong> los primeros 12 meses, luego <strong style={{ color: 'var(--text)' }}>$1,299/mes</strong>
             </div>
           )}
         </div>
@@ -126,16 +126,29 @@ function DigitalCard({ plan, isAnnual, onSelectPlan }) {
 
       <button
         className="btn btn-primary"
-        style={{ width: '100%', cursor: 'pointer' }}
+        style={{ width: '100%', cursor: 'pointer', marginBottom: 10 }}
         onClick={() => onSelectPlan(plan.id)}
       >
         Contratar ahora
       </button>
+      <button
+        className="btn btn-outline"
+        style={{ width: '100%', cursor: 'pointer' }}
+        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: plan.monthlyPrice, type: 'plan' })}
+      >
+        Agregar al carrito
+      </button>
+
+      {plan.renewalNote && (
+        <p style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 14, marginBottom: 0, lineHeight: 1.5, textAlign: 'center' }}>
+          {plan.renewalNote}
+        </p>
+      )}
     </div>
   );
 }
 
-function HardwareCard({ plan, isAnnual, onSelectPlan }) {
+function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
   const [planTier, setPlanTier] = useState('basico');
 
   const isPremium = planTier === 'premium';
@@ -160,7 +173,6 @@ function HardwareCard({ plan, isAnnual, onSelectPlan }) {
         {plan.hardware.description}
       </div>
 
-      {/* Plan tier toggle */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
         {['basico', 'premium'].map(tier => (
           <button
@@ -217,16 +229,23 @@ function HardwareCard({ plan, isAnnual, onSelectPlan }) {
 
       <button
         className="btn btn-primary"
-        style={{ width: '100%', cursor: 'pointer' }}
+        style={{ width: '100%', cursor: 'pointer', marginBottom: 10 }}
         onClick={() => onSelectPlan(planTier === 'premium' ? 'premium' : plan.id)}
       >
         Contratar ahora
+      </button>
+      <button
+        className="btn btn-outline"
+        style={{ width: '100%', cursor: 'pointer' }}
+        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: plan.hardware.initialFee, type: 'hardware' })}
+      >
+        Agregar al carrito
       </button>
     </div>
   );
 }
 
-export default function PricingSection({ onSelectPlan, isAnnual, onToggleAnnual }) {
+export default function PricingSection({ onSelectPlan, onAddToCart, isAnnual, onToggleAnnual }) {
   return (
     <section id="planes" className="section">
       <div className="section-heading center">
@@ -238,7 +257,6 @@ export default function PricingSection({ onSelectPlan, isAnnual, onToggleAnnual 
         </p>
       </div>
 
-      {/* Billing toggle */}
       <div
         style={{
           display: 'flex',
@@ -276,9 +294,9 @@ export default function PricingSection({ onSelectPlan, isAnnual, onToggleAnnual 
       {/* Digital plans */}
       <div style={{ marginBottom: 56 }}>
         <p className="eyebrow" style={{ textAlign: 'center', marginBottom: 24 }}>Planes digitales</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 20 }}>
           {digitalPlans.map((plan) => (
-            <DigitalCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} />
+            <DigitalCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} onAddToCart={onAddToCart} />
           ))}
         </div>
       </div>
@@ -293,7 +311,7 @@ export default function PricingSection({ onSelectPlan, isAnnual, onToggleAnnual 
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
           {hardwarePlans.map((plan) => (
-            <HardwareCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} />
+            <HardwareCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} onAddToCart={onAddToCart} />
           ))}
         </div>
       </div>

@@ -76,7 +76,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         const tokenResponse = await tokenizeCard({
           card_number: cardData.number.replace(/\s/g, ''),
           expiration_month: cardData.expMonth,
-          expiration_year: cardData.expYear,
+          expiration_year: cardData.expYear.length === 2 ? `20${cardData.expYear}` : cardData.expYear,
           cvv2: cardData.cvv,
           holder_name: cardData.name,
         });
@@ -346,12 +346,12 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                 <Field label="Año venc.">
                   <input
                     type="text"
-                    placeholder="AA"
+                    placeholder="AAAA"
                     value={cardData.expYear}
                     onChange={handleCardChange('expYear')}
                     style={inputStyle}
                     autoComplete="cc-exp-year"
-                    maxLength={2}
+                    maxLength={4}
                     inputMode="numeric"
                   />
                 </Field>

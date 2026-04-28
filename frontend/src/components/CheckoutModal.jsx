@@ -73,6 +73,9 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
       let cardToken = null;
       if (paymentMethod === 'card') {
+        if (!window.OpenPay || !window.OpenPay.token) {
+          throw new Error('El procesador de pagos no está listo. Recarga la página e intenta de nuevo.');
+        }
         const cleanNumber = cardData.number.replace(/\D/g, '');
         const cleanYear = cardData.expYear.length === 4 ? cardData.expYear.slice(2) : cardData.expYear;
         const tokenResponse = await tokenizeCard({

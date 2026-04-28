@@ -100,6 +100,10 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         cardToken = tokenResponse.data.id;
       }
 
+      const deviceSessionId = paymentMethod === 'card'
+        ? window.OpenPay.deviceData.setup()
+        : null;
+
       const data = await submitCheckout({
         planType,
         amount,
@@ -112,6 +116,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         posType: isCartMode ? 'cart' : plan.id,
         planName: isCartMode ? 'Carrito' : plan.name,
         paymentMethod,
+        deviceSessionId,
       });
 
       setIsLoading(false);

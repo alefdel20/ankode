@@ -27,7 +27,11 @@ export async function loadOpenpayScripts() {
 export function tokenizeCard(cardData) {
   // cardData: { card_number, expiration_month, expiration_year, cvv2, holder_name }
   return new Promise((resolve, reject) => {
-    window.OpenPay.token.create(cardData, resolve, reject);
+    window.OpenPay.token.create(
+  cardData,
+  (response) => { console.log('TOKEN OK:', response); resolve(response); },
+  (error) => { console.error('TOKEN ERROR:', error); reject(new Error(error.data?.description || 'Token error')); }
+    );
   });
 }
 

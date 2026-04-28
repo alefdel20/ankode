@@ -130,10 +130,10 @@ export const TERMS = {
   refundPolicy:
     'Según política de Openpay y términos de servicio de Ankode. Aplica para cobros duplicados o errores técnicos comprobables.',
   currency: 'Pesos Mexicanos (MXN) con IVA incluido',
-  renewalType: 'Automática vía token guardado en Openpay by BBVA',
+  renewalType: 'Automática vía token guardado en Openpay',
   annualNote:
     'Al contratar plan anual pagas 10 mensualidades y recibes 12 meses de servicio (2 meses gratis — ahorro del 16.7%)',
   dataPolicy:
-    'Los datos de tarjeta son tokenizados directamente por Openpay by BBVA. Ankode nunca almacena datos de pago.',
+    'Los datos de tarjeta son tokenizados directamente por Openpay. Ankode nunca almacena datos de pago.',
   supportEmail: 'ankodemx@gmail.com',
 };

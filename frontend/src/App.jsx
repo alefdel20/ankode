@@ -827,7 +827,7 @@ function App() {
           <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos y condiciones</a>
           <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Política de cancelación</a>
           <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Privacidad de pago</a>
-          <span>Pagos procesados por Openpay by BBVA</span>
+          <span>Pagos procesados por Openpay</span>
         </div>
       </footer>
 

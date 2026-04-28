@@ -115,7 +115,6 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
       });
 
       setIsLoading(false);
-      onSubmitPayment({ success: true });
       setResult({
         total,
         planName: isCartMode ? 'Carrito' : plan.name,
@@ -217,7 +216,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
               type="button"
               className="btn btn-primary"
               style={{ width: '100%', cursor: 'pointer' }}
-              onClick={onClose}
+              onClick={() => { onSubmitPayment({ success: true }); onClose(); }}
             >
               Cerrar
             </button>

@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Read(//c/Users/tatue/Documents/Ankode/**)",
+      "Read(//c/Users/tatue/Documents/POS_SaaS/**)",
+      "Read(//c/Users/tatue/Documents/bec_api_backend/**)"
     ]
   }
 }

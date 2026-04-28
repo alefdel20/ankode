@@ -125,9 +125,18 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
     } catch (err) {
       setIsLoading(false);
       const rawMsg = err.message || '';
-      const declinedPhrases = ['fondos insuficientes', 'insufficient funds', 'tarjeta reportada', 'lost card', 'stolen', 'robada', 'perdida'];
-      const isDeclined = declinedPhrases.some(p => rawMsg.toLowerCase().includes(p));
-      setError(isDeclined ? 'Tarjeta declinada. Intenta con otra tarjeta.' : (rawMsg || 'Ocurrió un error. Intenta de nuevo.'));
+      const errCode = err.error_code || err.openpayCode || null;
+      const lower = rawMsg.toLowerCase();
+      const isFraud = lower.includes('fraud') || lower.includes('anti-fraud') || errCode === 3005 || errCode === '3005';
+      const isDeclined3004 = errCode === 3004 || errCode === '3004';
+      const isDeclined = ['fondos insuficientes', 'insufficient funds', 'tarjeta reportada', 'lost card', 'stolen', 'robada', 'perdida']
+        .some(p => lower.includes(p));
+      const userMsg = isFraud
+        ? 'La transacción falló. Intenta con otra tarjeta.'
+        : (isDeclined || isDeclined3004)
+          ? 'Tarjeta declinada. Intenta con otra tarjeta.'
+          : (rawMsg || 'Ocurrió un error. Intenta de nuevo.');
+      setError(userMsg);
     }
   };
 

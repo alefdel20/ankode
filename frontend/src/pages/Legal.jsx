@@ -22,7 +22,7 @@ export default function Legal() {
         {doc.content}
       </div>
       <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid #e5eaf5', fontSize: '0.85rem', color: '#667085' }}>
-        <p>¿Tienes dudas? Escríbenos a <a href="mailto:contacto@ankode.cloud" style={{ color: '#6d4aff', fontWeight: 700 }}>contacto@ankode.cloud</a></p>
+        <p>¿Tienes dudas? Escríbenos a <a href="mailto:ankodemx@gmail.com" style={{ color: '#6d4aff', fontWeight: 700 }}>ankodemx@gmail.com</a></p>
         <div style={{ display: 'flex', gap: 20, marginTop: 8, flexWrap: 'wrap' }}>
           <a href="/legal?doc=terms" target="_blank" style={{ color: '#667085' }}>Términos y Condiciones</a>
           <a href="/legal?doc=privacy" target="_blank" style={{ color: '#667085' }}>Aviso de Privacidad</a>

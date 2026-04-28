@@ -3,7 +3,7 @@ export const LEGAL = {
 Última actualización: abril 2026
 
 1. Quiénes somos
-Ankode es una plataforma de gestión empresarial bajo el modelo SaaS, operada por Alejandro Flores Delgado, con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México. Contacto: contacto@ankode.cloud
+Ankode es una plataforma de gestión empresarial bajo el modelo SaaS, operada por Alejandro Flores Delgado, con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México. Contacto: ankodemx@gmail.com
 
 2. Aceptación
 Al crear una cuenta, acceder o contratar cualquier plan, el usuario acepta estos términos en su totalidad.
@@ -47,7 +47,7 @@ Cualquier intento de acceder a datos de otros tenants resultará en cancelación
 9. Soporte Técnico y Mantenimiento
 - Vigencia: El soporte técnico se brinda exclusivamente a usuarios con suscripción activa. En caso de cancelación o falta de pago, el acceso a soporte queda suspendido de inmediato.
 - Alcance: El soporte aplica únicamente para incidencias directas de la plataforma Ankode y fallas de fábrica en hardware dentro de garantía. No incluye soporte para software de terceros, configuración de redes locales del cliente, ni reparación de equipos ajenos a los proporcionados por Ankode.
-- Horario: Atención vía contacto@ankode.cloud y canal oficial de WhatsApp, lunes a viernes de 9:00 a 18:00 hrs.
+- Horario: Atención vía ankodemx@gmail.com y canal oficial de WhatsApp, lunes a viernes de 9:00 a 18:00 hrs.
 
 10. Modificaciones
 Ankode se reserva el derecho de modificar funcionalidades o precios, notificando al Cliente con 30 días de antelación vía correo electrónico.
@@ -58,7 +58,7 @@ Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para cua
   privacy: `AVISO DE PRIVACIDAD — ANKODE
 Última actualización: abril 2026
 
-Responsable: Alejandro Flores Delgado · contacto@ankode.cloud
+Responsable: Alejandro Flores Delgado · ankodemx@gmail.com
 
 Finalidad: Los datos recabados (nombre, correo, datos del negocio y tokens de pago) tienen como fin único la prestación del servicio SaaS y el cobro de suscripción.
 
@@ -66,7 +66,7 @@ Transferencias: Sus datos son compartidos con:
 - Openpay: procesamiento seguro de pagos (PCI DSS).
 - Hostinger International Ltd.: almacenamiento cifrado en base de datos.
 
-Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición enviando un correo a contacto@ankode.cloud adjuntando identificación oficial, conforme a la LFPDPPP.`,
+Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición enviando un correo a ankodemx@gmail.com adjuntando identificación oficial, conforme a la LFPDPPP.`,
 
   cancellation: `POLÍTICA DE CANCELACIÓN — ANKODE
 
@@ -76,5 +76,5 @@ Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición
 - No se realizan reembolsos parciales ni totales por períodos ya facturados.
 - El acceso a la plataforma permanece activo hasta el fin del período pagado.
 - El Cliente tendrá 10 días naturales tras la cancelación para exportar su información antes de la eliminación definitiva de sus datos.
-- Para soporte en cancelaciones: contacto@ankode.cloud · WhatsApp oficial · Lunes a viernes 9:00–18:00 hrs.`,
+- Para soporte en cancelaciones: ankodemx@gmail.com · WhatsApp oficial · Lunes a viernes 9:00–18:00 hrs.`,
 };

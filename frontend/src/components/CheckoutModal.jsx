@@ -39,11 +39,17 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   const [speiEmail, setSpeiEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
       loadOpenpayScripts().catch(err => console.error('Openpay scripts failed to load:', err));
     }
+  }, [isOpen]);
+
+  // Reset result when modal reopens
+  useEffect(() => {
+    if (isOpen) setResult(null);
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -63,6 +69,11 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
   const handleCardChange = (field) => (e) =>
     setCardData((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleNumericChange = (field, maxLen) => (e) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, maxLen);
+    setCardData(prev => ({ ...prev, [field]: val }));
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -89,7 +100,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         cardToken = tokenResponse.data.id;
       }
 
-      await submitCheckout({
+      const data = await submitCheckout({
         planType,
         amount,
         cardToken,
@@ -105,9 +116,13 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
       setIsLoading(false);
       onSubmitPayment({ success: true });
-      setError(null);
-      alert('✅ ¡Suscripción activada! Revisa tu correo para recibir tus credenciales de acceso. Tu pago fue procesado correctamente.');
-      onClose();
+      setResult({
+        total,
+        planName: isCartMode ? 'Carrito' : plan.name,
+        orderId: data.orderId || data.subscriptionId || null,
+        clabe: data.clabe || null,
+        paymentMethod,
+      });
     } catch (err) {
       setIsLoading(false);
       const rawMsg = err.message || '';
@@ -162,324 +177,397 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
           ×
         </button>
 
-        {/* Header — cart mode */}
-        {isCartMode && (
-          <div style={{ marginBottom: 24 }}>
-            <h3 style={{ margin: '0 0 12px', color: 'var(--purple)', fontSize: '1.3rem' }}>
-              Resumen de compra
+        {/* Success screen */}
+        {result ? (
+          <div style={{ textAlign: 'center', padding: '12px 0' }}>
+            <div style={{ fontSize: '3rem', marginBottom: 12 }}>✅</div>
+            <h3 style={{ margin: '0 0 8px', color: 'var(--purple)', fontSize: '1.4rem' }}>
+              {result.paymentMethod === 'spei' ? '¡Orden generada!' : '¡Pago completado!'}
             </h3>
-            <div style={{
-              background: 'var(--bg-soft)',
-              borderRadius: 14,
-              padding: '14px 16px',
-              marginBottom: 8,
-            }}>
-              {cart.map(item => (
-                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: 6 }}>
-                  <span>{item.name} × {item.qty}</span>
-                  <span style={{ color: 'var(--purple)', fontWeight: 700 }}>
-                    ${(item.price * item.qty).toLocaleString('es-MX')}
-                  </span>
-                </div>
-              ))}
-              <div style={{ borderTop: '1px solid var(--border)', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between', fontWeight: 800 }}>
-                <span>Total</span>
-                <span style={{ color: 'var(--purple)', fontSize: '1.1rem' }}>
-                  ${cartTotal.toLocaleString('es-MX')} MXN
+            <p style={{ margin: '0 0 20px', color: 'var(--muted)', fontSize: '0.95rem' }}>
+              {result.paymentMethod === 'spei'
+                ? 'Realiza la transferencia SPEI a la CLABE que recibiste en tu correo. Tu suscripción se activará al detectarse el pago.'
+                : 'Tu pago fue procesado correctamente. Revisa tu correo para recibir tus credenciales de acceso.'}
+            </p>
+            <div style={{ background: 'var(--bg-soft)', borderRadius: 14, padding: '16px 20px', marginBottom: 20, textAlign: 'left' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>Plan</span>
+                <span style={{ fontWeight: 700 }}>{result.planName}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: result.orderId ? 8 : 0 }}>
+                <span style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>Monto</span>
+                <span style={{ fontWeight: 800, color: 'var(--purple)', fontSize: '1.1rem' }}>
+                  ${result.total.toLocaleString('es-MX')} MXN
                 </span>
               </div>
+              {result.clabe && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+                  <span style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>CLABE</span>
+                  <span style={{ fontWeight: 700, fontFamily: 'monospace' }}>{result.clabe}</span>
+                </div>
+              )}
+              {result.orderId && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+                  <span style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>Referencia</span>
+                  <span style={{ fontWeight: 600, fontSize: '0.82rem', color: 'var(--muted)', fontFamily: 'monospace' }}>{result.orderId}</span>
+                </div>
+              )}
             </div>
+            <button
+              type="button"
+              className="btn btn-primary"
+              style={{ width: '100%', cursor: 'pointer' }}
+              onClick={onClose}
+            >
+              Cerrar
+            </button>
           </div>
-        )}
-
-        {/* Header — normal plan mode */}
-        {!isCartMode && (
-          <div style={{ marginBottom: 24 }}>
-            <h3 style={{ margin: '0 0 4px', color: 'var(--purple)', fontSize: '1.3rem' }}>
-              {plan.name}
-            </h3>
-            <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
-              Facturación {isAnnual ? 'anual' : 'mensual'}
-            </p>
-            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
-              ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
-            </div>
-          </div>
-        )}
-
-        <form>
-          {/* Extra branches — only in normal plan mode */}
-          {!isCartMode && (
-            <Field label="Sucursales adicionales">
-              <input
-                type="number"
-                min={0}
-                step={1}
-                value={extraBranches === 0 ? '' : extraBranches}
-                placeholder="0"
-                onChange={(e) => {
-                  const raw = e.target.value;
-                  if (raw === '' || raw === '-') {
-                    setExtraBranches(0);
-                    return;
-                  }
-                  const val = Math.floor(Number(raw));
-                  setExtraBranches(isNaN(val) || val < 0 ? 0 : val);
-                }}
-                onBlur={() => {
-                  if (extraBranches === '' || isNaN(extraBranches)) setExtraBranches(0);
-                }}
-                style={{ ...inputStyle, width: '100%' }}
-              />
-              <div style={{ marginTop: 6, fontSize: '0.88rem', color: 'var(--muted)' }}>
-                Total:{' '}
-                <strong style={{ color: 'var(--purple)' }}>
-                  ${total.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
-                </strong>
-                {extraBranches > 0 && (
-                  <span> (+{extraBranches} × ${plan.extraBranchPrice.toLocaleString('es-MX')}/mes)</span>
-                )}
+        ) : (
+          <>
+            {/* Header — cart mode */}
+            {isCartMode && (
+              <div style={{ marginBottom: 24 }}>
+                <h3 style={{ margin: '0 0 12px', color: 'var(--purple)', fontSize: '1.3rem' }}>
+                  Resumen de compra
+                </h3>
+                <div style={{
+                  background: 'var(--bg-soft)',
+                  borderRadius: 14,
+                  padding: '14px 16px',
+                  marginBottom: 8,
+                }}>
+                  {cart.map(item => (
+                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: 6 }}>
+                      <span>{item.name} × {item.qty}</span>
+                      <span style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                        ${(item.price * item.qty).toLocaleString('es-MX')}
+                      </span>
+                    </div>
+                  ))}
+                  <div style={{ borderTop: '1px solid var(--border)', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between', fontWeight: 800 }}>
+                    <span>Total</span>
+                    <span style={{ color: 'var(--purple)', fontSize: '1.1rem' }}>
+                      ${cartTotal.toLocaleString('es-MX')} MXN
+                    </span>
+                  </div>
+                </div>
               </div>
-            </Field>
-          )}
+            )}
 
-          {/* Payment method toggle */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={labelStyle}>Método de pago</div>
-            <div style={{ display: 'flex', gap: 10 }}>
-              {['card', 'spei'].map((method) => (
-                <button
-                  key={method}
-                  type="button"
-                  onClick={() => setPaymentMethod(method)}
+            {/* Header — normal plan mode */}
+            {!isCartMode && (
+              <div style={{ marginBottom: 24 }}>
+                <h3 style={{ margin: '0 0 4px', color: 'var(--purple)', fontSize: '1.3rem' }}>
+                  {plan.name}
+                </h3>
+                <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
+                  Facturación {isAnnual ? 'anual' : 'mensual'}
+                </p>
+                <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
+                  ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+                </div>
+              </div>
+            )}
+
+            <form>
+              {/* Extra branches — only in normal plan mode */}
+              {!isCartMode && (
+                <Field label="Sucursales adicionales">
+                  <input
+                    type="number"
+                    min={0}
+                    step={1}
+                    value={extraBranches === 0 ? '' : extraBranches}
+                    placeholder="0"
+                    onChange={(e) => {
+                      const raw = e.target.value;
+                      if (raw === '' || raw === '-') {
+                        setExtraBranches(0);
+                        return;
+                      }
+                      const val = Math.floor(Number(raw));
+                      setExtraBranches(isNaN(val) || val < 0 ? 0 : val);
+                    }}
+                    onBlur={() => {
+                      if (extraBranches === '' || isNaN(extraBranches)) setExtraBranches(0);
+                    }}
+                    style={{ ...inputStyle, width: '100%' }}
+                  />
+                  <div style={{ marginTop: 6, fontSize: '0.88rem', color: 'var(--muted)' }}>
+                    Total:{' '}
+                    <strong style={{ color: 'var(--purple)' }}>
+                      ${total.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+                    </strong>
+                    {extraBranches > 0 && (
+                      <span> (+{extraBranches} × ${plan.extraBranchPrice.toLocaleString('es-MX')}/mes)</span>
+                    )}
+                  </div>
+                </Field>
+              )}
+
+              {/* Payment method toggle */}
+              <div style={{ marginBottom: 20 }}>
+                <div style={labelStyle}>Método de pago</div>
+                <div style={{ display: 'flex', gap: 10 }}>
+                  {['card', 'spei'].map((method) => (
+                    <button
+                      key={method}
+                      type="button"
+                      onClick={() => setPaymentMethod(method)}
+                      style={{
+                        padding: '8px 20px',
+                        borderRadius: 999,
+                        border: `2px solid ${paymentMethod === method ? 'var(--purple)' : 'var(--border)'}`,
+                        background: paymentMethod === method ? 'rgba(109,74,255,0.06)' : 'transparent',
+                        color: paymentMethod === method ? 'var(--purple)' : 'var(--muted)',
+                        fontWeight: 700,
+                        fontSize: '0.9rem',
+                        cursor: 'pointer',
+                        transition: '0.15s ease',
+                        fontFamily: 'inherit',
+                      }}
+                    >
+                      {method === 'card' ? 'Tarjeta' : 'SPEI'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card brand badges */}
+              {paymentMethod === 'card' && (
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--muted)', marginRight: 4 }}>Aceptamos:</span>
+                  <span style={{ background: '#1a1f71', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1 }}>VISA</span>
+                  <span style={{ background: '#eb001b', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>MC</span>
+                  <span style={{ background: '#2e77bc', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>AMEX</span>
+                </div>
+              )}
+
+              {/* Card form */}
+              {paymentMethod === 'card' && (
+                <div>
+                  <Field label="Nombre en tarjeta">
+                    {/* NOTE: These fields will be tokenized via Openpay.js (OpenPay.token.create). Ankode never receives raw card data. */}
+                    <input
+                      type="text"
+                      placeholder="Como aparece en la tarjeta"
+                      value={cardData.name}
+                      onChange={handleCardChange('name')}
+                      style={inputStyle}
+                      autoComplete="cc-name"
+                    />
+                  </Field>
+                  <Field label="Número de tarjeta">
+                    <input
+                      type="text"
+                      placeholder="0000 0000 0000 0000"
+                      value={cardData.number}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                        setCardData(prev => ({ ...prev, number: val }));
+                      }}
+                      style={inputStyle}
+                      autoComplete="cc-number"
+                      inputMode="numeric"
+                      maxLength={16}
+                    />
+                  </Field>
+                  {!hasOnlyAccessories && (
+                    <Field label="Nombre de tu negocio">
+                      <input
+                        type="text"
+                        placeholder="Ej. Veterinaria San Blas"
+                        value={cardData.businessName}
+                        onChange={handleCardChange('businessName')}
+                        style={inputStyle}
+                        autoComplete="organization"
+                      />
+                    </Field>
+                  )}
+                  {!hasOnlyAccessories && (
+                    <Field label="Tipo de negocio">
+                      <select
+                        required
+                        value={cardData.businessType}
+                        onChange={handleCardChange('businessType')}
+                        style={{ ...inputStyle, cursor: 'pointer' }}
+                      >
+                        <option value="" disabled>Selecciona tu giro</option>
+                        {[
+                          'Tienda', 'Tlapalería', 'Papelería', 'Veterinaria',
+                          'Dentista', 'Farmacia', 'Farmacia con consultorio',
+                          'Clínica chica', 'Restaurante', 'Otro',
+                        ].map(opt => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </Field>
+                  )}
+                  {!hasOnlyAccessories && (
+                    <Field label="Contraseña para tu cuenta (mínimo 8 caracteres)">
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={cardData.password}
+                        onChange={handleCardChange('password')}
+                        style={inputStyle}
+                        autoComplete="new-password"
+                      />
+                    </Field>
+                  )}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                    <Field label="Mes venc.">
+                      <input
+                        type="text"
+                        placeholder="MM"
+                        value={cardData.expMonth}
+                        onChange={handleNumericChange('expMonth', 2)}
+                        style={inputStyle}
+                        autoComplete="cc-exp-month"
+                        maxLength={2}
+                        inputMode="numeric"
+                      />
+                    </Field>
+                    <Field label="Año venc.">
+                      <input
+                        type="text"
+                        placeholder="AA"
+                        value={cardData.expYear}
+                        onChange={handleNumericChange('expYear', 2)}
+                        style={inputStyle}
+                        autoComplete="cc-exp-year"
+                        maxLength={2}
+                        inputMode="numeric"
+                      />
+                    </Field>
+                    <Field label="CVV">
+                      <input
+                        type="text"
+                        placeholder="•••"
+                        value={cardData.cvv}
+                        onChange={handleNumericChange('cvv', 4)}
+                        style={inputStyle}
+                        autoComplete="cc-csc"
+                        maxLength={4}
+                        inputMode="numeric"
+                      />
+                    </Field>
+                  </div>
+                  <Field label="Email">
+                    <input
+                      type="email"
+                      placeholder="tu@correo.com"
+                      value={cardData.email}
+                      onChange={handleCardChange('email')}
+                      style={inputStyle}
+                      autoComplete="email"
+                    />
+                  </Field>
+                  {/* Openpay security notice with official logo */}
+                  <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <img
+                      src="https://img.openpay.mx/logo-openpay.png"
+                      alt="Openpay"
+                      style={{ height: 20, objectFit: 'contain' }}
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                    <span>🔒 Tu tarjeta es tokenizada por Openpay. Ankode nunca almacena tus datos de pago.</span>
+                  </div>
+                </div>
+              )}
+
+              {/* SPEI */}
+              {paymentMethod === 'spei' && (
+                <div>
+                  <Field label="Email (para recibir la CLABE)">
+                    <input
+                      type="email"
+                      placeholder="tu@correo.com"
+                      value={speiEmail}
+                      onChange={(e) => setSpeiEmail(e.target.value)}
+                      style={inputStyle}
+                      autoComplete="email"
+                    />
+                  </Field>
+                  <div
+                    style={{
+                      background: 'var(--bg-soft)',
+                      borderRadius: 12,
+                      padding: '10px 14px',
+                      fontSize: '0.88rem',
+                      color: 'var(--muted)',
+                      marginBottom: 16,
+                    }}
+                  >
+                    Al confirmar recibirás una CLABE interbancaria en tu correo. Tu suscripción se activará al detectarse el pago.
+                  </div>
+                </div>
+              )}
+
+              {/* Error */}
+              {error && (
+                <div
+                  className="pill"
                   style={{
-                    padding: '8px 20px',
-                    borderRadius: 999,
-                    border: `2px solid ${paymentMethod === method ? 'var(--purple)' : 'var(--border)'}`,
-                    background: paymentMethod === method ? 'rgba(109,74,255,0.06)' : 'transparent',
-                    color: paymentMethod === method ? 'var(--purple)' : 'var(--muted)',
-                    fontWeight: 700,
-                    fontSize: '0.9rem',
-                    cursor: 'pointer',
-                    transition: '0.15s ease',
-                    fontFamily: 'inherit',
+                    background: '#fef2f2',
+                    color: '#dc2626',
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    borderRadius: 12,
+                    height: 'auto',
+                    padding: '10px 14px',
+                    marginBottom: 12,
+                    fontSize: '0.88rem',
                   }}
                 >
-                  {method === 'card' ? 'Tarjeta' : 'SPEI'}
-                </button>
-              ))}
-            </div>
-          </div>
+                  {error}
+                </div>
+              )}
 
-          {paymentMethod === 'card' && (
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--muted)', marginRight: 4 }}>Aceptamos:</span>
-              <span style={{ background: '#1a1f71', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1 }}>VISA</span>
-              <span style={{ background: '#eb001b', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>MC</span>
-              <span style={{ background: '#2e77bc', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>AMEX</span>
-            </div>
-          )}
-
-          {/* Card form */}
-          {paymentMethod === 'card' && (
-            <div>
-              <Field label="Nombre en tarjeta">
-                {/* NOTE: These fields will be tokenized via Openpay.js (OpenPay.token.create). Ankode never receives raw card data. */}
-                <input
-                  type="text"
-                  placeholder="Como aparece en la tarjeta"
-                  value={cardData.name}
-                  onChange={handleCardChange('name')}
-                  style={inputStyle}
-                  autoComplete="cc-name"
-                />
-              </Field>
-              <Field label="Número de tarjeta">
-                <input
-                  type="text"
-                  placeholder="0000 0000 0000 0000"
-                  value={cardData.number}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/\D/g, '').slice(0, 16);
-                    setCardData(prev => ({ ...prev, number: val }));
-                  }}
-                  style={inputStyle}
-                  autoComplete="cc-number"
-                  inputMode="numeric"
-                  maxLength={16}
-                />
-              </Field>
-              {!hasOnlyAccessories && (
-                <Field label="Nombre de tu negocio">
-                  <input
-                    type="text"
-                    placeholder="Ej. Veterinaria San Blas"
-                    value={cardData.businessName}
-                    onChange={handleCardChange('businessName')}
-                    style={inputStyle}
-                    autoComplete="organization"
-                  />
-                </Field>
-              )}
-              {!hasOnlyAccessories && (
-                <Field label="Tipo de negocio">
-                  <select
-                    required
-                    value={cardData.businessType}
-                    onChange={handleCardChange('businessType')}
-                    style={{ ...inputStyle, cursor: 'pointer' }}
-                  >
-                    <option value="" disabled>Selecciona tu giro</option>
-                    {[
-                      'Tienda', 'Tlapalería', 'Papelería', 'Veterinaria',
-                      'Dentista', 'Farmacia', 'Farmacia con consultorio',
-                      'Clínica chica', 'Restaurante', 'Otro',
-                    ].map(opt => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
-                </Field>
-              )}
-              {!hasOnlyAccessories && (
-                <Field label="Contraseña para tu cuenta (mínimo 8 caracteres)">
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={cardData.password}
-                    onChange={handleCardChange('password')}
-                    style={inputStyle}
-                    autoComplete="new-password"
-                  />
-                </Field>
-              )}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-                <Field label="Mes venc.">
-                  <input
-                    type="text"
-                    placeholder="MM"
-                    value={cardData.expMonth}
-                    onChange={handleCardChange('expMonth')}
-                    style={inputStyle}
-                    autoComplete="cc-exp-month"
-                    maxLength={2}
-                    inputMode="numeric"
-                  />
-                </Field>
-                <Field label="Año venc.">
-                  <input
-                    type="text"
-                    placeholder="AA"
-                    value={cardData.expYear}
-                    onChange={handleCardChange('expYear')}
-                    style={inputStyle}
-                    autoComplete="cc-exp-year"
-                    maxLength={2}
-                    inputMode="numeric"
-                  />
-                </Field>
-                <Field label="CVV">
-                  <input
-                    type="text"
-                    placeholder="•••"
-                    value={cardData.cvv}
-                    onChange={handleCardChange('cvv')}
-                    style={inputStyle}
-                    autoComplete="cc-csc"
-                    maxLength={4}
-                    inputMode="numeric"
-                  />
-                </Field>
+              {/* Total visible + Submit */}
+              <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 16px', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>Total a pagar</span>
+                <span style={{ fontWeight: 900, fontSize: '1.15rem', color: 'var(--purple)' }}>
+                  ${total.toLocaleString('es-MX')} MXN
+                </span>
               </div>
-              <Field label="Email">
-                <input
-                  type="email"
-                  placeholder="tu@correo.com"
-                  value={cardData.email}
-                  onChange={handleCardChange('email')}
-                  style={inputStyle}
-                  autoComplete="email"
-                />
-              </Field>
-              <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontWeight: 800, color: '#00b3e6', fontSize: '0.9rem' }}>Openpay</span>
-                <span>🔒 Tu tarjeta es tokenizada por Openpay. Ankode nunca almacena tus datos de pago.</span>
-              </div>
-            </div>
-          )}
-
-          {/* SPEI */}
-          {paymentMethod === 'spei' && (
-            <div>
-              <Field label="Email (para recibir la CLABE)">
-                <input
-                  type="email"
-                  placeholder="tu@correo.com"
-                  value={speiEmail}
-                  onChange={(e) => setSpeiEmail(e.target.value)}
-                  style={inputStyle}
-                  autoComplete="email"
-                />
-              </Field>
-              <div
-                style={{
-                  background: 'var(--bg-soft)',
-                  borderRadius: 12,
-                  padding: '10px 14px',
-                  fontSize: '0.88rem',
-                  color: 'var(--muted)',
-                  marginBottom: 16,
-                }}
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ width: '100%', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
+                disabled={isLoading}
+                onClick={handleSubmit}
               >
-                Al confirmar recibirás una CLABE interbancaria en tu correo. Tu suscripción se activará al detectarse el pago.
-              </div>
-            </div>
-          )}
+                {isLoading ? 'Procesando...' : 'Confirmar y pagar'}
+              </button>
+            </form>
 
-          {/* Error */}
-          {error && (
-            <div
-              className="pill"
-              style={{
-                background: '#fef2f2',
-                color: '#dc2626',
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-                borderRadius: 12,
-                height: 'auto',
-                padding: '10px 14px',
-                marginBottom: 12,
-                fontSize: '0.88rem',
-              }}
-            >
-              {error}
-            </div>
-          )}
-
-          {/* Submit */}
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ width: '100%', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
-            disabled={isLoading}
-            onClick={handleSubmit}
-          >
-            {isLoading ? 'Procesando...' : `Confirmar y pagar — $${total.toLocaleString('es-MX')} MXN`}
-          </button>
-        </form>
-
-        {/* Terms link */}
-        <p style={{ textAlign: 'center', fontSize: '0.82rem', color: 'var(--muted)', marginTop: 14, marginBottom: 0 }}>
-          Al continuar aceptas nuestros{' '}
-          <a
-            href="/legal?doc=terms"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: 'var(--purple)', fontWeight: 700 }}
-          >
-            términos y condiciones
-          </a>
-        </p>
+            {/* Legal links */}
+            <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--muted)', marginTop: 12, marginBottom: 4, lineHeight: 1.6 }}>
+              Al continuar aceptas nuestros{' '}
+              <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                términos y condiciones
+              </a>
+              {', '}
+              <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                aviso de privacidad
+              </a>
+              {' y '}
+              <a href="/legal?doc=refunds" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                política de cancelación
+              </a>
+              .
+            </p>
+            {/* Support info */}
+            <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4, marginBottom: 0 }}>
+              ¿Necesitas ayuda?{' '}
+              <a href="mailto:soporte@ankode.cloud" style={{ color: 'var(--muted)' }}>
+                soporte@ankode.cloud
+              </a>
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

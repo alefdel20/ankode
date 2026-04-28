@@ -99,11 +99,15 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
       setIsLoading(false);
       onSubmitPayment({ success: true });
-      alert('¡Suscripción activada! Revisa tu correo para recibir tus credenciales de acceso.');
+      setError(null);
+      alert('✅ ¡Suscripción activada! Revisa tu correo para recibir tus credenciales de acceso. Tu pago fue procesado correctamente.');
       onClose();
     } catch (err) {
       setIsLoading(false);
-      setError(err.message || 'Ocurrió un error. Intenta de nuevo.');
+      const rawMsg = err.message || '';
+      const declinedPhrases = ['fondos insuficientes', 'insufficient funds', 'tarjeta reportada', 'lost card', 'stolen', 'robada', 'perdida'];
+      const isDeclined = declinedPhrases.some(p => rawMsg.toLowerCase().includes(p));
+      setError(isDeclined ? 'Tarjeta declinada. Intenta con otra tarjeta.' : (rawMsg || 'Ocurrió un error. Intenta de nuevo.'));
     }
   };
 
@@ -261,6 +265,15 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
             </div>
           </div>
 
+          {paymentMethod === 'card' && (
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--muted)', marginRight: 4 }}>Aceptamos:</span>
+              <img src="https://js.openpay.mx/images/visa.png" alt="Visa" style={{ height: 24, objectFit: 'contain' }} />
+              <img src="https://js.openpay.mx/images/mastercard.png" alt="Mastercard" style={{ height: 24, objectFit: 'contain' }} />
+              <img src="https://js.openpay.mx/images/american_express.png" alt="AMEX" style={{ height: 24, objectFit: 'contain' }} />
+            </div>
+          )}
+
           {/* Card form */}
           {paymentMethod === 'card' && (
             <div>
@@ -280,11 +293,14 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                   type="text"
                   placeholder="0000 0000 0000 0000"
                   value={cardData.number}
-                  onChange={handleCardChange('number')}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                    setCardData(prev => ({ ...prev, number: val }));
+                  }}
                   style={inputStyle}
                   autoComplete="cc-number"
                   inputMode="numeric"
-                  maxLength={19}
+                  maxLength={16}
                 />
               </Field>
               {!hasOnlyAccessories && (
@@ -346,12 +362,12 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                 <Field label="Año venc.">
                   <input
                     type="text"
-                    placeholder="AAAA"
+                    placeholder="AA"
                     value={cardData.expYear}
                     onChange={handleCardChange('expYear')}
                     style={inputStyle}
                     autoComplete="cc-exp-year"
-                    maxLength={4}
+                    maxLength={2}
                     inputMode="numeric"
                   />
                 </Field>
@@ -378,17 +394,9 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                   autoComplete="email"
                 />
               </Field>
-              <div
-                style={{
-                  background: 'var(--bg-soft)',
-                  borderRadius: 12,
-                  padding: '10px 14px',
-                  fontSize: '0.82rem',
-                  color: 'var(--muted)',
-                  marginBottom: 16,
-                }}
-              >
-                🔒 Tu tarjeta es tokenizada por Openpay by BBVA. Ankode nunca almacena tus datos de pago.
+              <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
+                <img src="https://js.openpay.mx/images/openpay.png" alt="Openpay" style={{ height: 24, objectFit: 'contain' }} />
+                <span>🔒 Tu tarjeta es tokenizada por Openpay. Ankode nunca almacena tus datos de pago.</span>
               </div>
             </div>
           )}

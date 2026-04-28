@@ -268,9 +268,9 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
           {paymentMethod === 'card' && (
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
               <span style={{ fontSize: '0.8rem', color: 'var(--muted)', marginRight: 4 }}>Aceptamos:</span>
-              <img src="https://js.openpay.mx/images/visa.png" alt="Visa" style={{ height: 24, objectFit: 'contain' }} />
-              <img src="https://js.openpay.mx/images/mastercard.png" alt="Mastercard" style={{ height: 24, objectFit: 'contain' }} />
-              <img src="https://js.openpay.mx/images/american_express.png" alt="AMEX" style={{ height: 24, objectFit: 'contain' }} />
+              <span style={{ background: '#1a1f71', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1 }}>VISA</span>
+              <span style={{ background: '#eb001b', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>MC</span>
+              <span style={{ background: '#2e77bc', color: 'white', borderRadius: 4, padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>AMEX</span>
             </div>
           )}
 
@@ -395,7 +395,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                 />
               </Field>
               <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <img src="https://js.openpay.mx/images/openpay.png" alt="Openpay" style={{ height: 24, objectFit: 'contain' }} />
+                <span style={{ fontWeight: 800, color: '#00b3e6', fontSize: '0.9rem' }}>Openpay</span>
                 <span>🔒 Tu tarjeta es tokenizada por Openpay. Ankode nunca almacena tus datos de pago.</span>
               </div>
             </div>

@@ -115,6 +115,12 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
       });
 
       setIsLoading(false);
+
+      if (data.requires3DS && data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+        return;
+      }
+
       setResult({
         total,
         planName: isCartMode ? 'Carrito' : plan.name,

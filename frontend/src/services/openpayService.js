@@ -50,7 +50,10 @@ export async function submitCheckout(payload) {
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || data.error || 'Error al procesar el pago');
+    const err = new Error(data.message || data.error || 'Error al procesar el pago');
+    err.details = data.details || null;
+    err.status = response.status;
+    throw err;
   }
   return data;
 }

@@ -78,6 +78,11 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   const handleSubmit = async () => {
     setError(null);
     setIsLoading(true);
+    if (!hasOnlyAccessories && paymentMethod === 'card' && cardData.password.length < 8) {
+      setError('La contraseña debe tener al menos 8 caracteres.');
+      setIsLoading(false);
+      return;
+    }
     try {
       const planType = isAnnual ? 'yearly' : 'monthly';
       const amount = isCartMode ? cartTotal : (isAnnual ? plan.annualPrice : plan.monthlyPrice);
@@ -135,6 +140,11 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
       });
     } catch (err) {
       setIsLoading(false);
+      if (err.details && Array.isArray(err.details) && err.details[0]?.msg) {
+        setError(err.details[0].msg);
+        setIsLoading(false);
+        return;
+      }
       const rawMsg = err.message || '';
       const errCode = err.error_code || err.openpayCode || null;
       const lower = rawMsg.toLowerCase();
@@ -440,7 +450,12 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                         type="text"
                         placeholder="MM"
                         value={cardData.expMonth}
-                        onChange={handleNumericChange('expMonth', 2)}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '').slice(0, 2);
+                          if (val === '' || Number(val) <= 12) {
+                            setCardData(prev => ({ ...prev, expMonth: val }));
+                          }
+                        }}
                         style={inputStyle}
                         autoComplete="cc-exp-month"
                         maxLength={2}

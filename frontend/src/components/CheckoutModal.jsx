@@ -463,14 +463,13 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                       autoComplete="email"
                     />
                   </Field>
-                  {/* Openpay security notice with official logo */}
+                  {/* Openpay security notice with inline SVG logo */}
                   <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <img
-                      src="https://img.openpay.mx/logo-openpay.png"
-                      alt="Openpay"
-                      style={{ height: 20, objectFit: 'contain' }}
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 28" height="20" aria-label="Openpay">
+                      <circle cx="12" cy="14" r="10" fill="#00b3e6" />
+                      <circle cx="12" cy="14" r="5" fill="white" />
+                      <text x="26" y="19" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="15" fill="#00b3e6">openpay</text>
+                    </svg>
                     <span>🔒 Tu tarjeta es tokenizada por Openpay. Ankode nunca almacena tus datos de pago.</span>
                   </div>
                 </div>
@@ -562,8 +561,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
             {/* Support info */}
             <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4, marginBottom: 0 }}>
               ¿Necesitas ayuda?{' '}
-              <a href="mailto:soporte@ankode.cloud" style={{ color: 'var(--muted)' }}>
-                soporte@ankode.cloud
+              <a href="mailto:ankodemx@gmail.com" style={{ color: 'var(--muted)' }}>
+                ankodemx@gmail.com
               </a>
             </p>
           </>

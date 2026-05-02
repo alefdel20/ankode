@@ -139,14 +139,15 @@ export default function PagoResultado() {
     const params = new URLSearchParams(window.location.search);
     const urlStatus = params.get('status');
     const orderId = params.get('order_id');
+    const chargeId = params.get('id');
 
     if (urlStatus === 'failed' || urlStatus === 'cancelled') {
       setScreen('error');
       return;
     }
 
-    if (urlStatus === 'completed' && orderId) {
-      startPolling(orderId);
+    if (orderId || chargeId) {
+      startPolling(orderId, chargeId);
     } else {
       setScreen('error');
     }
@@ -157,9 +158,13 @@ export default function PagoResultado() {
     };
   }, []);
 
-  function startPolling(orderId) {
+  function startPolling(orderId, chargeId) {
+    const qs = orderId
+      ? `order_id=${encodeURIComponent(orderId)}`
+      : `charge_id=${encodeURIComponent(chargeId)}`;
+
     const poll = () => {
-      fetch(`${API_BASE}/api/onboarding/status?order_id=${encodeURIComponent(orderId)}`)
+      fetch(`${API_BASE}/api/onboarding/status?${qs}`)
         .then((r) => r.json())
         .then((data) => {
           if (data.status === 'provisioned') {

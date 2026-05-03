@@ -158,6 +158,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
           ? 'Tarjeta declinada. Intenta con otra tarjeta.'
           : (rawMsg || 'Ocurrió un error. Intenta de nuevo.');
       setError(userMsg);
+      setCardData(prev => ({ ...prev, cvv: '' }));
     }
   };
 

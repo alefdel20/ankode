@@ -87,6 +87,10 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
       const planType = isAnnual ? 'yearly' : 'monthly';
       const amount = isCartMode ? cartTotal : (isAnnual ? plan.annualPrice : plan.monthlyPrice);
 
+      const deviceSessionId = paymentMethod === 'card'
+        ? window.OpenPay.deviceData.setup()
+        : null;
+
       let cardToken = null;
       if (paymentMethod === 'card') {
         if (!window.OpenPay || !window.OpenPay.token) {
@@ -104,10 +108,6 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         });
         cardToken = tokenResponse.data.id;
       }
-
-      const deviceSessionId = paymentMethod === 'card'
-        ? window.OpenPay.deviceData.setup()
-        : null;
 
       const data = await submitCheckout({
         planType,

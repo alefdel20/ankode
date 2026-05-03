@@ -38,6 +38,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   const [cardData, setCardData] = useState({ name: '', number: '', expMonth: '', expYear: '', cvv: '', email: '', businessName: '', businessType: '', password: '' });
   const [speiEmail, setSpeiEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
 
@@ -76,6 +77,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setError(null);
     setIsLoading(true);
     if (!hasOnlyAccessories && paymentMethod === 'card' && cardData.password.length < 8) {
@@ -130,6 +133,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
         window.location.href = data.redirectUrl;
         return;
       }
+      setIsSubmitting(false);
 
       setResult({
         total,
@@ -159,6 +163,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
           : (rawMsg || 'Ocurrió un error. Intenta de nuevo.');
       setError(userMsg);
       setCardData(prev => ({ ...prev, cvv: '' }));
+      setIsSubmitting(false);
     }
   };
 
@@ -570,7 +575,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                 type="button"
                 className="btn btn-primary"
                 style={{ width: '100%', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}
-                disabled={isLoading}
+                disabled={isLoading || isSubmitting}
                 onClick={handleSubmit}
               >
                 {isLoading ? 'Procesando...' : 'Confirmar y pagar'}

@@ -151,6 +151,10 @@ function DigitalCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
 function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
   const [planTier, setPlanTier] = useState('basico');
 
+  const planPrices = { basico: 349, premium: 699, enterprise: 999 };
+  const hardwareBase = plan.hardware.initialFee - 349;
+  const dynamicInitialFee = hardwareBase + (planPrices[planTier] || 349);
+
   const isPremium = planTier === 'premium';
   const displayMonthly = isPremium ? 699 : plan.monthlyPrice;
   const displayAnnual = isPremium ? 6990 : plan.annualPrice;
@@ -199,7 +203,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
 
       <div style={{ marginBottom: 12 }}>
         <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--purple)' }}>
-          Pago inicial: ${plan.hardware.initialFee.toLocaleString('es-MX')}
+          Pago inicial: ${dynamicInitialFee.toLocaleString('es-MX')}
         </div>
         <div style={{ color: 'var(--muted)', fontSize: '0.9rem', marginTop: 4 }}>
           {isAnnual
@@ -237,7 +241,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
       <button
         className="btn btn-outline"
         style={{ width: '100%', cursor: 'pointer' }}
-        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: plan.hardware.initialFee, type: 'hardware', planId: plan.id })}
+        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: dynamicInitialFee, type: 'hardware', planId: plan.id })}
       >
         Agregar al carrito
       </button>

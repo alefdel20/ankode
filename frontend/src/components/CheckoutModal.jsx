@@ -57,6 +57,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
 
   const isCartMode = selectedPlan === 'cart';
   const hasOnlyAccessories = cart.length > 0 && cart.every(item => item.type === 'accessory');
+  const hasHardwareBundle = cart.some(item => item.type === 'hardware');
 
   const plan = isCartMode
     ? null
@@ -344,7 +345,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
               <div style={{ marginBottom: 20 }}>
                 <div style={labelStyle}>Método de pago</div>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  {(isCartMode ? ['card', 'spei'] : ['card']).map((method) => (
+                  {(isCartMode && !hasHardwareBundle ? ['card', 'spei'] : ['card']).map((method) => (
                     <button
                       key={method}
                       type="button"

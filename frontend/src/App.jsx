@@ -849,15 +849,13 @@ function App() {
           onRemoveItem={handleRemoveFromCart}
           onCheckout={() => {
             setIsCartOpen(false);
-            if (!selectedPlan) {
-              const firstPlan = cart.find(item => item.type === 'plan');
-              if (firstPlan) {
-                const planData = PLANS.find(p => p.id === firstPlan.id);
-                if (planData) setSelectedPlan(planData);
-                else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-              } else {
-                setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-              }
+            const firstPlan = cart.find(item => item.type === 'plan');
+            if (firstPlan) {
+              const planData = PLANS.find(p => p.id === firstPlan.id);
+              if (planData) setSelectedPlan(planData);
+              else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+            } else {
+              setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
             }
             setIsCheckoutOpen(true);
           }}

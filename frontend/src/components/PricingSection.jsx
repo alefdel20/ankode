@@ -237,7 +237,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
       <button
         className="btn btn-outline"
         style={{ width: '100%', cursor: 'pointer' }}
-        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: plan.hardware.initialFee, type: 'hardware' })}
+        onClick={() => onAddToCart({ id: plan.id, name: plan.name, price: plan.hardware.initialFee, type: 'hardware', planId: plan.id })}
       >
         Agregar al carrito
       </button>

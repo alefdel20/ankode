@@ -344,7 +344,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
               <div style={{ marginBottom: 20 }}>
                 <div style={labelStyle}>Método de pago</div>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  {['card', 'spei'].map((method) => (
+                  {(isCartMode ? ['card', 'spei'] : ['card']).map((method) => (
                     <button
                       key={method}
                       type="button"

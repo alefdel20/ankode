@@ -230,7 +230,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
       <button
         className="btn btn-primary"
         style={{ width: '100%', cursor: 'pointer', marginBottom: 10 }}
-        onClick={() => onSelectPlan(planTier === 'premium' ? 'premium' : plan.id)}
+        onClick={() => onSelectPlan(planTier === 'premium' ? 'premium' : planTier === 'enterprise' ? 'enterprise' : plan.id)}
       >
         Contratar ahora
       </button>

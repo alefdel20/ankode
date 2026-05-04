@@ -174,7 +174,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
       </div>
 
       <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
-        {['basico', 'premium'].map(tier => (
+        {['basico', 'premium', 'enterprise'].map(tier => (
           <button
             key={tier}
             type="button"
@@ -192,7 +192,7 @@ function HardwareCard({ plan, isAnnual, onSelectPlan, onAddToCart }) {
               transition: '0.15s ease',
             }}
           >
-            {tier === 'basico' ? 'Plan Básico · $349/mes' : 'Plan Premium · $699/mes'}
+            {tier === 'basico' ? 'Plan Básico · $349/mes' : tier === 'premium' ? 'Plan Premium · $699/mes' : 'Plan Enterprise · $999/mes'}
           </button>
         ))}
       </div>

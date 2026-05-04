@@ -741,13 +741,26 @@ function App() {
                   <h3>{item.name}</h3>
                   <p className="text-justify">{item.desc}</p>
                   <div className="accessory-price">${item.price.toLocaleString('es-MX')} MXN</div>
-                  <button
-                    className="btn btn-outline"
-                    style={{ width: '100%', marginTop: 12, cursor: 'pointer' }}
-                    onClick={() => handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' })}
-                  >
-                    Agregar al carrito
-                  </button>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: '100%', cursor: 'pointer' }}
+                      onClick={() => {
+                        setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+                        handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' });
+                        setIsCheckoutOpen(true);
+                      }}
+                    >
+                      Comprar ahora
+                    </button>
+                    <button
+                      className="btn btn-outline"
+                      style={{ width: '100%', cursor: 'pointer' }}
+                      onClick={() => handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' })}
+                    >
+                      Agregar al carrito
+                    </button>
+                  </div>
                 </div>
               </article>
             ))}

@@ -345,7 +345,9 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
               <div style={{ marginBottom: 20 }}>
                 <div style={labelStyle}>Método de pago</div>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  {(isCartMode && !hasHardwareBundle ? ['card', 'spei'] : ['card']).map((method) => (
+                  {(isCartMode && !hasHardwareBundle && !cart.some(item => item.type === 'plan')
+                    ? ['card', 'spei']
+                    : ['card']).map((method) => (
                     <button
                       key={method}
                       type="button"

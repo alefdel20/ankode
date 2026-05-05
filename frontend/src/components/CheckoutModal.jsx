@@ -66,8 +66,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   if (!isCartMode && !plan) return null;
 
   const cartTotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-  const basePrice = plan ? (isAnnual ? plan.annualPrice : plan.monthlyPrice) : 0;
-  const total = isCartMode ? cartTotal : basePrice + extraBranches * (plan.extraBranchPrice ?? 0);
+  const basePrice = plan ? (plan.overrideAmount ?? (isAnnual ? plan.annualPrice : plan.monthlyPrice)) : 0;
+  const total = isCartMode ? cartTotal : basePrice + (plan.overrideAmount ? 0 : extraBranches * (plan.extraBranchPrice ?? 0));
 
   const handleCardChange = (field) => (e) =>
     setCardData((prev) => ({ ...prev, [field]: e.target.value }));

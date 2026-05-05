@@ -853,6 +853,7 @@ function App() {
           isOpen={isCheckoutOpen}
           onClose={() => setIsCheckoutOpen(false)}
           selectedPlan={selectedPlan?.id}
+          overrideAmount={selectedPlan?.overrideAmount}
           isAnnual={isAnnual}
           onSubmitPayment={handleSubmitPayment}
           cart={cart}

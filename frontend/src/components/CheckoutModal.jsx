@@ -32,7 +32,7 @@ function Field({ label, children }) {
   );
 }
 
-export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual, onSubmitPayment, cart = [] }) {
+export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideAmount, isAnnual, onSubmitPayment, cart = [] }) {
   const [extraBranches, setExtraBranches] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [cardData, setCardData] = useState({ name: '', number: '', expMonth: '', expYear: '', cvv: '', email: '', businessName: '', businessType: '', password: '' });
@@ -66,8 +66,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
   if (!isCartMode && !plan) return null;
 
   const cartTotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-  const basePrice = plan ? (plan.overrideAmount ?? (isAnnual ? plan.annualPrice : plan.monthlyPrice)) : 0;
-  const total = isCartMode ? cartTotal : basePrice + (plan.overrideAmount ? 0 : extraBranches * (plan.extraBranchPrice ?? 0));
+  const basePrice = plan ? (overrideAmount ?? (isAnnual ? plan.annualPrice : plan.monthlyPrice)) : 0;
+  const total = isCartMode ? cartTotal : basePrice + (overrideAmount ? 0 : extraBranches * (plan.extraBranchPrice ?? 0));
 
   const handleCardChange = (field) => (e) =>
     setCardData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -89,7 +89,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
     }
     try {
       const planType = isAnnual ? 'yearly' : 'monthly';
-      const amount = isCartMode ? cartTotal : (plan.overrideAmount ?? (isAnnual ? plan.annualPrice : plan.monthlyPrice));
+      const amount = isCartMode ? cartTotal : basePrice;
 
       const deviceSessionId = paymentMethod === 'card'
         ? window.OpenPay.deviceData.setup()
@@ -297,10 +297,10 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
                   {plan.name}
                 </h3>
                 <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
-                  Facturación {isAnnual ? 'anual' : 'mensual'}
+                  {plan.hardware ? `Pago inicial · luego $${plan.monthlyPrice.toLocaleString('es-MX')}/mes` : `Facturación ${isAnnual ? 'anual' : 'mensual'}`}
                 </p>
                 <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
-                  ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
+                  ${basePrice.toLocaleString('es-MX')}{plan?.hardware ? '' : isAnnual ? '/año' : '/mes'}
                 </div>
               </div>
             )}

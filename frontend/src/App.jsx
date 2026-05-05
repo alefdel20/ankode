@@ -894,11 +894,11 @@ function App() {
             setIsCartOpen(false);
             setCartWarning('');
             const hasHardware = cart.some(item => item.type === 'hardware');
+            const hasAccessory = cart.some(item => item.type === 'accessory');
             const firstPlan = cart.find(item => item.type === 'plan');
+            const isPlanOnly = firstPlan && !hasHardware && !hasAccessory && cart.length === 1;
 
-            if (hasHardware) {
-              setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-            } else if (firstPlan) {
+            if (isPlanOnly) {
               const planData = PLANS.find(p => p.id === firstPlan.id);
               if (planData) setSelectedPlan(planData);
               else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });

@@ -5,7 +5,9 @@
       "Read(//c/Users/tatue/Documents/Ankode/**)",
       "Read(//c/Users/tatue/Documents/POS_SaaS/**)",
       "Read(//c/Users/tatue/Documents/bec_api_backend/**)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\" -Recurse -Directory)",
+      "Bash(Select-Object -First 20 FullName)"
     ]
   }
 }

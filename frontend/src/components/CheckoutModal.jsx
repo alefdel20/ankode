@@ -89,7 +89,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, isAnnual,
     }
     try {
       const planType = isAnnual ? 'yearly' : 'monthly';
-      const amount = isCartMode ? cartTotal : (isAnnual ? plan.annualPrice : plan.monthlyPrice);
+      const amount = isCartMode ? cartTotal : (plan.overrideAmount ?? (isAnnual ? plan.annualPrice : plan.monthlyPrice));
 
       const deviceSessionId = paymentMethod === 'card'
         ? window.OpenPay.deviceData.setup()

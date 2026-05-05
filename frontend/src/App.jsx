@@ -397,9 +397,13 @@ function App() {
     setCart(prev => prev.filter(item => item.id !== id));
   };
 
-  const handleSelectPlan = (planId) => {
+  const handleSelectPlan = (planId, hardwareFee = null) => {
     const plan = PLANS.find(p => p.id === planId) || null;
-    setSelectedPlan(plan);
+    if (plan && hardwareFee) {
+      setSelectedPlan({ ...plan, overrideAmount: hardwareFee });
+    } else {
+      setSelectedPlan(plan);
+    }
     setIsCheckoutOpen(true);
   };
 

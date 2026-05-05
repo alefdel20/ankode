@@ -124,6 +124,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
         password: cardData.password || '',
         posType: cardData.businessType || (isCartMode ? 'cart' : plan.id),
         planName: isCartMode ? 'Carrito' : plan.name,
+        isCartCheckout: isCartMode,
         paymentMethod,
         deviceSessionId,
       });

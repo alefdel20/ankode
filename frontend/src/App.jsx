@@ -146,9 +146,9 @@ const accessories = [
   },
   {
     id: "tablet",
-    name: 'Test', // TEMP TEST — original: 'All In One Touch Higole 10.1"'
+    name: 'All In One Touch Higole 10.1"',
     desc: "RK3399, 1080p, Android 12. Pantalla táctil ideal como terminal de punto de venta fija o secundaria.",
-    price: 10, // TEMP TEST — original: 5199
+    price: 5199,
     emoji: "📱",
   },
   {

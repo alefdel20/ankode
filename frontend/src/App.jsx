@@ -300,7 +300,7 @@ function ModuleIcon({ name }) {
   }
 }
 
-function CartDrawer({ cart, onClose, onRemoveItem, onCheckout }) {
+function CartDrawer({ cart, onClose, onRemoveItem, onCheckout, cartWarning }) {
   const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
   return (
     <>
@@ -326,6 +326,20 @@ function CartDrawer({ cart, onClose, onRemoveItem, onCheckout }) {
           <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>Tu carrito está vacío.</p>
         ) : (
           <div style={{ flex: 1, overflowY: 'auto' }}>
+            {cartWarning && (
+              <div style={{
+                background: '#fff3cd',
+                border: '1px solid #ffc107',
+                borderRadius: '8px',
+                padding: '10px 14px',
+                marginBottom: '12px',
+                color: '#856404',
+                fontSize: '0.85rem',
+                lineHeight: 1.4
+              }}>
+                ⚠️ {cartWarning}
+              </div>
+            )}
             {cart.map(item => (
               <div key={item.id} style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -380,10 +394,20 @@ function App() {
   const [activeModule, setActiveModule] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartWarning, setCartWarning] = useState('');
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
   const handleAddToCart = (item) => {
+    setCartWarning('');
+    if (item.type === 'plan') {
+      const existingPlan = cart.find((c) => c.type === 'plan');
+      if (existingPlan) {
+        setCartWarning('Solo puedes tener un plan de suscripción en el carrito. Elimina el plan actual para agregar otro.');
+        setIsCartOpen(true);
+        return;
+      }
+    }
     setCart((prev) => {
       const existing = prev.find((c) => c.id === item.id);
       if (existing) {
@@ -865,10 +889,16 @@ function App() {
           cart={cart}
           onClose={() => setIsCartOpen(false)}
           onRemoveItem={handleRemoveFromCart}
+          cartWarning={cartWarning}
           onCheckout={() => {
             setIsCartOpen(false);
+            setCartWarning('');
+            const hasHardware = cart.some(item => item.type === 'hardware');
             const firstPlan = cart.find(item => item.type === 'plan');
-            if (firstPlan) {
+
+            if (hasHardware) {
+              setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+            } else if (firstPlan) {
               const planData = PLANS.find(p => p.id === firstPlan.id);
               if (planData) setSelectedPlan(planData);
               else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });

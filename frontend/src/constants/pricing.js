@@ -1,5 +1,5 @@
 export const ANKODE_PLANS = [
-  { id: 'basico', name: 'Básico', price: 349, extraBranch: 149, included: 1 },
+  { id: 'basico', name: 'Básico', price: 10, extraBranch: 149, included: 1 }, // TEMP TEST — regresar a 349 después de prueba
   { id: 'premium', name: 'Premium', price: 699, extraBranch: 129, included: 3 },
   { id: 'inclusive', name: 'All-Inclusive', price: 999, extraBranch: 99, included: 5 },
   { id: 'pro', name: 'All-Inclusive Pro', price: 999, extraBranch: 99, included: 5, initialFee: 8199 }

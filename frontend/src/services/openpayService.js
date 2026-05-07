@@ -1,7 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'https://api.ankode.cloud';
 const OPENPAY_MERCHANT_ID = import.meta.env.VITE_OPENPAY_MERCHANT_ID || 'mfdkmyq03bdg5xyyz49l'; // PROD fallback
 const OPENPAY_PUBLIC_KEY  = import.meta.env.VITE_OPENPAY_PUBLIC_KEY  || 'pk_df711c8430434be2a9a4c5b024805532'; // PROD fallback
-const IS_SANDBOX = false; // FORCED PROD — era: import.meta.env.VITE_OPENPAY_SANDBOX === 'true'
+const IS_SANDBOX = import.meta.env.VITE_OPENPAY_SANDBOX === 'true';
 
 export async function loadOpenpayScripts() {
   // Sandbox: https://js.openpay.mx/openpay.v1.min.js

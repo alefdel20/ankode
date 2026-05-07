@@ -1,7 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'https://api.ankode.cloud';
 const OPENPAY_MERCHANT_ID = import.meta.env.VITE_OPENPAY_MERCHANT_ID || '';
 const OPENPAY_PUBLIC_KEY = import.meta.env.VITE_OPENPAY_PUBLIC_KEY || '';
-const IS_SANDBOX = import.meta.env.VITE_OPENPAY_SANDBOX === 'true';
+const IS_SANDBOX = false; // FORCED PROD — era: import.meta.env.VITE_OPENPAY_SANDBOX === 'true'
 
 export async function loadOpenpayScripts() {
   // Sandbox: https://js.openpay.mx/openpay.v1.min.js

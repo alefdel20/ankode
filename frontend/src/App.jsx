@@ -6,7 +6,7 @@ import PricingSection from './components/PricingSection';
 import CheckoutModal from './components/CheckoutModal';
 
 const CONTACT = {
-  whatsapp: "525535803405",
+  whatsapp: "525515133527",
   email: "ankodemx@gmail.com",
 };
 

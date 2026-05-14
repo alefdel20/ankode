@@ -2,7 +2,7 @@ export const PLANS = [
   {
     id: 'basico',
     name: 'Básico',
-    monthlyPrice: 10, // TEMP TEST — regresar a 349 después de prueba
+    monthlyPrice: 349,
     annualPrice: 3490,
     annualSaving: 698,
     includedBranches: 1,

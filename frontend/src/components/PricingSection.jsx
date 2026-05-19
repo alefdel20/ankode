@@ -1,6 +1,6 @@
 import { PLANS, TERMS } from '../constants/plans';
 
-const digitalPlans = PLANS.filter((p) => ['basico', 'premium', 'enterprise', 'all-inclusive'].includes(p.id));
+const digitalPlans = PLANS.filter((p) => ['basico', 'premium', 'enterprise'].includes(p.id));
 
 function FeatureList({ features }) {
   return (

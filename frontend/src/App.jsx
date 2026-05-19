@@ -35,59 +35,6 @@ const moduleCards = [
   { title: "Roles y accesos", icon: "access", desc: "Asigna permisos específicos a cada usuario: Admin, Cajero, Almacén, Vendedor y Gerente." },
 ];
 
-const industries = [
-  {
-    id: "veterinaria",
-    title: "Veterinaria",
-    desc: "Organiza ventas, productos y operación diaria con una base flexible para crecer según tu forma de trabajar.",
-    details:
-      "Control de inventario clínico, seguimiento de productos y operación diaria en un mismo flujo.",
-    image:
-      "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=900&q=80",
-    demoMessage: "Hola, quiero una demo de ankode para veterinaria",
-  },
-  {
-    id: "retail",
-    title: "Retail",
-    desc: "Controla inventario, proveedores y ventas en tienda con más claridad y menos errores.",
-    details:
-      "Inventario, reposición y ventas centralizadas para mantener orden operativo y mejor visibilidad.",
-    image:
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?auto=format&fit=crop&w=900&q=80",
-    demoMessage: "Hola, quiero una demo de ankode para retail",
-  },
-  {
-    id: "restaurantes",
-    title: "Restaurantes",
-    desc: "Centraliza venta, control interno y operación diaria para trabajar con mayor orden.",
-    details:
-      "Flujos para venta y control operativo en un solo sistema adaptable al ritmo del negocio.",
-    image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
-    demoMessage: "Hola, quiero una demo de ankode para restaurante",
-  },
-  {
-    id: "farmacias",
-    title: "Farmacias",
-    desc: "Ordena inventario, ventas y compras para evitar faltantes y operar con mejor control.",
-    details:
-      "Seguimiento de inventario y ventas con una vista clara para tomar decisiones más rápidas.",
-    image:
-      "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=900&q=80",
-    demoMessage: "Hola, quiero una demo de ankode para farmacia",
-  },
-  {
-    id: "consultorios",
-    title: "Consultorios",
-    desc: "Organiza cobros, seguimiento y operación administrativa en un flujo simple.",
-    details:
-      "Estructura de trabajo para ordenar tareas internas y simplificar la operación diaria.",
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
-    demoMessage: "Hola, quiero una demo de ankode para consultorio",
-  },
-];
-
 const benefits = [
   {
     title: "Más control",
@@ -564,51 +511,6 @@ function App() {
               <h3>Tiempo perdido</h3>
               <p className="text-justify">Seguimientos manuales, menos claridad y más margen de error.</p>
             </article>
-          </div>
-        </section>
-
-        <section id="giros" className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Por giro</p>
-            <h2>Una solución pensada para distintos tipos de negocio.</h2>
-            <p>
-              Cada giro tiene necesidades distintas. Por eso ankode puede
-              configurarse según tu operación.
-            </p>
-          </div>
-
-          <div className="industry-grid industry-grid-centered">
-            {industries.map((item) => (
-              <article key={item.title} className="industry-card">
-                <div
-                  className="industry-thumb"
-                  style={{ backgroundImage: `url(${item.image})` }}
-                />
-                <div className="industry-head">
-                  <h3>{item.title}</h3>
-                </div>
-                <p className="text-justify">{item.desc}</p>
-                <a href={`#detalle-${item.id}`}>Quiero conocer más</a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="detalle-giros">
-          <div className="section-heading center">
-            <p className="eyebrow">Detalle por giro</p>
-            <h2>Conoce cómo se aplica ankode según tu operación.</h2>
-          </div>
-          <div className="industry-grid industry-grid-centered">
-            {industries.map((item) => (
-              <article key={`detail-${item.title}`} id={`detalle-${item.id}`} className="industry-card">
-                <h3>{item.title}</h3>
-                <p className="text-justify">{item.details}</p>
-                <a href={buildWhatsAppLink(item.demoMessage)} target="_blank" rel="noreferrer">
-                  Solicitar demo para este giro
-                </a>
-              </article>
-            ))}
           </div>
         </section>
 

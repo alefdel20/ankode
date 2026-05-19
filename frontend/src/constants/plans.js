@@ -62,28 +62,6 @@ export const PLANS = [
         'Precio preferencial por sucursal extra: +$99/mes',
     ],
   },
-  {
-    id: 'all-inclusive',
-    name: 'All-Inclusive',
-    monthlyPrice: 1299,
-    annualPrice: 12990,
-    annualSaving: 2598,
-    includedBranches: 5,
-    extraBranchPrice: 99,
-    badge: 'Todo incluido',
-    features: [
-      'POS & Ventas',
-      'Inventario',
-      'Crédito y Cobranza',
-      'Finanzas y Reportes',
-      'Gestión de Usuarios (5 roles)',
-      'Multi-empresa',
-      'Soporte técnico',
-      'Reportes avanzados y análisis de tendencias',
-      'Hasta 5 sucursales incluidas',
-      'Precio preferencial por sucursal extra: +$99/mes',
-    ],
-  },
 ];
 
 export const TERMS = {

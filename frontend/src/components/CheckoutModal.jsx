@@ -432,9 +432,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
                       >
                         <option value="" disabled>Selecciona tu giro</option>
                         {[
-                          'Tienda', 'Tlapalería', 'Papelería', 'Veterinaria',
-                          'Dentista', 'Farmacia', 'Farmacia con consultorio',
-                          'Clínica chica', 'Restaurante', 'Otro',
+                          'Tienda', 'Papelería', 'Tlapalería',
                         ].map(opt => (
                           <option key={opt} value={opt}>{opt}</option>
                         ))}

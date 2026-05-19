@@ -129,51 +129,6 @@ const faqs = [
   },
 ];
 
-const accessories = [
-  {
-    id: "laptop",
-    name: "Laptop Asus Vivobook Go",
-    desc: "Intel Celeron N4500, 4GB RAM, 128GB SSD. Ideal para operar tu punto de venta con movilidad.",
-    price: 4999,
-    emoji: "💻",
-  },
-  {
-    id: "pc-all-in-one",
-    name: 'PC All In One 23.8" AKIOEK',
-    desc: "Intel Core i5, 8GB RAM, 256GB SSD, pantalla Full HD. Todo en uno para tu punto de venta fijo.",
-    price: 6999,
-    emoji: "🖥️",
-  },
-  {
-    id: "tablet",
-    name: 'All In One Touch Higole 10.1"',
-    desc: "RK3399, 1080p, Android 12. Pantalla táctil ideal como terminal de punto de venta fija o secundaria.",
-    price: 5199,
-    emoji: "📱",
-  },
-  {
-    id: "scanner",
-    name: "Escáner de código de barras Shawty",
-    desc: "Inalámbrico 1D y 2D, USB con Bluetooth y batería. Agiliza el registro de productos en caja.",
-    price: 449,
-    emoji: "📡",
-  },
-  {
-    id: "printer",
-    name: "Impresora térmica de tickets SUZWIP",
-    desc: "58mm, Bluetooth + USB, incluye 5 rollos de papel. Imprime tickets y comprobantes al instante.",
-    price: 599,
-    emoji: "🖨️",
-  },
-  {
-    id: "cashbox",
-    name: "Cajón de dinero Nextep NE-514",
-    desc: "4 compartimentos para billetes, 8 para monedas, color negro. Resguarda tu efectivo de forma segura.",
-    price: 999,
-    emoji: "💰",
-  },
-];
-
 function CartIcon({ count }) {
   return (
     <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
@@ -743,57 +698,6 @@ function App() {
           isAnnual={isAnnual}
           onToggleAnnual={() => setIsAnnual(prev => !prev)}
         />
-
-        {/* Accesorios y Extras */}
-        <section id="accesorios" className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Accesorios y Extras</p>
-            <h2>Complementa tu plan con el equipo que necesitas.</h2>
-            <p>
-              Agrega los accesorios que mejor se adapten a tu operación y págalos por separado.
-            </p>
-          </div>
-          <div className="accessories-grid">
-            {accessories.map((item) => (
-              <article key={item.id} className="accessory-card">
-                <div style={{
-                  fontSize: '4rem',
-                  textAlign: 'center',
-                  padding: '28px 0 12px',
-                  background: 'var(--bg-soft)',
-                  borderRadius: '16px 16px 0 0',
-                }}>
-                  {item.emoji}
-                </div>
-                <div className="accessory-body">
-                  <h3>{item.name}</h3>
-                  <p className="text-justify">{item.desc}</p>
-                  <div className="accessory-price">${item.price.toLocaleString('es-MX')} MXN</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
-                    <button
-                      className="btn btn-primary"
-                      style={{ width: '100%', cursor: 'pointer' }}
-                      onClick={() => {
-                        setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-                        handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' });
-                        setIsCheckoutOpen(true);
-                      }}
-                    >
-                      Comprar ahora
-                    </button>
-                    <button
-                      className="btn btn-outline"
-                      style={{ width: '100%', cursor: 'pointer' }}
-                      onClick={() => handleAddToCart({ id: item.id, name: item.name, price: item.price, type: 'accessory' })}
-                    >
-                      Agregar al carrito
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
 
         <section id="faq" className="section">
           <div className="section-heading center">

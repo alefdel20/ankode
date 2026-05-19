@@ -57,7 +57,6 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
 
   const isCartMode = selectedPlan === 'cart';
   const hasOnlyAccessories = cart.length > 0 && cart.every(item => item.type === 'accessory');
-  const hasHardwareBundle = cart.some(item => item.type === 'hardware');
 
   const plan = isCartMode
     ? null
@@ -298,10 +297,10 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
                   {plan.name}
                 </h3>
                 <p style={{ margin: '0 0 8px', color: 'var(--muted)', fontSize: '0.88rem' }}>
-                  {plan.hardware ? `Pago inicial · luego $${plan.monthlyPrice.toLocaleString('es-MX')}/mes` : `Facturación ${isAnnual ? 'anual' : 'mensual'}`}
+                  {`Facturación ${isAnnual ? 'anual' : 'mensual'}`}
                 </p>
                 <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
-                  ${basePrice.toLocaleString('es-MX')}{plan?.hardware ? '' : isAnnual ? '/año' : '/mes'}
+                  ${basePrice.toLocaleString('es-MX')}{isAnnual ? '/año' : '/mes'}
                 </div>
               </div>
             )}
@@ -346,7 +345,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
               <div style={{ marginBottom: 20 }}>
                 <div style={labelStyle}>Método de pago</div>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  {(isCartMode && !hasHardwareBundle && !cart.some(item => item.type === 'plan')
+                  {(isCartMode && !cart.some(item => item.type === 'plan')
                     ? ['card', 'spei']
                     : ['card']).map((method) => (
                     <button

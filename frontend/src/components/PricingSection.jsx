@@ -155,10 +155,12 @@ export default function PricingSection({ onSelectPlan, onAddToCart, isAnnual, on
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 20 }}>
-        {digitalPlans.map((plan) => (
-          <DigitalCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} onAddToCart={onAddToCart} />
-        ))}
+      <div style={{ maxWidth: 960, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20, justifyContent: 'center' }}>
+          {digitalPlans.map((plan) => (
+            <DigitalCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} onAddToCart={onAddToCart} />
+          ))}
+        </div>
       </div>
 
     </section>

@@ -514,6 +514,54 @@ function App() {
           </div>
         </section>
 
+        <section id="giros" className="section section-soft">
+          <div className="section-heading center">
+            <p className="eyebrow">Por giro</p>
+            <h2>Una solución para tu tipo de negocio.</h2>
+            <p>
+              ankode se adapta a la operación de distintos comercios. Encuentra el tuyo.
+            </p>
+          </div>
+          <div className="industry-grid industry-grid-centered">
+            {[
+              {
+                id: 'tienda',
+                emoji: '🏪',
+                title: 'Tienda',
+                desc: 'Controla tu inventario, ventas y cobranza desde un solo lugar. Ideal para tiendas de abarrotes, misceláneas y comercios en general.',
+              },
+              {
+                id: 'papeleria',
+                emoji: '🗒️',
+                title: 'Papelería',
+                desc: 'Gestiona productos, ventas al mostrador y control de stock para tu papelería con rapidez y orden.',
+              },
+              {
+                id: 'tlapaleria',
+                emoji: '🔧',
+                title: 'Tlapalería',
+                desc: 'Lleva el control de tu inventario variado, ventas y proveedores en un sistema pensado para ferreterías y tlapalerías.',
+              },
+            ].map((item) => (
+              <article key={item.id} className="industry-card" style={{ padding: 0 }}>
+                <div style={{
+                  fontSize: '4rem',
+                  textAlign: 'center',
+                  padding: '28px 0 12px',
+                  background: 'var(--bg-soft)',
+                  borderRadius: '16px 16px 0 0',
+                }}>
+                  {item.emoji}
+                </div>
+                <div style={{ padding: 24 }}>
+                  <h3 style={{ margin: '0 0 10px', fontSize: '1.18rem' }}>{item.title}</h3>
+                  <p className="text-justify" style={{ color: 'var(--muted)', margin: 0 }}>{item.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section id="personalizacion" className="section">
           <div className="feature-showcase">
             <div className="feature-copy">

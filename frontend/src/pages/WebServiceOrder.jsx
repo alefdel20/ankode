@@ -157,8 +157,7 @@ export default function WebServiceOrder() {
         {/* ── SECCIÓN 1: Hero ── */}
         <section style={{
           padding: '72px 28px 80px',
-          background: '#111827',
-          borderRadius: 42,
+          background: 'var(--bg-soft)',
           textAlign: 'center',
           margin: '32px 0 0',
         }}>
@@ -167,12 +166,12 @@ export default function WebServiceOrder() {
             fontSize: 'clamp(2.6rem, 5vw, 4.4rem)',
             letterSpacing: '-0.04em',
             margin: '0 0 20px',
-            color: 'white',
+            color: 'var(--text-strong)',
             lineHeight: 1.05,
           }}>
             Tu negocio en internet,<br />sin rollos
           </h1>
-          <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.65)', maxWidth: 540, margin: '0 auto 48px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '1.1rem', color: 'var(--muted)', maxWidth: 540, margin: '0 auto 48px', lineHeight: 1.6 }}>
             Te armamos una página profesional en 5 días. Tú nos cuentas de tu negocio, nosotros hacemos el resto.
           </p>
 
@@ -190,10 +189,11 @@ export default function WebServiceOrder() {
               { num: '∞',    desc: 'Cambios el primer mes incluidos' },
             ].map(stat => (
               <div key={stat.num} style={{
-                background: '#ffffff',
-                borderRadius: 20,
+                background: 'var(--surface)',
+                borderRadius: 16,
                 padding: '24px 16px',
-                border: '1px solid rgba(255,255,255,0.15)',
+                border: '1px solid var(--border)',
+                boxShadow: '0 2px 12px rgba(109,74,255,0.07)',
               }}>
                 <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>{stat.num}</div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginTop: 10, lineHeight: 1.4 }}>{stat.desc}</div>

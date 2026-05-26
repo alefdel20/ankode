@@ -81,32 +81,46 @@ function PlanCard({ plan, featured, isAnnual }) {
         {plan.name}
       </h3>
 
-      <div style={{ marginBottom: 20 }}>
-        <span style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-strong)' }}>{plan.setup}</span>
-        <span style={{ color: 'var(--muted)', fontSize: '0.9rem', marginLeft: 6 }}>setup único</span>
-        <div style={{ color: 'var(--muted)', fontSize: '0.88rem', marginTop: 4 }}>
-          {isAnnual ? (
-            <><span style={{ color: 'var(--text-strong)', fontWeight: 700 }}>{plan.annual}</span> · {plan.annualNote}</>
-          ) : (
-            <>
-              + {plan.monthly} de hosting
-              <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 3 }}>{plan.monthlyBreakdown}</div>
-            </>
-          )}
-        </div>
+      {/* 1. Setup fee — discreto */}
+      <div style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: 8 }}>
+        {plan.setup} setup único
       </div>
 
-      <div style={{ background: '#ffffff', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 16px', marginBottom: 24 }}>
-        <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 2 }}>
+      {/* 2. Precio principal — protagonista */}
+      <div style={{ marginBottom: 4 }}>
+        <span style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>
+          {isAnnual ? plan.annual : plan.monthly}
+        </span>
+      </div>
+
+      {/* 3. Subtexto del precio */}
+      <div style={{ marginBottom: 20 }}>
+        {isAnnual ? (
+          <span style={{
+            display: 'inline-block',
+            background: 'var(--green-soft)', color: 'var(--green)',
+            fontSize: '0.78rem', fontWeight: 700,
+            padding: '2px 8px', borderRadius: 999,
+          }}>
+            {plan.annualNote}
+          </span>
+        ) : (
+          <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{plan.monthlyBreakdown}</span>
+        )}
+      </div>
+
+      {/* 4. Recuadro IVA — discreto */}
+      <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '10px 14px', marginBottom: 24 }}>
+        <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginBottom: 2 }}>
           {isAnnual ? 'Pago anual (IVA incluido)' : 'Primer cobro (IVA incluido)'}
         </div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--purple)' }}>
-          {isAnnual ? plan.ivaAnnual : plan.ivaMonthly} <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>MXN</span>
+        <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--muted)' }}>
+          {isAnnual ? plan.ivaAnnual : plan.ivaMonthly} <span style={{ fontSize: '0.85rem', fontWeight: 400 }}>MXN</span>
         </div>
-        <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4 }}>
+        <div style={{ fontSize: '0.72rem', color: 'var(--muted)', marginTop: 3 }}>
           {isAnnual ? plan.annualSubtext : 'Setup único + primer mes de hosting'}
         </div>
-        <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 2 }}>Entrega en {plan.days} días hábiles</div>
+        <div style={{ fontSize: '0.72rem', color: 'var(--muted)', marginTop: 2 }}>Entrega en {plan.days} días hábiles</div>
       </div>
 
       <ul style={{ flex: 1, margin: '0 0 28px', padding: 0, listStyle: 'none', display: 'grid', gap: 10 }}>

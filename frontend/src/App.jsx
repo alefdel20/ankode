@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { PLANS } from './constants/plans';
 import PricingSection from './components/PricingSection';
 import CheckoutModal from './components/CheckoutModal';
-import WebPlansSection from './components/landing/WebPlansSection';
-import HowItWorks from './components/landing/HowItWorks';
 
 const CONTACT = {
   whatsapp: "525515133527",
@@ -352,6 +350,7 @@ function App() {
           <a href="#giros">Por giro</a>
           <a href="#personalizacion">Personalización</a>
           <a href="#faq">Preguntas frecuentes</a>
+          <a href="/paginas-web">Páginas web</a>
           <a href="#planes">Planes</a>
         </nav>
 
@@ -650,10 +649,6 @@ function App() {
           isAnnual={isAnnual}
           onToggleAnnual={() => setIsAnnual(prev => !prev)}
         />
-
-        <WebPlansSection />
-
-        <HowItWorks />
 
         <section id="faq" className="section">
           <div className="section-heading center">

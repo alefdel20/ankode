@@ -43,26 +43,18 @@ function RadioGroup({ name, options, value, onChange }) {
           <label
             key={opt.value}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              cursor: 'pointer',
-              padding: '9px 16px',
-              borderRadius: 999,
+              display: 'flex', alignItems: 'center', gap: 8,
+              cursor: 'pointer', padding: '9px 16px', borderRadius: 999,
               border: `2px solid ${selected ? 'var(--purple)' : 'var(--border)'}`,
               background: selected ? 'rgba(109,74,255,0.06)' : 'white',
               color: selected ? 'var(--purple)' : 'var(--text)',
               fontWeight: selected ? 700 : 400,
-              fontSize: '0.9rem',
-              transition: '0.15s ease',
+              fontSize: '0.9rem', transition: '0.15s ease',
             }}
           >
             <input
-              type="radio"
-              name={name}
-              value={opt.value}
-              checked={selected}
-              onChange={() => onChange(opt.value)}
+              type="radio" name={name} value={opt.value}
+              checked={selected} onChange={() => onChange(opt.value)}
               style={{ display: 'none' }}
             />
             {opt.label}
@@ -73,26 +65,52 @@ function RadioGroup({ name, options, value, onChange }) {
   );
 }
 
-const REQUIRED = [
-  'business_name', 'giro', 'address', 'phone', 'schedule',
-  'catalog', 'domain', 'functionality', 'description', 'contact_email',
-];
+const GIROS = ['Restaurante', 'Tienda', 'Clínica', 'Servicio', 'Otro'];
 
 export default function AdvancedForm({ onSubmit, loading }) {
   const [form, setForm] = useState({
-    business_name: '', giro: '', address: '', phone: '', schedule: '',
-    social: '', catalog: '', style: '',
-    domain: '', functionality: '', description: '', testimonials: '', uses_pos: '', contact_email: '',
+    business_name:    '',
+    business_type:    '',
+    business_address: '',
+    business_phone:   '',
+    schedule:         '',
+    social:           '',
+    catalog:          '',
+    style:            '',
+    domain:           '',
+    functionality:    '',
+    description:      '',
+    testimonials:     '',
+    uses_pos:         '',
+    contact_email:    '',
   });
+  const [businessTypeCustom, setBusinessTypeCustom] = useState('');
 
   const set = (field) => (e) => setForm(prev => ({ ...prev, [field]: e.target.value }));
   const setDirect = (field) => (value) => setForm(prev => ({ ...prev, [field]: value }));
-  const isValid = REQUIRED.every(f => form[f].trim());
+
+  const isOtro = form.business_type === 'Otro';
+  const typeValid = form.business_type !== '' && (!isOtro || businessTypeCustom.trim() !== '');
+  const isValid =
+    form.business_name.trim() &&
+    typeValid &&
+    form.business_address.trim() &&
+    form.business_phone.trim() &&
+    form.schedule.trim() &&
+    form.catalog.trim() &&
+    form.domain.trim() &&
+    form.functionality.trim() &&
+    form.description.trim() &&
+    form.contact_email.trim();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid || loading) return;
-    onSubmit(form);
+    const finalData = {
+      ...form,
+      business_type: isOtro ? businessTypeCustom.trim() : form.business_type,
+    };
+    onSubmit(finalData);
   };
 
   return (
@@ -106,26 +124,35 @@ export default function AdvancedForm({ onSubmit, loading }) {
       </p>
 
       <form onSubmit={handleSubmit}>
+
         {/* ── Campos básicos ── */}
         <Field label="Nombre del negocio" required>
           <input type="text" placeholder="Ej. Ferretería El Tornillo" value={form.business_name} onChange={set('business_name')} style={inputStyle} />
         </Field>
 
         <Field label="Giro del negocio" required>
-          <select value={form.giro} onChange={set('giro')} style={{ ...inputStyle, cursor: 'pointer' }}>
+          <select value={form.business_type} onChange={set('business_type')} style={{ ...inputStyle, cursor: 'pointer' }}>
             <option value="" disabled>Selecciona tu giro</option>
-            {['Restaurante', 'Tienda', 'Clínica', 'Servicio', 'Otro'].map(g => (
-              <option key={g} value={g}>{g}</option>
-            ))}
+            {GIROS.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
+          {isOtro && (
+            <input
+              type="text"
+              placeholder="¿Cuál es tu giro? Ej. Floristería"
+              value={businessTypeCustom}
+              onChange={(e) => setBusinessTypeCustom(e.target.value)}
+              style={{ ...inputStyle, marginTop: 8 }}
+              autoFocus
+            />
+          )}
         </Field>
 
         <Field label="Dirección completa" required>
-          <input type="text" placeholder="Calle, número, colonia, ciudad" value={form.address} onChange={set('address')} style={inputStyle} />
+          <input type="text" placeholder="Calle, número, colonia, ciudad" value={form.business_address} onChange={set('business_address')} style={inputStyle} />
         </Field>
 
         <Field label="Teléfono / WhatsApp" required>
-          <input type="tel" placeholder="55 1234 5678" value={form.phone} onChange={set('phone')} style={inputStyle} />
+          <input type="tel" placeholder="55 1234 5678" value={form.business_phone} onChange={set('business_phone')} style={inputStyle} />
         </Field>
 
         <Field label="Horario de atención" required>
@@ -155,7 +182,7 @@ export default function AdvancedForm({ onSubmit, loading }) {
         </div>
 
         <Field label="Dominio deseado (.com.mx)" required hint="Solo el nombre, sin www. Ej: minegocio">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <input
               type="text"
               placeholder="minegocio"
@@ -163,7 +190,12 @@ export default function AdvancedForm({ onSubmit, loading }) {
               onChange={set('domain')}
               style={{ ...inputStyle, borderRadius: '12px 0 0 12px', borderRight: 'none' }}
             />
-            <span style={{ padding: '12px 14px', background: 'var(--bg-soft)', border: '1px solid var(--border)', borderRadius: '0 12px 12px 0', color: 'var(--muted)', fontSize: '0.92rem', whiteSpace: 'nowrap' }}>
+            <span style={{
+              padding: '12px 14px',
+              background: 'var(--bg-soft)', border: '1px solid var(--border)',
+              borderRadius: '0 12px 12px 0', color: 'var(--muted)',
+              fontSize: '0.92rem', whiteSpace: 'nowrap',
+            }}>
               .com.mx
             </span>
           </div>
@@ -193,7 +225,7 @@ export default function AdvancedForm({ onSubmit, loading }) {
 
         <Field label="Testimonios o reseñas">
           <textarea
-            placeholder="Copia aquí reseñas de clientes o escribe las que quieras destacar."
+            placeholder="Copia reseñas de clientes o escribe las que quieras destacar."
             value={form.testimonials}
             onChange={set('testimonials')}
             style={{ ...inputStyle, minHeight: 90, resize: 'vertical' }}

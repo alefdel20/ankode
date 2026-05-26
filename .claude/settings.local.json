@@ -10,7 +10,16 @@
       "Bash(Select-Object -First 20 FullName)",
       "Bash(Test-Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\.git\")",
       "Bash(Test-Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\pos-app\\\\.git\")",
-      "PowerShell(Test-Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\pos-app\\\\.git\"; Get-ChildItem \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\pos-app\" -Hidden -Name -ErrorAction SilentlyContinue | Where-Object { $_ -eq \".git\" })"
+      "PowerShell(Test-Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\pos-app\\\\.git\"; Get-ChildItem \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\\\\pos-app\" -Hidden -Name -ErrorAction SilentlyContinue | Where-Object { $_ -eq \".git\" })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\" -Force | Select-Object Name, @{Name='Type'; Expression={if\\($_.PSIsContainer\\){'DIR'}else{'FILE'}}})",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\" -Recurse -Depth 3 | Where-Object {$_.PSIsContainer} | Select-Object FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\" -Recurse -Depth 5 -Exclude \"node_modules\" -File | Select-Object FullName | Where-Object {$_.FullName -notmatch \"node_modules|dist\"})",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\tatue\\\\Documents\\\\POS_SaaS\" -Recurse -Depth 2)",
+      "Bash(Select-Object FullName)",
+      "Bash(Format-List)",
+      "Bash(find \"C:\\\\\\\\Users\\\\\\\\tatue\\\\\\\\Documents\\\\\\\\POS_SaaS\\\\\\\\pos-app\\\\\\\\backend\" -type f -name \"*.js\")",
+      "Bash(Get-ChildItem -Recurse -Filter \"*.jsx\" \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\")",
+      "Bash(Select-Object -ExpandProperty FullName)"
     ]
   }
 }

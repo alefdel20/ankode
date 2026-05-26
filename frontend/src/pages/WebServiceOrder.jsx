@@ -257,26 +257,27 @@ export default function WebServiceOrder() {
         </section>
 
         {/* ── SECCIÓN 3: Cómo funciona ── */}
-        <section style={{ padding: '80px 28px', background: '#111827', borderRadius: 42 }}>
+        <section style={{ padding: '80px 28px', background: 'var(--bg-soft)' }}>
           <div className="section-heading center">
             <p className="eyebrow" style={{ color: 'var(--purple)' }}>¿Cómo funciona?</p>
-            <h2 style={{ color: 'white' }}>De cero a publicada en pocos días.</h2>
-            <p style={{ color: 'rgba(255,255,255,0.65)' }}>Sin reuniones largas ni tecnicismos. Así es el proceso.</p>
+            <h2 style={{ color: 'var(--text-strong)' }}>De cero a publicada en pocos días.</h2>
+            <p style={{ color: 'var(--muted)' }}>Sin reuniones largas ni tecnicismos. Así es el proceso.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 16 }}>
             {STEPS.map((step, i) => (
               <div key={step.title} className="step-card" style={{
                 padding: 22,
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                boxShadow: '0 2px 12px rgba(109,74,255,0.07)',
               }}>
                 <div className="step-number">{i + 1}</div>
                 <div style={{ fontSize: '1.5rem', margin: '12px 0 10px' }}>{step.emoji}</div>
-                <strong style={{ display: 'block', marginBottom: 8, color: 'white', fontSize: '0.95rem' }}>
+                <strong style={{ display: 'block', marginBottom: 8, color: 'var(--text-strong)', fontSize: '0.95rem' }}>
                   {step.title}
                 </strong>
-                <p style={{ margin: 0, color: 'rgba(255,255,255,0.65)', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
                   {step.desc}
                 </p>
               </div>

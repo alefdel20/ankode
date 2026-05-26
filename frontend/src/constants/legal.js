@@ -1,82 +1,117 @@
 export const LEGAL = {
-  terms: `TÉRMINOS Y CONDICIONES DE USO — ANKODE
+  terms: `TÉRMINOS Y CONDICIONES DE USO Y CONTRATACIÓN — ANKODE
 Última actualización: abril 2026
 
-1. Quiénes somos
-Ankode es una plataforma de gestión empresarial bajo el modelo SaaS, operada por Alejandro Flores Delgado, con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México. Contacto: ankodemx@gmail.com
+1. IDENTIDAD DE LA EMPRESA
+El presente sitio web, el sistema informático de Punto de Venta (SaaS) y el servicio de desarrollo de páginas web denominados comercialmente "Ankode", son operados por Alejandro Flores Delgado, persona física con actividad empresarial, con domicilio fiscal en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México, y correo de contacto técnico y comercial: ankodemx@gmail.com.
 
-2. Aceptación
-Al crear una cuenta, acceder o contratar cualquier plan, el usuario acepta estos términos en su totalidad.
+2. ACEPTACIÓN DE LOS TÉRMINOS
+La creación de una cuenta de usuario, la descarga del software, la firma de propuestas comerciales, el pago de la tarifa de configuración inicial (setup) o la contratación de cualquiera de las suscripciones de Ankode implica la aceptación expresa, total y sin reservas de estos Términos y Condiciones por parte del Cliente.
 
-3. Descripción del Servicio y Licencia de Uso
-Ankode otorga al Cliente una licencia de uso personal, intransferible, no exclusiva y temporal para acceder vía internet a los módulos de punto de venta, inventario, finanzas y generación de documentos fiscales de apoyo contable. Estos documentos son generados con los datos fiscales del Cliente para ser timbrados por un contador o PAC autorizado; Ankode no realiza el timbrado directo ante el SAT.
+3. DESCRIPCIÓN DE LOS SERVICIOS Y LICENCIA DE USO
+3.1. Sistema de Punto de Venta (POS)
+Ankode otorga al Cliente una licencia de uso limitada, personal, temporal, intransferible y no exclusiva para acceder a través de internet a la plataforma SaaS de Punto de Venta, control de inventarios, reportes de finanzas e impresión de notas de venta.
 
-Responsabilidad Fiscal: El Cliente es el único responsable de la veracidad y validez de la información capturada en el sistema. Ankode no se hace responsable por errores en declaraciones de impuestos, cálculos contables erróneos derivados de datos mal ingresados, ni por incumplimiento de obligaciones fiscales ante el SAT.
+Deslinde de Timbrado Fiscal Directo: Ankode provee un sistema informático de apoyo contable. Las herramientas generan notas y archivos de apoyo contable que el Cliente debe validar o timbrar con un PAC o su respectivo contador público. El Cliente es el único responsable de la validez fiscal y exactitud de los datos ingresados al sistema ante el SAT.
 
-Propiedad Intelectual: El código fuente, diseño, algoritmos, bases de datos y la marca "Ankode" son propiedad exclusiva de Alejandro Flores Delgado. Está prohibida la ingeniería inversa o el intento de acceso al código del sistema.
+3.2. Servicio de Desarrollo y Renta de Páginas Web
+Ankode ofrece dos planes de desarrollo de páginas web: "Presencia Básica" y "Página Avanzada", estructurados bajo una modalidad mixta de: a) Pago único de configuración (setup fee). b) Pago recurrente de hospedaje (hosting) y mantenimiento técnico.
 
-4. Planes, Pagos y Facturación
-- Moneda: Precios en pesos mexicanos (MXN) con IVA incluido.
-- Procesamiento: Los pagos se realizan mediante Openpay (certificación PCI DSS). Ankode no almacena datos de tarjetas; solo recibe un token de confirmación.
-- Promociones: El plan anual (12 meses por el precio de 10) aplica según la promoción vigente al momento de la contratación, únicamente durante el primer año.
+Alcance del Plan Presencia Básica: Hasta 3 secciones en una sola página (one-page), diseño responsive, identidad visual de negocio, catálogo informativo básico (hasta 12 items), botón flotante de WhatsApp, SSL incluido y subdominio bajo la extensión ankode.cloud en servidores propios de Ankode. No incluye dominio propio, carrito de compras, ni pasarela de pagos integrados.
 
-5. Planes con Hardware
-5.1 Cobertura de instalación: La instalación física es proporcionada por Ankode únicamente dentro de la Ciudad de México y Área Metropolitana. Para clientes fuera de esta zona, el envío se realiza vía paquetería (Fedex, Estafeta o DHL) con costo adicional calculado según destino al momento de la compra. La instalación remota se coordina vía soporte.
+Alcance del Plan Página Avanzada: Hasta 6 secciones o páginas internas, diseño responsive, identidad de marca, dominio propio (.com.mx) incluido por el primer año, pasarela de pagos con tarjetas y transferencias SPEI vía Openpay, formulario de contacto, SEO básico (sitemap y meta tags), integración técnica con la base de datos de inventarios del POS Ankode.
 
-5.2 Contenido del equipo: El hardware entregado (escáner de código de barras, impresora, caja de dinero, según el plan) se configura para funcionar con la plataforma Ankode. No incluye sistema operativo con licencia, paquetería de oficina (Microsoft Office o equivalentes), antivirus, ni software adicional ajeno a Ankode. El Cliente es responsable de adquirir dichas licencias de forma independiente si las requiere.
+Requisitos de Entrega e Información: Para dar cumplimiento a los plazos de entrega técnica (5 días hábiles para el plan básico y 15 días hábiles para el plan avanzado), el Cliente se obliga a proporcionar logotipos, textos, datos de contacto, accesos y catálogo completo en los formatos indicados por Ankode. El plazo de entrega comenzará a computarse única y exclusivamente a partir del día hábil siguiente a aquel en que el Cliente entregue el 100% de la información requerida de manera satisfactoria. El retraso del Cliente por más de 15 días naturales en la entrega del material facultará a Ankode a suspender temporalmente el proyecto sin derecho a devolución de la tarifa de setup.
 
-5.3 Garantía: El equipo incluye 3 meses de garantía directa con Ankode por defectos de fabricación o fallas en condiciones normales de uso. Posterior a este período, la garantía corresponde al fabricante. No aplica por daños ocasionados por mal uso, golpes, humedad, alteraciones o instalación de software no autorizado.
+4. PROPIEDAD INTELECTUAL
+4.1. Propiedad de Ankode: Los algoritmos, marcas, logotipos, código fuente del POS, maquetación, frameworks, plantillas de desarrollo web y, especialmente, el código puente y conectores API de sincronización nativa de inventarios son propiedad exclusiva y reservada de Alejandro Flores Delgado.
+4.2. Licencia de Uso Web: Al liquidar el setup único de desarrollo, el Cliente adquiere una licencia de uso temporal sobre la interfaz gráfica de la página web contratada. Esta licencia permanecerá activa única y exclusivamente mientras el Cliente se encuentre al corriente con su suscripción de hosting. El Cliente tiene prohibido realizar ingeniería inversa, revender, sublicenciar, extraer código fuente o migrar el código y sistemas de sincronización a servidores externos ajenos a Ankode. En caso de cancelación del hosting de Ankode, el sitio web será dado de baja del servidor sin posibilidad de migración del código base del sistema.
 
-5.4 Devoluciones: Una vez entregado e instalado el equipo, no se aceptan devoluciones salvo falla comprobable dentro del período de garantía Ankode.
+5. PLANES CON HARDWARE
+5.1. Instalación Física y Envíos: La instalación física de terminales, impresoras de tickets o cajones de dinero provistos en los planes con hardware se limita a la Ciudad de México y Área Metropolitana. Para el resto de la República Mexicana, el hardware se enviará por paqueterías autorizadas con costo adicional a cargo del Cliente, programando una sesión de soporte para la configuración remota.
+5.2. Límites del Hardware: Los equipos se configuran exclusivamente para su operación con el POS Ankode. El hardware no incluye licencias de sistemas operativos, paqueterías de oficina, antivirus, ni configuraciones de redes locales internas del local del Cliente.
+5.3. Garantía del Equipo: El hardware incluye una garantía de 3 meses naturales con Ankode por fallas mecánicas o defectos de fabricación en condiciones de uso normales. Quedan excluidos de la garantía los daños causados por caídas, golpes, descargas eléctricas, humedad, manipulación interna, o la instalación de software no autorizado por Ankode.
 
-6. Responsabilidad de Infraestructura
-Ankode utiliza servicios de Hostinger International Ltd. para servidores VPS, dominios y almacenamiento. Las interrupciones por fallas de red, mantenimiento del proveedor, caídas de DNS o ataques externos se consideran Fuerza Mayor. Ankode no será responsable por pérdidas económicas o de datos derivadas de fallas en la infraestructura de Hostinger.
+6. TARIFAS, PROCESAMIENTO DE PAGOS Y FACTURACIÓN
+6.1. Moneda e Impuestos: Todas las tarifas de setup y suscripciones se expresan en pesos mexicanos (MXN) e incluyen el Impuesto al Valor Agregado (IVA) correspondiente.
+6.2. Suscripciones Recurrentes: Los cobros de las suscripciones de hosting y POS se realizan de forma automática y anticipada en modalidad mensual o anual a través de la pasarela de pagos Openpay.
+6.3. Falta de Pago y Suspensión de Servicios: Si el cargo de renovación recurrente no se procesa exitosamente en la fecha de vencimiento, el sistema POS bloqueará el acceso de forma automática, y las páginas web desarrolladas serán puestas fuera de línea temporalmente tras un periodo de gracia de 7 días naturales. Ankode no se hace responsable por la pérdida de ventas, interrupción del negocio, caída en el posicionamiento web (SEO) o eliminación de datos derivados de la suspensión del servicio por impago.
+6.4. Política de Cambios Posteriores: Los cambios y modificaciones de contenido técnico posterior al primer mes de garantía de lanzamiento se sujetarán a las tarifas fijas de cambios vigentes ($299 MXN para el plan básico y $499 MXN para el plan avanzado), comprendiendo únicamente modificaciones menores de contenido (textos, imágenes u horarios). Cambios que alteren sustancialmente la estructura del sitio o agreguen nuevas secciones se cotizarán por separado.
 
-7. Seguridad, Aislamiento de Datos y Resguardo
-Ankode implementa medidas de seguridad y arquitectura multi-tenant para proteger la información de cada Cliente. El Cliente acepta que ninguna transmisión por internet es 100% segura y es responsable de resguardar sus credenciales.
+7. DESLINDE DE RESPONSABILIDAD POR SERVICIOS DE TERCEROS
+El Cliente acepta que Ankode actúa únicamente como integrador de tecnologías de terceros:
 
-Resguardo de Información: Ankode recomienda al Cliente realizar exportaciones periódicas de sus datos (ventas, inventarios, clientes) mediante los módulos de reportes de la plataforma. En caso de terminación de la relación contractual, el Cliente tendrá 10 días naturales para descargar su información antes de la eliminación definitiva de sus datos del servidor.
+Pasarela de Pagos (Openpay): El procesamiento de las transacciones es operado directamente por Openpay. Ankode no se responsabiliza de contracargos, retención de fondos, comisiones imprevistas o fallas en el procesamiento bancario.
 
-Cualquier intento de acceder a datos de otros tenants resultará en cancelación inmediata sin reembolso.
+Infraestructura de Servidores (Hostinger): Las caídas del sistema imputables al proveedor técnico del servidor se consideran de Fuerza Mayor, deslindando a Ankode de cualquier indemnización derivada de la inactividad del sitio.
 
-8. Cancelación y Reembolsos
-- El Cliente puede cancelar desde su panel de administración en cualquier momento.
-- La cancelación surte efecto al finalizar el período ya pagado. No se realizan reembolsos parciales ni totales.
-- Se recomienda cancelar al menos 48 horas antes de la fecha de renovación para evitar cargos automáticos.
+Exclusión de Garantías Comerciales: Ankode no garantiza un número determinado de ventas, captación de prospectos, visitas o clics en los sitios web provistos.
 
-9. Soporte Técnico y Mantenimiento
-- Vigencia: El soporte técnico se brinda exclusivamente a usuarios con suscripción activa. En caso de cancelación o falta de pago, el acceso a soporte queda suspendido de inmediato.
-- Alcance: El soporte aplica únicamente para incidencias directas de la plataforma Ankode y fallas de fábrica en hardware dentro de garantía. No incluye soporte para software de terceros, configuración de redes locales del cliente, ni reparación de equipos ajenos a los proporcionados por Ankode.
-- Horario: Atención vía ankodemx@gmail.com y canal oficial de WhatsApp, lunes a viernes de 9:00 a 18:00 hrs.
+Modificación No Autorizada: Cualquier manipulación directa del código o base de datos por personal no autorizado por Ankode invalidará de manera inmediata toda garantía técnica de funcionamiento.
 
-10. Modificaciones
-Ankode se reserva el derecho de modificar funcionalidades o precios, notificando al Cliente con 30 días de antelación vía correo electrónico.
+8. LIMITACIÓN DE RESPONSABILIDAD CIVIL
+En la medida máxima permitida por las leyes aplicables en los Estados Unidos Mexicanos, la responsabilidad total acumulada de Alejandro Flores Delgado (Ankode) frente al Cliente ante cualquier reclamación estará estrictamente limitada a una cantidad máxima que no excederá la suma total de los montos efectivamente pagados por el Cliente a Ankode durante los 12 meses anteriores a la fecha del evento que dio origen a la reclamación.
 
-11. Legislación y Jurisdicción
-Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para cualquier controversia, las partes se someten a los tribunales competentes de la Ciudad de México o el Estado de México.`,
+9. MODIFICACIONES A LOS TÉRMINOS
+Ankode se reserva el derecho de actualizar estos Términos y Condiciones, notificando al Cliente con un mínimo de 30 días naturales de anticipación mediante aviso por correo electrónico. El uso continuo de los servicios posterior a dicho plazo implica la aceptación completa de las reformas.
+
+10. LEGISLACIÓN APLICABLE Y JURISDICCIÓN
+Estos Términos y Condiciones se rigen por las leyes federales de los Estados Unidos Mexicanos. Las partes se someten a la jurisdicción de los tribunales competentes en la Ciudad de México o el Estado de México.`,
 
   privacy: `AVISO DE PRIVACIDAD — ANKODE
 Última actualización: abril 2026
 
-Responsable: Alejandro Flores Delgado · ankodemx@gmail.com
+1. RESPONSABLE DEL TRATAMIENTO DE DATOS PERSONALES
+Alejandro Flores Delgado (en lo sucesivo "Ankode"), con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México, y correo de contacto ankodemx@gmail.com, es el Responsable del uso, tratamiento y protección de sus datos personales de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
 
-Finalidad: Los datos recabados (nombre, correo, datos del negocio y tokens de pago) tienen como fin único la prestación del servicio SaaS y el cobro de suscripción.
+2. DATOS PERSONALES RECABADOS Y FINALIDADES
+Recabamos sus datos de identificación, contacto, fiscales y de facturación (nombre, teléfono, correo electrónico, RFC, dirección del negocio y tokens de pago cifrados a través de Openpay) para las siguientes finalidades:
+- Proveer y administrar las licencias de software POS.
+- Realizar el diseño, desarrollo, hospedaje y mantenimiento técnico de su página web.
+- Procesar los cobros recurrentes de sus suscripciones mensuales o anuales.
+- Brindar soporte técnico y atención a clientes.
 
-Transferencias: Sus datos son compartidos con:
-- Openpay: procesamiento seguro de pagos (PCI DSS).
-- Hostinger International Ltd.: almacenamiento cifrado en base de datos.
+3. DISTINCIÓN DE ROLES: RESPONSABLE Y ENCARGADO (LFPDPPP)
+Rol de Responsable: Ankode actúa como "Responsable" respecto de los datos personales que el Cliente nos proporciona directamente para la contratación y uso de nuestros servicios.
 
-Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición enviando un correo a ankodemx@gmail.com adjuntando identificación oficial, conforme a la LFPDPPP.`,
+Rol de Encargado del Tratamiento: El Cliente (la PyME) es el único "Responsable" de las bases de datos de sus propios clientes, empleados y proveedores que registre en el POS o que realicen transacciones en la página web desarrollada por Ankode. Ankode fungirá exclusivamente como "Encargado" del tratamiento de dichos datos con el único fin de proveer la infraestructura de software y almacenamiento en la nube. El Cliente se obliga a contar con su propio Aviso de Privacidad visible para sus usuarios finales.
 
-  cancellation: `POLÍTICA DE CANCELACIÓN — ANKODE
+4. TRANSFERENCIA DE DATOS
+Para cumplir con los servicios, Ankode comparte datos personales con:
+- Openpay, S.A. de C.V. (México): Procesamiento y validación de transacciones de pago (Certificación PCI DSS).
+- Hostinger International Ltd. (Chipre/EUA): Proveedor de infraestructura de servidores VPS y almacenamiento de bases de datos cifradas.
 
-- El Cliente puede cancelar su suscripción en cualquier momento desde su panel de administración.
-- Se recomienda cancelar al menos 48 horas antes de la fecha de renovación para evitar cargos automáticos.
-- La cancelación surte efecto al finalizar el período ya pagado (mensual o anual).
-- No se realizan reembolsos parciales ni totales por períodos ya facturados.
-- El acceso a la plataforma permanece activo hasta el fin del período pagado.
-- El Cliente tendrá 10 días naturales tras la cancelación para exportar su información antes de la eliminación definitiva de sus datos.
-- Para soporte en cancelaciones: ankodemx@gmail.com · WhatsApp oficial · Lunes a viernes 9:00–18:00 hrs.`,
+5. MEDIDAS DE SEGURIDAD
+Ankode cuenta con medidas de seguridad que incluyen cifrado de transferencias mediante protocolo SSL (https), aislamiento de bases de datos bajo arquitectura multi-tenant y copias de seguridad periódicas para evitar el acceso no autorizado, robo o alteración de su información.
+
+6. EJERCICIO DE DERECHOS ARCO
+Usted tiene derecho a ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) sobre sus datos personales enviando una solicitud por escrito a ankodemx@gmail.com, adjuntando identificación oficial vigente y descripción clara del derecho que desea ejercer, de conformidad con la LFPDPPP. Responderemos en un plazo no mayor a 20 días hábiles.`,
+
+  cancellation: `POLÍTICA DE CANCELACIÓN Y SUSPENSIÓN — ANKODE
+Última actualización: abril 2026
+
+1. CANCELACIÓN POR EL CLIENTE
+El Cliente puede solicitar la cancelación de su suscripción (tanto del sistema POS Ankode como del servicio de hosting y mantenimiento web) en cualquier momento directamente desde su panel de administración o mediante comunicación escrita a ankodemx@gmail.com.
+
+2. PLAZOS DE PREAVISO Y CARGOS AUTOMÁTICOS
+Para evitar la renovación e inicio de un nuevo periodo de facturación, se requiere que la cancelación se solicite con al menos 48 horas de anticipación a la fecha de corte. La cancelación surtirá efectos al finalizar el último día del periodo de facturación que se encuentre pagado (mensual o anual).
+
+3. POLÍTICA DE NO REEMBOLSO
+Ankode no realiza reembolsos totales ni parciales bajo ninguna circunstancia por periodos mensuales o anuales ya facturados, cobrados o en curso.
+
+4. EFECTOS DE LA CANCELACIÓN EN EL POS Y HARDWARE
+Al finalizar el periodo pagado, el acceso del Cliente a la plataforma SaaS POS quedará suspendido. La suspensión de la cuenta no exime al Cliente de la propiedad de los equipos físicos adquiridos en la modalidad de compra, los cuales seguirán siendo del Cliente pero sin vinculación operativa a la plataforma Ankode.
+
+5. EFECTOS DE LA CANCELACIÓN EN PÁGINAS WEB Y DOMINIOS
+En caso de cancelación de la suscripción de hosting, el sitio web del Cliente será puesto fuera de línea de manera inmediata al finalizar el periodo pagado. El Cliente perderá el derecho de uso de la interfaz web, el sistema de reservas y los conectores de sincronización de inventario provistos por Ankode.
+
+Transferencia de dominios: Si el dominio (.com.mx) fue registrado por Ankode, el Cliente podrá solicitar la transferencia del dominio a su propio proveedor, siempre y cuando se encuentre al corriente de todos sus pagos y liquide una tarifa administrativa de transferencia de $350 MXN.
+
+6. RESGUARDO Y ELIMINACIÓN DEFINITIVA DE DATOS
+El Cliente acepta que es su entera responsabilidad exportar su información antes de la fecha efectiva de cancelación. Una vez finalizado el periodo contratado, Ankode mantendrá resguardada la base de datos por un plazo máximo de 10 días naturales. Transcurrido este plazo, Ankode procederá a la eliminación definitiva de toda la información de los servidores sin responsabilidad alguna de recuperación de datos.
+
+7. SOPORTE PARA CANCELACIONES
+Para aclaraciones o apoyo en el proceso de cancelación: ankodemx@gmail.com y WhatsApp oficial, lunes a viernes de 9:00 a 18:00 hrs.`,
 };
 
 export const WEB_TERMS = [

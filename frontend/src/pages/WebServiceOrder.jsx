@@ -9,7 +9,9 @@ const BASICO = {
   annual: '$2,490/año',
   annualNote: '2 meses gratis',
   monthlyBreakdown: '12 pagos de $299 = $3,588/año',
-  iva: '$2,655.24',
+  ivaMonthly: '$2,655.24',
+  ivaAnnual: '$5,196.80',
+  annualSubtext: 'Setup único + 12 meses (2 meses gratis)',
   days: '5',
   includes: [
     'Subdominio ankode.cloud',
@@ -29,7 +31,9 @@ const AVANZADO = {
   annual: '$4,990/año',
   annualNote: 'Dominio .com.mx año 1 incluido',
   monthlyBreakdown: '12 pagos de $499 = $5,988/año',
-  iva: '$8,668.84',
+  ivaMonthly: '$8,668.84',
+  ivaAnnual: '$13,896.80',
+  annualSubtext: 'Setup único + año completo + dominio .com.mx',
   days: '15',
   includes: [
     'Dominio .com.mx propio (año 1 incluido)',
@@ -92,10 +96,17 @@ function PlanCard({ plan, featured, isAnnual }) {
         </div>
       </div>
 
-      <div style={{ background: 'var(--bg-soft)', borderRadius: 12, padding: '12px 16px', marginBottom: 24 }}>
-        <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginBottom: 2 }}>Cobro inicial (con IVA)</div>
-        <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--purple)' }}>{plan.iva} <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>MXN</span></div>
-        <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 2 }}>Entrega en {plan.days} días hábiles</div>
+      <div style={{ background: '#ffffff', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 16px', marginBottom: 24 }}>
+        <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 2 }}>
+          {isAnnual ? 'Pago anual (IVA incluido)' : 'Primer cobro (IVA incluido)'}
+        </div>
+        <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--purple)' }}>
+          {isAnnual ? plan.ivaAnnual : plan.ivaMonthly} <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>MXN</span>
+        </div>
+        <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4 }}>
+          {isAnnual ? plan.annualSubtext : 'Setup único + primer mes de hosting'}
+        </div>
+        <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 2 }}>Entrega en {plan.days} días hábiles</div>
       </div>
 
       <ul style={{ flex: 1, margin: '0 0 28px', padding: 0, listStyle: 'none', display: 'grid', gap: 10 }}>
@@ -179,10 +190,10 @@ export default function WebServiceOrder() {
               { num: '∞',    desc: 'Cambios el primer mes incluidos' },
             ].map(stat => (
               <div key={stat.num} style={{
-                background: 'rgba(255,255,255,0.06)',
+                background: 'rgba(255,255,255,0.12)',
                 borderRadius: 20,
                 padding: '24px 16px',
-                border: '1px solid rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.18)',
               }}>
                 <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>{stat.num}</div>
                 <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', marginTop: 10, lineHeight: 1.4 }}>{stat.desc}</div>

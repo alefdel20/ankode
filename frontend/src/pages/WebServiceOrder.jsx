@@ -10,7 +10,7 @@ const BASICO = {
   annualNote: '2 meses gratis',
   monthlyBreakdown: '12 pagos de $299 = $3,588/año',
   ivaMonthly: '$2,655.24',
-  ivaAnnual: '$5,196.80',
+  ivaAnnual: '$5,776.80',
   annualSubtext: 'Setup único + 12 meses (2 meses gratis)',
   days: '5',
   includes: [
@@ -31,7 +31,7 @@ const AVANZADO = {
   annual: '$4,990/año',
   annualNote: 'Dominio .com.mx año 1 incluido',
   monthlyBreakdown: '12 pagos de $499 = $5,988/año',
-  ivaMonthly: '$8,668.84',
+  ivaMonthly: '$8,687.24',
   ivaAnnual: '$13,896.80',
   annualSubtext: 'Setup único + año completo + dominio .com.mx',
   days: '15',

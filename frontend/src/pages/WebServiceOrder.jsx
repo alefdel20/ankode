@@ -364,8 +364,9 @@ export default function WebServiceOrder() {
 
         <footer style={{ borderTop: '1px solid var(--border)', marginTop: 40, padding: '28px 0', textAlign: 'center' }}>
           <p style={{ fontSize: '0.82rem', color: 'var(--muted)', display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap', margin: 0 }}>
-            <span>© 2025 Ankode · Todos los derechos reservados</span>
+            <span>© 2026 Ankode · Todos los derechos reservados</span>
             <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos y condiciones</a>
+            <a href="/legal?doc=webTerms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos del servicio — Páginas Web</a>
             <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Política de cancelación</a>
             <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Privacidad de pago</a>
             <span>Pagos procesados por Openpay</span>

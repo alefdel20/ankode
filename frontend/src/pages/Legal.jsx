@@ -10,12 +10,16 @@ const DOCS = {
 export default function Legal() {
   const params = new URLSearchParams(window.location.search);
   const doc = DOCS[params.get('doc')] || DOCS.terms;
+  const back = document.referrer.includes('paginas-web') ? '/paginas-web' : '/';
 
   return (
     <div style={{ maxWidth: 820, margin: '0 auto', padding: '60px 24px 80px', fontFamily: 'Inter, system-ui, sans-serif', color: '#1d2433', lineHeight: 1.7 }}>
-      <a href="/" style={{ display: 'inline-block', marginBottom: 32, color: '#6d4aff', fontWeight: 700, textDecoration: 'none', fontSize: '0.95rem' }}>
+      <button
+        onClick={() => { window.location.href = back; }}
+        style={{ display: 'inline-block', marginBottom: 32, color: '#6d4aff', fontWeight: 700, textDecoration: 'none', fontSize: '0.95rem', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+      >
         ← Volver a Ankode
-      </a>
+      </button>
       <h1 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.03em', marginBottom: 32, borderBottom: '2px solid #e5eaf5', paddingBottom: 16 }}>
         {doc.title}
       </h1>

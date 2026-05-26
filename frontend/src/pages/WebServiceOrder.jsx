@@ -69,37 +69,24 @@ export default function WebServiceOrder() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleAcceptTerms = async () => {
+  // Paso 1: solo avanza localmente — el backend necesita los datos del negocio para crear la orden
+  const handleAcceptTerms = () => {
+    setStep(2);
+  };
+
+  // Paso 2: crea la orden con todos los datos juntos (TC + cuestionario)
+  const handleFormSubmit = async (formData) => {
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(`${API_BASE}/api/web-services/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, tc_accepted: true, tc_ip: '' }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || data.error || 'Error al crear la orden');
-      setOrderId(data.order_id || data.id);
-      setStep(2);
-    } catch (err) {
-      setError(err.message || 'Ocurrió un error. Intenta de nuevo.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFormSubmit = async (formData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`${API_BASE}/api/web-services/orders/${orderId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ plan, tc_accepted: true, tc_ip: '', ...formData }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || data.error || 'Error al guardar tu información');
+      setOrderId(data.order_id || data.id);
       setStep(3);
     } catch (err) {
       setError(err.message || 'Ocurrió un error. Intenta de nuevo.');
@@ -113,10 +100,10 @@ export default function WebServiceOrder() {
       {/* Header */}
       <header style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '18px 24px',
+        height: 60,
+        padding: '0 24px',
         borderBottom: '1px solid var(--border)',
-        background: 'rgba(247,248,252,0.92)',
-        backdropFilter: 'blur(14px)',
+        background: 'white',
         position: 'sticky', top: 0, zIndex: 50,
       }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center' }}>

@@ -249,7 +249,7 @@ export default function WebPaymentStep({ orderId, plan, amount }) {
 
       <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--muted)', marginTop: 12, lineHeight: 1.6 }}>
         Al pagar aceptas nuestros{' '}
-        <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>términos y condiciones</a>{' '}y{' '}
+        <a href="/legal?doc=webTerms" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>términos y condiciones</a>{' '}y{' '}
         <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--purple)', fontWeight: 700 }}>aviso de privacidad</a>.
       </p>
     </div>

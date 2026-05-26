@@ -9,7 +9,7 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://api.ankode.cloud';
 
 const PLAN_CONFIG = {
   basico:   { name: 'Presencia básica', totalWithIva: 2655.24 },
-  avanzado: { name: 'Página avanzada',  totalWithIva: 8668.84 },
+  avanzado: { name: 'Página avanzada',  totalWithIva: 8687.24 },
 };
 
 const STEP_LABELS = ['Términos', 'Tu negocio', 'Pago'];

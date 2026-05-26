@@ -8,6 +8,7 @@ const BASICO = {
   monthly: '$299/mes',
   annual: '$2,490/año',
   annualNote: '2 meses gratis',
+  monthlyBreakdown: '12 pagos de $299 = $3,588/año',
   iva: '$2,655.24',
   days: '5',
   includes: [
@@ -27,6 +28,7 @@ const AVANZADO = {
   monthly: '$499/mes',
   annual: '$4,990/año',
   annualNote: 'Dominio .com.mx año 1 incluido',
+  monthlyBreakdown: '12 pagos de $499 = $5,988/año',
   iva: '$8,668.84',
   days: '15',
   includes: [
@@ -82,7 +84,10 @@ function PlanCard({ plan, featured, isAnnual }) {
           {isAnnual ? (
             <><span style={{ color: 'var(--text-strong)', fontWeight: 700 }}>{plan.annual}</span> · {plan.annualNote}</>
           ) : (
-            <>+ {plan.monthly} de hosting</>
+            <>
+              + {plan.monthly} de hosting
+              <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 3 }}>{plan.monthlyBreakdown}</div>
+            </>
           )}
         </div>
       </div>
@@ -241,22 +246,26 @@ export default function WebServiceOrder() {
         </section>
 
         {/* ── SECCIÓN 3: Cómo funciona ── */}
-        <section className="section section-soft">
+        <section style={{ padding: '80px 28px', background: '#111827', borderRadius: 42 }}>
           <div className="section-heading center">
-            <p className="eyebrow">¿Cómo funciona?</p>
-            <h2>De cero a publicada en pocos días.</h2>
-            <p>Sin reuniones largas ni tecnicismos. Así es el proceso.</p>
+            <p className="eyebrow" style={{ color: 'var(--purple)' }}>¿Cómo funciona?</p>
+            <h2 style={{ color: 'white' }}>De cero a publicada en pocos días.</h2>
+            <p style={{ color: 'rgba(255,255,255,0.65)' }}>Sin reuniones largas ni tecnicismos. Así es el proceso.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 16 }}>
             {STEPS.map((step, i) => (
-              <div key={step.title} className="step-card" style={{ padding: 22 }}>
+              <div key={step.title} className="step-card" style={{
+                padding: 22,
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}>
                 <div className="step-number">{i + 1}</div>
                 <div style={{ fontSize: '1.5rem', margin: '12px 0 10px' }}>{step.emoji}</div>
-                <strong style={{ display: 'block', marginBottom: 8, color: 'var(--text-strong)', fontSize: '0.95rem' }}>
+                <strong style={{ display: 'block', marginBottom: 8, color: 'white', fontSize: '0.95rem' }}>
                   {step.title}
                 </strong>
-                <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                <p style={{ margin: 0, color: 'rgba(255,255,255,0.65)', fontSize: '0.85rem', lineHeight: 1.5 }}>
                   {step.desc}
                 </p>
               </div>
@@ -319,6 +328,16 @@ export default function WebServiceOrder() {
             </div>
           </div>
         </section>
+
+        <footer style={{ borderTop: '1px solid var(--border)', marginTop: 40, padding: '28px 0', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.82rem', color: 'var(--muted)', display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap', margin: 0 }}>
+            <span>© 2025 Ankode · Todos los derechos reservados</span>
+            <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos y condiciones</a>
+            <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Política de cancelación</a>
+            <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Privacidad de pago</a>
+            <span>Pagos procesados por Openpay</span>
+          </p>
+        </footer>
 
       </div>
     </div>

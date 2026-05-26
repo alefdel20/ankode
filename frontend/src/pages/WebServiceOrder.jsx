@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import ankodeLogo from '../assets/ankode-logo.png';
 
 const BASICO = {
   id: 'basico',
-  name: 'Básico',
+  name: 'Presencia básica',
   setup: '$1,990',
   monthly: '$299/mes',
+  annual: '$2,490/año',
+  annualNote: '2 meses gratis',
   iva: '$2,655.24',
   days: '5',
   includes: [
@@ -19,9 +22,11 @@ const BASICO = {
 
 const AVANZADO = {
   id: 'avanzado',
-  name: 'Avanzado',
+  name: 'Página avanzada',
   setup: '$6,990',
   monthly: '$499/mes',
+  annual: '$4,990/año',
+  annualNote: 'Dominio .com.mx año 1 incluido',
   iva: '$8,668.84',
   days: '15',
   includes: [
@@ -43,7 +48,7 @@ const STEPS = [
   { emoji: '🚀', title: 'Tu página está lista',      desc: 'Te avisamos, revisas y queda lista. Sin tecnicismos.' },
 ];
 
-function PlanCard({ plan, featured }) {
+function PlanCard({ plan, featured, isAnnual }) {
   return (
     <div
       className="soft-card"
@@ -62,19 +67,23 @@ function PlanCard({ plan, featured }) {
           padding: '4px 18px', borderRadius: 999,
           fontSize: '0.78rem', fontWeight: 800, whiteSpace: 'nowrap',
         }}>
-          Más popular
+          Recomendado
         </div>
       )}
 
       <h3 style={{ margin: '0 0 6px', fontSize: '1.4rem', color: 'var(--text-strong)' }}>
-        Plan {plan.name}
+        {plan.name}
       </h3>
 
       <div style={{ marginBottom: 20 }}>
         <span style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-strong)' }}>{plan.setup}</span>
         <span style={{ color: 'var(--muted)', fontSize: '0.9rem', marginLeft: 6 }}>setup único</span>
         <div style={{ color: 'var(--muted)', fontSize: '0.88rem', marginTop: 4 }}>
-          + {plan.monthly} de hosting
+          {isAnnual ? (
+            <><span style={{ color: 'var(--text-strong)', fontWeight: 700 }}>{plan.annual}</span> · {plan.annualNote}</>
+          ) : (
+            <>+ {plan.monthly} de hosting</>
+          )}
         </div>
       </div>
 
@@ -105,6 +114,8 @@ function PlanCard({ plan, featured }) {
 }
 
 export default function WebServiceOrder() {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
@@ -129,25 +140,51 @@ export default function WebServiceOrder() {
 
         {/* ── SECCIÓN 1: Hero ── */}
         <section style={{
-          padding: '80px 28px 88px',
-          background: 'linear-gradient(135deg, rgba(109,74,255,0.12) 0%, rgba(25,195,125,0.1) 100%)',
+          padding: '72px 28px 80px',
+          background: '#111827',
           borderRadius: 42,
           textAlign: 'center',
           margin: '32px 0 0',
         }}>
-          <p className="eyebrow">Páginas web para negocios</p>
+          <p className="eyebrow" style={{ color: 'var(--purple)' }}>— PÁGINAS WEB</p>
           <h1 style={{
             fontSize: 'clamp(2.6rem, 5vw, 4.4rem)',
             letterSpacing: '-0.04em',
             margin: '0 0 20px',
-            color: 'var(--text-strong)',
+            color: 'white',
             lineHeight: 1.05,
           }}>
             Tu negocio en internet,<br />sin rollos
           </h1>
-          <p style={{ fontSize: '1.1rem', color: 'var(--muted)', maxWidth: 540, margin: '0 auto 36px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.65)', maxWidth: 540, margin: '0 auto 48px', lineHeight: 1.6 }}>
             Te armamos una página profesional en 5 días. Tú nos cuentas de tu negocio, nosotros hacemos el resto.
           </p>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+            gap: 16,
+            maxWidth: 820,
+            margin: '0 auto 48px',
+          }}>
+            {[
+              { num: '5',    desc: 'Días hábiles de entrega (básico)' },
+              { num: '$0',   desc: 'Costo extra de infraestructura para ti' },
+              { num: '2.9%', desc: 'Comisión Openpay (plan avanzado)' },
+              { num: '∞',    desc: 'Cambios el primer mes incluidos' },
+            ].map(stat => (
+              <div key={stat.num} style={{
+                background: 'rgba(255,255,255,0.06)',
+                borderRadius: 20,
+                padding: '24px 16px',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}>
+                <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>{stat.num}</div>
+                <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', marginTop: 10, lineHeight: 1.4 }}>{stat.desc}</div>
+              </div>
+            ))}
+          </div>
+
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="/paginas-web/contratar?plan=basico" className="btn btn-light" style={{ fontSize: '1rem', height: 52, padding: '0 28px' }}>
               Quiero el plan Básico →
@@ -166,9 +203,40 @@ export default function WebServiceOrder() {
             <p>Sin permanencia forzada. Puedes cambiar de plan después.</p>
           </div>
 
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 36 }}>
+            <span style={{ fontSize: '0.95rem', fontWeight: isAnnual ? 500 : 700, color: isAnnual ? 'var(--muted)' : 'var(--text-strong)' }}>
+              Mensual
+            </span>
+            <button
+              onClick={() => setIsAnnual(prev => !prev)}
+              aria-label="Cambiar entre pago mensual y anual"
+              style={{
+                width: 52, height: 28, borderRadius: 999,
+                border: 'none', cursor: 'pointer',
+                background: isAnnual ? 'var(--purple)' : 'var(--border)',
+                position: 'relative', transition: '0.2s ease',
+                flexShrink: 0,
+              }}
+            >
+              <span style={{
+                position: 'absolute', top: 4,
+                left: isAnnual ? 28 : 4,
+                width: 20, height: 20, borderRadius: '50%',
+                background: 'white', transition: '0.2s ease',
+                display: 'block',
+              }} />
+            </button>
+            <span style={{ fontSize: '0.95rem', fontWeight: isAnnual ? 700 : 500, color: isAnnual ? 'var(--text-strong)' : 'var(--muted)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              Anual
+              <span style={{ background: 'var(--green-soft)', color: '#0d8f59', fontSize: '0.78rem', fontWeight: 800, padding: '2px 8px', borderRadius: 999 }}>
+                2 meses gratis
+              </span>
+            </span>
+          </div>
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 28, maxWidth: 860, margin: '0 auto' }}>
-            <PlanCard plan={BASICO} featured={false} />
-            <PlanCard plan={AVANZADO} featured={true} />
+            <PlanCard plan={BASICO} featured={false} isAnnual={isAnnual} />
+            <PlanCard plan={AVANZADO} featured={true} isAnnual={isAnnual} />
           </div>
         </section>
 
@@ -192,6 +260,44 @@ export default function WebServiceOrder() {
                   {step.desc}
                 </p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── SECCIÓN FAQ ── */}
+        <section className="section" id="faq-web">
+          <div className="section-heading center">
+            <p className="eyebrow">Preguntas frecuentes</p>
+            <h2>Lo que más nos preguntan</h2>
+            <p>Si tienes otra duda, escríbenos por WhatsApp y te respondemos rápido.</p>
+          </div>
+          <div className="faq-list">
+            {[
+              {
+                q: '¿Cuánto tiempo tarda en estar lista mi página?',
+                a: 'El plan Básico se entrega en 5 días hábiles y el Avanzado en 15. El reloj empieza cuando nos mandas tu logo, fotos y la info de tu negocio. Si tardas en enviarnos los materiales, los tiempos se recorren.',
+              },
+              {
+                q: '¿Qué pasa si no me gusta el diseño?',
+                a: 'El primer mes puedes pedirnos los cambios que necesites sin costo extra. Ajustamos colores, textos, fotos, secciones — lo que haga falta. Queremos que quedes contento.',
+              },
+              {
+                q: '¿El dominio queda a mi nombre?',
+                a: 'Sí, 100%. El dominio .com.mx que incluye el plan Avanzado queda registrado a nombre de tu negocio o el que indiques. Tú eres el dueño, no nosotros.',
+              },
+              {
+                q: '¿Puedo cancelar en cualquier momento?',
+                a: 'Sí, sin permanencia forzada. El setup es un pago único y el hosting es mes a mes. Si decides cancelar, solo avísanos con un mes de anticipación y listo, sin penalizaciones.',
+              },
+              {
+                q: '¿Qué necesito para empezar?',
+                a: 'Solo tres cosas: llenar el formulario de tu negocio, hacer el pago del setup y mandarnos tu logo o imagen por WhatsApp. Nosotros hacemos el resto.',
+              },
+            ].map(item => (
+              <details key={item.q} className="faq-card">
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
             ))}
           </div>
         </section>

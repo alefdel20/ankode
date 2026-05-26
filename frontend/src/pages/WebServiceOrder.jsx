@@ -39,10 +39,10 @@ const AVANZADO = {
     'Dominio .com.mx propio (año 1 incluido)',
     'Hasta 6 secciones',
     'Tienda online o reservas/citas',
-    'Pagos con tarjeta y SPEI vía Openpay',
+    { label: 'Pagos con tarjeta y SPEI vía Openpay', optional: true },
     'SEO básico + Google Analytics',
     'Galería, testimonios, formulario',
-    'Certificación Openpay gestionada',
+    { label: 'Certificación Openpay gestionada', optional: true },
   ],
 };
 
@@ -80,11 +80,6 @@ function PlanCard({ plan, featured, isAnnual }) {
       <h3 style={{ margin: '0 0 6px', fontSize: '1.4rem', color: 'var(--text-strong)' }}>
         {plan.name}
       </h3>
-
-      {/* 1. Setup fee — discreto */}
-      <div style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: 8 }}>
-        {plan.setup} setup único
-      </div>
 
       {/* 2. Precio principal — protagonista */}
       <div style={{ marginBottom: 4 }}>
@@ -124,12 +119,24 @@ function PlanCard({ plan, featured, isAnnual }) {
       </div>
 
       <ul style={{ flex: 1, margin: '0 0 28px', padding: 0, listStyle: 'none', display: 'grid', gap: 10 }}>
-        {plan.includes.map(item => (
-          <li key={item} style={{ display: 'flex', gap: 10, fontSize: '0.9rem', color: 'var(--text)' }}>
-            <span style={{ color: 'var(--green)', fontWeight: 800, flexShrink: 0 }}>✓</span>
-            {item}
-          </li>
-        ))}
+        {plan.includes.map(item => {
+          const label = typeof item === 'string' ? item : item.label;
+          const optional = typeof item === 'object' && item.optional;
+          return (
+            <li key={label} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.9rem', color: 'var(--text)' }}>
+              <span style={{ color: 'var(--green)', fontWeight: 800, flexShrink: 0 }}>✓</span>
+              {label}
+              {optional && (
+                <span style={{
+                  background: 'var(--bg-soft)', color: 'var(--muted)',
+                  fontSize: '0.7rem', fontWeight: 600,
+                  padding: '1px 7px', borderRadius: 999, marginLeft: 6,
+                  flexShrink: 0,
+                }}>Opcional</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       <a

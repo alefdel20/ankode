@@ -78,3 +78,48 @@ Derechos ARCO: Puede solicitar Acceso, Rectificación, Cancelación u Oposición
 - El Cliente tendrá 10 días naturales tras la cancelación para exportar su información antes de la eliminación definitiva de sus datos.
 - Para soporte en cancelaciones: ankodemx@gmail.com · WhatsApp oficial · Lunes a viernes 9:00–18:00 hrs.`,
 };
+
+export const WEB_TERMS = [
+  {
+    number: 1,
+    title: 'Objeto del servicio',
+    summary: 'El servicio tiene dos partes: pagas el setup una sola vez para que armemos tu página, y luego una renta mensual o anual para mantenerla en línea.',
+    legal: 'El servicio contratado comprende (a) un pago único de configuración inicial (setup) que cubre el diseño y desarrollo técnico de la página web según el plan elegido, y (b) una suscripción periódica de hospedaje web (hosting) y mantenimiento básico, en modalidad mensual o anual, necesaria para mantener el sitio activo. En el plan Página Avanzada, el dominio .com.mx se incluye sin costo el primer año; a partir del segundo año, la renovación tiene un costo aproximado de $300 MXN anuales, el cual puede integrarse en la anualidad de hosting o facturarse por separado.',
+  },
+  {
+    number: 2,
+    title: 'Obligaciones del cliente',
+    summary: 'Tienes 10 días hábiles para mandarnos tu logo, fotos y textos por WhatsApp. Si no los mandas a tiempo, pausamos el proyecto sin reembolso. El plazo de entrega empieza hasta que tengamos todo.',
+    legal: 'El cliente se compromete a entregar la totalidad del material requerido (logotipos, textos, catálogo, accesos) en un plazo máximo de 10 días hábiles posteriores a la contratación. El incumplimiento de este plazo faculta a Ankode a pausar el proyecto sin responsabilidad de reembolso. El plazo de entrega prometido comenzará a contar únicamente a partir del día hábil siguiente en que Ankode reciba el 100% del material. El cliente es responsable de garantizar que el contenido proporcionado no viola derechos de propiedad intelectual de terceros.',
+  },
+  {
+    number: 3,
+    title: 'Propiedad intelectual',
+    summary: 'Tu logo, fotos y textos son tuyos. El código y la plataforma son de Ankode. Mientras pagues tu renta, tu página está en línea. Si cancelas o dejas de pagar, el sitio se suspende y se retira del servidor.',
+    legal: 'El cliente conserva todos los derechos sobre sus marcas, logotipos e imágenes proporcionadas. Ankode retiene la propiedad intelectual exclusiva sobre la plataforma, código base, diseños de interfaz y sistema de sincronización con el POS. Al contratar, Ankode otorga al cliente una licencia de uso limitada, no transferible y revocable, vigente únicamente mientras la suscripción esté al corriente. En caso de cancelación o impago, el sitio web será suspendido y retirado del servidor, sin derecho a migrar el código o bases de datos internas. Ankode se reserva el derecho de exhibir el sitio desarrollado en su portafolio promocional.',
+  },
+  {
+    number: 4,
+    title: 'Cambios y mantenimiento',
+    summary: 'El primer mes puedes pedir los cambios que quieras sin costo. Después, los cambios menores tienen un costo fijo según tu plan. Agregar secciones nuevas o funciones extra se cotiza aparte.',
+    legal: 'Se define como "Cambio" toda modificación menor de contenido existente (actualizar teléfonos, corregir textos, sustituir imágenes, modificar horarios). No constituyen "Cambios": agregar secciones que excedan las contratadas, implementar nuevas funciones de software, integrar pasarelas de pago adicionales o rediseñar la estructura visual. Dichos trabajos se cotizarán por separado. Cualquier modificación directa al código por personal no autorizado por Ankode cancelará de forma inmediata la garantía técnica del servicio.',
+  },
+  {
+    number: 5,
+    title: 'Facturación, suspensión e impago',
+    summary: 'Te cobramos automático cada mes o año. Si el pago falla, tienes 7 días para regularizarte antes de que suspendamos tu página. Para reactivarla, pagas lo que debes más $299 MXN de reactivación.',
+    legal: 'Los cargos recurrentes se facturarán automáticamente al inicio de cada periodo. En caso de fallo en el pago, Ankode otorgará un período de gracia de 7 días naturales. Transcurrido este plazo sin recibir el pago, el sitio será suspendido automáticamente. Ankode no se responsabiliza por pérdidas de ventas, datos o posicionamiento SEO derivados de la suspensión por impago. La reactivación requiere liquidar el saldo vencido más una tarifa de reactivación de $299 MXN.',
+  },
+  {
+    number: 6,
+    title: 'Deslinde por servicios de terceros',
+    summary: 'Usamos Openpay para cobros y servidores externos para el hosting. Si ellos fallan, no es responsabilidad de Ankode. Tampoco garantizamos visitas ni ventas — eso depende de tu negocio.',
+    legal: 'Ankode actúa como integrador técnico. Las transacciones son procesadas por Openpay; Ankode no asume responsabilidad por fallas, contracargos, fraudes o comisiones de dicha pasarela. Ankode no garantiza uptime ininterrumpido del servidor de hosting ni se responsabiliza por pérdidas derivadas de caídas de internet o mantenimiento de servidores. Ankode no garantiza volumen de visitas, posicionamiento en buscadores ni conversiones de venta.',
+  },
+  {
+    number: 7,
+    title: 'Limitación de responsabilidad',
+    summary: 'Si algo sale muy mal, lo máximo que Ankode puede deber es lo que pagaste de hosting en los últimos 12 meses. Nada más.',
+    legal: 'En la medida máxima permitida por la legislación mexicana aplicable, la responsabilidad total acumulada de Ankode ante cualquier reclamación derivada del funcionamiento o fallo del sitio web estará estrictamente limitada al monto total de las tarifas de hosting efectivamente pagadas por el cliente durante los 12 meses previos al evento que originó la reclamación.',
+  },
+];

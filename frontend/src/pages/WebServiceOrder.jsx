@@ -190,13 +190,13 @@ export default function WebServiceOrder() {
               { num: '∞',    desc: 'Cambios el primer mes incluidos' },
             ].map(stat => (
               <div key={stat.num} style={{
-                background: 'rgba(255,255,255,0.12)',
+                background: '#ffffff',
                 borderRadius: 20,
                 padding: '24px 16px',
-                border: '1px solid rgba(255,255,255,0.18)',
+                border: '1px solid rgba(255,255,255,0.15)',
               }}>
                 <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--purple)', lineHeight: 1 }}>{stat.num}</div>
-                <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', marginTop: 10, lineHeight: 1.4 }}>{stat.desc}</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginTop: 10, lineHeight: 1.4 }}>{stat.desc}</div>
               </div>
             ))}
           </div>

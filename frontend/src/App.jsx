@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { PLANS } from './constants/plans';
 import PricingSection from './components/PricingSection';
 import CheckoutModal from './components/CheckoutModal';
+import RestauranteSection from './components/RestauranteSection';
 
 const CONTACT = {
   whatsapp: "525515133527",
@@ -562,6 +563,8 @@ function App() {
             ))}
           </div>
         </section>
+
+        <RestauranteSection />
 
         <section id="personalizacion" className="section">
           <div className="feature-showcase">

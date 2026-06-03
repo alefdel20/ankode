@@ -936,7 +936,7 @@ a {
   display: inline-block;
   margin-top: 16px;
   background: var(--purple);
-  color: white;
+  color: #ffffff !important;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 0.9rem;

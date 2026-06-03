@@ -91,6 +91,10 @@ const giros = [
       'Reportes de utilidad bruta',
       'CFDI 4.0 incluido',
     ],
+    cta: {
+      label: 'Solicitar información',
+      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20tienda',
+    },
   },
   {
     id: 'papeleria',
@@ -104,6 +108,10 @@ const giros = [
       'Historial de compras por cliente',
       'Reportes de inventario exportables',
     ],
+    cta: {
+      label: 'Solicitar información',
+      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20papelería',
+    },
   },
   {
     id: 'tlapaleria',
@@ -117,6 +125,10 @@ const giros = [
       'Inventario por unidad o bulto',
       'Control de cuentas por cobrar',
     ],
+    cta: {
+      label: 'Solicitar información',
+      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20tlapalería',
+    },
   },
   {
     id: 'restaurante',

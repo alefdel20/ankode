@@ -132,7 +132,7 @@ const giros = [
       'CFDI 4.0 por mesa',
     ],
     cta: {
-      label: 'Agendar demo gratis →',
+      label: 'Agendar demo gratis',
       href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante',
     },
   },
@@ -626,7 +626,7 @@ function App() {
                           className="industry-card__cta"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          {giro.cta.label}
+                          {giro.cta.label} &#x2192;
                         </a>
                       )}
                     </div>

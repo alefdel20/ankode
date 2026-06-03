@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { PLANS } from './constants/plans';
 import PricingSection from './components/PricingSection';
 import CheckoutModal from './components/CheckoutModal';
-import RestauranteSection from './components/RestauranteSection';
+
 
 const CONTACT = {
   whatsapp: "525515133527",
@@ -74,6 +74,67 @@ const faqs = [
   {
     q: "¿Se puede ajustar a mi proceso?",
     a: "Sí. Esa es una de las ideas principales detrás de ankode.",
+  },
+];
+
+const giros = [
+  {
+    id: 'tienda',
+    emoji: '🏪',
+    title: 'Tienda',
+    desc: 'Controla tu inventario, ventas y cobranza desde un solo lugar. Ideal para tiendas de abarrotes, misceláneas y comercios en general.',
+    features: [
+      'Ventas rápidas con código de barras',
+      'Control de inventario por sucursal',
+      'Crédito a clientes con cobranza integrada',
+      'Corte de caja diario',
+      'Reportes de utilidad bruta',
+      'CFDI 4.0 incluido',
+    ],
+  },
+  {
+    id: 'papeleria',
+    emoji: '📋',
+    title: 'Papelería',
+    desc: 'Gestiona productos, ventas al mostrador y control de stock para tu papelería con rapidez y orden.',
+    features: [
+      'Catálogo de productos ilimitado',
+      'Ventas al mostrador',
+      'Control de stock con alertas de mínimos',
+      'Historial de compras por cliente',
+      'Reportes de inventario exportables',
+    ],
+  },
+  {
+    id: 'tlapaleria',
+    emoji: '🔧',
+    title: 'Tlapalería',
+    desc: 'Lleva el control de tu inventario variado, ventas y proveedores en un sistema pensado para ferreterías y tlapalerías.',
+    features: [
+      'Gestión de proveedores',
+      'Reabastecimiento con orden de compra',
+      'Múltiples listas de precios',
+      'Inventario por unidad o bulto',
+      'Control de cuentas por cobrar',
+    ],
+  },
+  {
+    id: 'restaurante',
+    emoji: '🍽️',
+    title: 'Restaurante',
+    desc: 'Controla mesas, comandas y cocina desde un solo sistema. Ideal para restaurantes y fondas.',
+    features: [
+      'Plano de salón con estado de mesas en tiempo real',
+      'Comandas digitales directo a cocina',
+      'Pantalla KDS para el equipo de cocina',
+      'Modificadores de platillos (sin pepino, extra queso)',
+      'División de cuenta y propina integrada',
+      'CFDI 4.0 por mesa',
+    ],
+    cta: {
+      label: 'Agendar demo gratis →',
+      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante',
+    },
   },
 ];
 
@@ -298,6 +359,7 @@ function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartWarning, setCartWarning] = useState('');
+  const [activeGiro, setActiveGiro] = useState(null);
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
@@ -524,47 +586,56 @@ function App() {
               ankode se adapta a la operación de distintos comercios. Encuentra el tuyo.
             </p>
           </div>
-          <div className="industry-grid industry-grid-centered">
-            {[
-              {
-                id: 'tienda',
-                emoji: '🏪',
-                title: 'Tienda',
-                desc: 'Controla tu inventario, ventas y cobranza desde un solo lugar. Ideal para tiendas de abarrotes, misceláneas y comercios en general.',
-              },
-              {
-                id: 'papeleria',
-                emoji: '🗒️',
-                title: 'Papelería',
-                desc: 'Gestiona productos, ventas al mostrador y control de stock para tu papelería con rapidez y orden.',
-              },
-              {
-                id: 'tlapaleria',
-                emoji: '🔧',
-                title: 'Tlapalería',
-                desc: 'Lleva el control de tu inventario variado, ventas y proveedores en un sistema pensado para ferreterías y tlapalerías.',
-              },
-            ].map((item) => (
-              <article key={item.id} className="industry-card" style={{ padding: 0 }}>
-                <div style={{
-                  fontSize: '4rem',
-                  textAlign: 'center',
-                  padding: '28px 0 12px',
-                  background: 'var(--bg-soft)',
-                  borderRadius: '16px 16px 0 0',
-                }}>
-                  {item.emoji}
-                </div>
-                <div style={{ padding: 24 }}>
-                  <h3 style={{ margin: '0 0 10px', fontSize: '1.18rem' }}>{item.title}</h3>
-                  <p className="text-justify" style={{ color: 'var(--muted)', margin: 0 }}>{item.desc}</p>
-                </div>
-              </article>
-            ))}
+          <div className="industry-grid">
+            {giros.map((giro) => {
+              const isOpen = activeGiro === giro.id;
+              return (
+                <article
+                  key={giro.id}
+                  className={`industry-card industry-card--accordion${isOpen ? ' industry-card--open' : ''}`}
+                  style={{ padding: 0, cursor: 'pointer' }}
+                  onClick={() => setActiveGiro(isOpen ? null : giro.id)}
+                >
+                  <div style={{
+                    fontSize: '4rem',
+                    textAlign: 'center',
+                    padding: '28px 0 12px',
+                    background: 'var(--bg-soft)',
+                    borderRadius: '16px 16px 0 0',
+                  }}>
+                    {giro.emoji}
+                  </div>
+                  <div style={{ padding: 24 }}>
+                    <div className="industry-card__header">
+                      <h3 style={{ margin: '0 0 10px', fontSize: '1.18rem' }}>{giro.title}</h3>
+                      <span className={`industry-card__chevron${isOpen ? ' industry-card__chevron--open' : ''}`}>▾</span>
+                    </div>
+                    <p className="text-justify" style={{ color: 'var(--muted)', margin: 0 }}>{giro.desc}</p>
+
+                    <div className={`industry-card__detail${isOpen ? ' industry-card__detail--open' : ''}`}>
+                      <ul className="industry-card__features">
+                        {giro.features.map((f) => (
+                          <li key={f}>{f}</li>
+                        ))}
+                      </ul>
+                      {giro.cta && (
+                        <a
+                          href={giro.cta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="industry-card__cta"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {giro.cta.label}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
-
-        <RestauranteSection />
 
         <section id="personalizacion" className="section">
           <div className="feature-showcase">

@@ -790,6 +790,14 @@ a {
     display: none;
   }
 
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .topbar-actions .btn-secondary {
+    display: none;
+  }
+
   .hero {
     padding-top: 36px;
   }
@@ -816,6 +824,10 @@ a {
 
   .btn {
     width: 100%;
+  }
+
+  .topbar .btn {
+    width: auto;
   }
 
   .section-soft {

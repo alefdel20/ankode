@@ -121,16 +121,7 @@ export default function PricingSection({ onSelectPlan, onAddToCart, isAnnual, on
         </p>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          background: 'var(--bg-soft)',
-          borderRadius: 999,
-          padding: 4,
-          width: 'fit-content',
-          margin: '0 auto 40px',
-        }}
-      >
+      <div className="billing-toggle">
         {[
           { label: 'Mensual', value: false },
           { label: 'Anual · 2 meses gratis (1er año)', value: true },
@@ -139,15 +130,8 @@ export default function PricingSection({ onSelectPlan, onAddToCart, isAnnual, on
             key={label}
             onClick={onToggleAnnual}
             style={{
-              padding: '8px 20px',
-              borderRadius: 999,
-              border: 'none',
               background: isAnnual === value ? 'var(--purple)' : 'transparent',
               color: isAnnual === value ? 'white' : 'var(--muted)',
-              fontWeight: 700,
-              fontSize: '0.92rem',
-              cursor: 'pointer',
-              transition: '0.15s ease',
             }}
           >
             {label}
@@ -156,7 +140,7 @@ export default function PricingSection({ onSelectPlan, onAddToCart, isAnnual, on
       </div>
 
       <div style={{ maxWidth: 960, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20, justifyContent: 'center' }}>
+        <div className="pricing-grid">
           {digitalPlans.map((plan) => (
             <DigitalCard key={plan.id} plan={plan} isAnnual={isAnnual} onSelectPlan={onSelectPlan} onAddToCart={onAddToCart} />
           ))}

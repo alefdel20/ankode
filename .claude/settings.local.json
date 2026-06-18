@@ -19,7 +19,12 @@
       "Bash(Format-List)",
       "Bash(find \"C:\\\\\\\\Users\\\\\\\\tatue\\\\\\\\Documents\\\\\\\\POS_SaaS\\\\\\\\pos-app\\\\\\\\backend\" -type f -name \"*.js\")",
       "Bash(Get-ChildItem -Recurse -Filter \"*.jsx\" \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\")",
-      "Bash(Select-Object -ExpandProperty FullName)"
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(ssh *)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\\\\components\\\\RestauranteSection.jsx\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\\\\components\\\\RestauranteSection.css\" -Force)",
+      "Bash(node ./node_modules/vite/bin/vite.js build)",
+      "Bash(node ./node_modules/vite/bin/vite.js --host)"
     ]
   }
 }

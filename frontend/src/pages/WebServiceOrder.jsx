@@ -196,13 +196,7 @@ export default function WebServiceOrder() {
             Te armamos una página profesional en 5 días. Tú nos cuentas de tu negocio, nosotros hacemos el resto.
           </p>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-            gap: 16,
-            maxWidth: 820,
-            margin: '0 auto 48px',
-          }}>
+          <div className="web-stats-grid">
             {[
               { num: '5',    desc: 'Días hábiles de entrega (básico)' },
               { num: '$0',   desc: 'Costo extra de infraestructura para ti' },
@@ -271,7 +265,7 @@ export default function WebServiceOrder() {
             </span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 28, maxWidth: 860, margin: '0 auto' }}>
+          <div className="web-plans-grid">
             <PlanCard plan={BASICO} featured={false} isAnnual={isAnnual} />
             <PlanCard plan={AVANZADO} featured={true} isAnnual={isAnnual} />
           </div>
@@ -285,7 +279,7 @@ export default function WebServiceOrder() {
             <p style={{ color: 'var(--muted)' }}>Sin reuniones largas ni tecnicismos. Así es el proceso.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 16 }}>
+          <div className="web-steps-grid">
             {STEPS.map((step, i) => (
               <div key={step.title} className="step-card" style={{
                 padding: 22,

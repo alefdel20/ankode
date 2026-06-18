@@ -15,7 +15,7 @@ export default function HowItWorks() {
         <p>Sin tecnicismos, sin reuniones interminables. Así es el proceso.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 16 }}>
+      <div className="web-steps-grid">
         {WEB_STEPS.map((step, i) => (
           <div key={step.title} className="step-card" style={{ padding: 22 }}>
             <div className="step-number">{i + 1}</div>

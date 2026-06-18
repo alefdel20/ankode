@@ -59,7 +59,7 @@ export default function WebPlansSection() {
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 24, maxWidth: 900, margin: '0 auto' }}>
+      <div className="web-plans-grid web-plans-grid--wide">
         {PLANS.map(plan => (
           <article
             key={plan.id}

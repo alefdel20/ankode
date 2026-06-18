@@ -451,7 +451,7 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
                       />
                     </Field>
                   )}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                  <div className="checkout-card-grid">
                     <Field label="Mes venc.">
                       <input
                         type="text"

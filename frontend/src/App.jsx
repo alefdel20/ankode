@@ -287,12 +287,7 @@ function CartDrawer({ cart, onClose, onRemoveItem, onCheckout, cartWarning }) {
           zIndex: 999,
         }}
       />
-      <div style={{
-        position: 'fixed', top: 0, right: 0, height: '100vh',
-        width: 360, background: 'white', zIndex: 1000,
-        boxShadow: '-4px 0 24px rgba(0,0,0,0.12)',
-        display: 'flex', flexDirection: 'column', padding: 24,
-      }}>
+      <div className="cart-drawer">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <h3 style={{ margin: 0 }}>Tu carrito</h3>
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer' }}>×</button>
@@ -372,6 +367,7 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartWarning, setCartWarning] = useState('');
   const [activeGiro, setActiveGiro] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
@@ -429,7 +425,7 @@ function App() {
           <a href="#planes">Planes</a>
         </nav>
 
-        <div className="topbar-actions">
+        <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button
             className="btn btn-light cart-btn"
             aria-label="Ver carrito"
@@ -442,8 +438,31 @@ function App() {
           <a href={demoLink} className="btn btn-secondary" target="_blank" rel="noreferrer">
             Solicitar demo
           </a>
+          <button
+            className="hamburger-btn"
+            aria-label="Abrir menú"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <span />
+          </button>
         </div>
       </header>
+
+      {isMobileMenuOpen && (
+        <>
+          <div className="mobile-nav-overlay" onClick={() => setIsMobileMenuOpen(false)} />
+          <nav className="mobile-nav">
+            <button className="mobile-nav-close" aria-label="Cerrar menú" onClick={() => setIsMobileMenuOpen(false)}>×</button>
+            <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)}>Módulos</a>
+            <a href="#giros" onClick={() => setIsMobileMenuOpen(false)}>Por giro</a>
+            <a href="#personalizacion" onClick={() => setIsMobileMenuOpen(false)}>Personalización</a>
+            <a href="#faq" onClick={() => setIsMobileMenuOpen(false)}>Preguntas frecuentes</a>
+            <a href="/paginas-web" onClick={() => setIsMobileMenuOpen(false)}>Páginas web</a>
+            <a href="#planes" onClick={() => setIsMobileMenuOpen(false)}>Planes</a>
+            <a href={demoLink} target="_blank" rel="noreferrer" onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--purple)', fontWeight: 700 }}>Solicitar demo</a>
+          </nav>
+        </>
+      )}
 
       <main>
         <section className="hero">

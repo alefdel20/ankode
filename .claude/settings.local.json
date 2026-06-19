@@ -24,7 +24,8 @@
       "Bash(Remove-Item \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\\\\components\\\\RestauranteSection.jsx\" -Force)",
       "Bash(Remove-Item \"C:\\\\Users\\\\tatue\\\\Documents\\\\ankode 2\\\\frontend\\\\src\\\\components\\\\RestauranteSection.css\" -Force)",
       "Bash(node ./node_modules/vite/bin/vite.js build)",
-      "Bash(node ./node_modules/vite/bin/vite.js --host)"
+      "Bash(node ./node_modules/vite/bin/vite.js --host)",
+      "Bash(npx vite *)"
     ]
   }
 }

@@ -24,6 +24,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -855,11 +860,13 @@ a {
 
   .hero-visual {
     min-height: auto;
+    flex-direction: column;
   }
 
   .floating-note {
     position: static;
     margin-top: 12px;
+    align-self: stretch;
   }
 }
 

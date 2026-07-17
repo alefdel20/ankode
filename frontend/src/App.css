@@ -382,6 +382,10 @@ a {
   font-size: clamp(2.1rem, 4vw, 3.6rem);
 }
 
+.section-heading--compact h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+}
+
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

@@ -89,7 +89,7 @@ const giros = [
       'Crédito a clientes con cobranza integrada',
       'Corte de caja diario',
       'Reportes de utilidad bruta',
-      'CFDI 4.0 incluido',
+      'Compatible con facturación CFDI 4.0 (add-on)',
     ],
     cta: {
       label: 'Solicitar información',
@@ -141,7 +141,7 @@ const giros = [
       'Pantalla KDS para el equipo de cocina',
       'Modificadores de platillos (sin pepino, extra queso)',
       'División de cuenta y propina integrada',
-      'CFDI 4.0 por mesa',
+      'Compatible con facturación CFDI 4.0 (add-on)',
     ],
     cta: {
       label: 'Agendar demo gratis',
@@ -697,7 +697,7 @@ function App() {
         </section>
 
         <section className="section section-soft">
-          <div className="section-heading center">
+          <div className="section-heading center section-heading--compact">
             <p className="eyebrow">Restaurantes</p>
             <h2>Restaurantes, sin comandas perdidas</h2>
             <p>De la mesa a la cocina, todo en el mismo sistema.</p>

@@ -148,6 +148,30 @@ const giros = [
       href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante',
     },
   },
+  {
+    id: 'veterinaria',
+    emoji: '🐾',
+    title: 'Veterinaria & Clínicas',
+    desc: 'Expediente clínico conectado a tu punto de venta.',
+    features: [
+      'Expediente por paciente, vinculado al dueño',
+      'Historial de citas y eventos preventivos',
+      'Recetas y seguimiento de tratamiento',
+      'Rol clínico independiente del área de caja',
+    ],
+    comingSoon: true,
+    cta: {
+      label: 'Próximamente',
+      href: null,
+    },
+  },
+];
+
+const restauranteHighlights = [
+  'Comandas digitales a pantalla de cocina (KDS)',
+  "Rol especializado 'Cocina', separado de caja",
+  'Combos y paquetes con precio especial',
+  'Control de insumos ligado al inventario',
 ];
 
 function CartIcon({ count }) {
@@ -649,7 +673,11 @@ function App() {
                           <li key={f}>{f}</li>
                         ))}
                       </ul>
-                      {giro.cta && (
+                      {giro.comingSoon ? (
+                        <span className="pill" style={{ marginTop: 16 }}>
+                          {giro.cta.label}
+                        </span>
+                      ) : giro.cta && (
                         <a
                           href={giro.cta.href}
                           target="_blank"
@@ -665,6 +693,33 @@ function App() {
                 </article>
               );
             })}
+          </div>
+        </section>
+
+        <section className="section section-soft">
+          <div className="section-heading center">
+            <p className="eyebrow">Restaurantes</p>
+            <h2>Restaurantes, sin comandas perdidas</h2>
+            <p>De la mesa a la cocina, todo en el mismo sistema.</p>
+          </div>
+          <div className="industry-grid">
+            <article className="industry-card" style={{ gridColumn: '1 / -1' }}>
+              <div className="industry-card__detail industry-card__detail--open">
+                <ul className="industry-card__features">
+                  {restauranteHighlights.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+                <a
+                  href="https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="industry-card__cta"
+                >
+                  Cotiza tu restaurante &#x2192;
+                </a>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -745,6 +800,27 @@ function App() {
                 <p>{step}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section-heading center">
+            <p className="eyebrow">Facturación</p>
+            <h2>Factura sin salir del ticket de venta</h2>
+            <p>
+              Agrega facturación electrónica CFDI 4.0 a cualquier plan. Timbrado
+              automático vía PAC certificado — sin manejar tú el proceso ante el SAT.
+            </p>
+          </div>
+          <div className="soft-card" style={{ maxWidth: 640, margin: '0 auto', padding: 32 }}>
+            <ul style={{ margin: '0 0 20px', paddingLeft: 18, color: 'var(--muted)', display: 'grid', gap: 8 }}>
+              <li>Timbrado automático vía PAC certificado</li>
+              <li>Factura generada desde la venta, sin recapturar datos</li>
+              <li>Compatible con personas físicas y morales</li>
+            </ul>
+            <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-strong)' }}>
+              +$149 MXN/mes · disponible en todos los planes
+            </p>
           </div>
         </section>
 

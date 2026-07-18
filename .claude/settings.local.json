@@ -26,7 +26,8 @@
       "Bash(node ./node_modules/vite/bin/vite.js build)",
       "Bash(node ./node_modules/vite/bin/vite.js --host)",
       "Bash(npx vite *)",
-      "Bash(grep -n -B1 -A5 \"^html,$\" src/App.css src/index.css)"
+      "Bash(grep -n -B1 -A5 \"^html,$\" src/App.css src/index.css)",
+      "Bash(grep -n \"^\\\\.soft-card {$\\\\|^\\\\.industry-grid {$\" src/App.css)"
     ]
   }
 }

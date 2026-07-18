@@ -1,9 +1,15 @@
 import "./App.css";
 import ankodeLogo from "./assets/ankode-logo.png";
+import shotVentasRetail from "./assets/screenshots/ventas-retail.png";
+import shotCocinaKds from "./assets/screenshots/cocina-kds.png";
+import shotComandaMesa from "./assets/screenshots/comanda-mesa.png";
+import shotDashboard from "./assets/screenshots/dashboard.png";
+import shotKits from "./assets/screenshots/kits.png";
 import { useState } from 'react';
 import { PLANS } from './constants/plans';
 import PricingSection from './components/PricingSection';
 import CheckoutModal from './components/CheckoutModal';
+import WebPlansSection from './components/landing/WebPlansSection';
 
 
 const CONTACT = {
@@ -171,6 +177,14 @@ const giros = [
       href: null,
     },
   },
+];
+
+const screenshots = [
+  { src: shotVentasRetail, caption: 'Ventas · Retail' },
+  { src: shotCocinaKds, caption: 'Cocina · Pantalla en vivo (KDS)' },
+  { src: shotComandaMesa, caption: 'Comanda digital' },
+  { src: shotDashboard, caption: 'Reportes y resumen operativo' },
+  { src: shotKits, caption: 'Combos y kits' },
 ];
 
 function CartIcon({ count }) {
@@ -820,6 +834,26 @@ function App() {
             </div>
           </div>
         </section>
+
+        <section className="section section-soft">
+          <div className="section-heading center">
+            <p className="eyebrow">Producto</p>
+            <h2>Así se ve por dentro</h2>
+            <p>Capturas reales del sistema, no mockups.</p>
+          </div>
+          <div className="screenshots-grid">
+            {screenshots.map((shot) => (
+              <div key={shot.caption} className="soft-card">
+                <div className="screenshot-frame">
+                  <img src={shot.src} alt={shot.caption} loading="lazy" />
+                </div>
+                <p>{shot.caption}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <WebPlansSection />
 
         <section id="faq" className="section">
           <div className="section-heading center">

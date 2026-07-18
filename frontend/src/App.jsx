@@ -107,6 +107,7 @@ const giros = [
       'Control de stock con alertas de mínimos',
       'Historial de compras por cliente',
       'Reportes de inventario exportables',
+      'Compatible con facturación CFDI 4.0 (add-on)',
     ],
     cta: {
       label: 'Solicitar información',
@@ -124,6 +125,7 @@ const giros = [
       'Múltiples listas de precios',
       'Inventario por unidad o bulto',
       'Control de cuentas por cobrar',
+      'Compatible con facturación CFDI 4.0 (add-on)',
     ],
     cta: {
       label: 'Solicitar información',
@@ -141,7 +143,10 @@ const giros = [
       'Pantalla KDS para el equipo de cocina',
       'Modificadores de platillos (sin pepino, extra queso)',
       'División de cuenta y propina integrada',
-      'Compatible con facturación CFDI 4.0 (add-on)',
+      'Comandas digitales a pantalla de cocina (KDS)',
+      "Rol especializado 'Cocina', separado de caja",
+      'Combos y paquetes con precio especial',
+      'Control de insumos ligado al inventario',
     ],
     cta: {
       label: 'Agendar demo gratis',
@@ -158,6 +163,7 @@ const giros = [
       'Historial de citas y eventos preventivos',
       'Recetas y seguimiento de tratamiento',
       'Rol clínico independiente del área de caja',
+      'Compatible con facturación CFDI 4.0 (add-on)',
     ],
     comingSoon: true,
     cta: {
@@ -165,13 +171,6 @@ const giros = [
       href: null,
     },
   },
-];
-
-const restauranteHighlights = [
-  'Comandas digitales a pantalla de cocina (KDS)',
-  "Rol especializado 'Cocina', separado de caja",
-  'Combos y paquetes con precio especial',
-  'Control de insumos ligado al inventario',
 ];
 
 function CartIcon({ count }) {
@@ -696,33 +695,6 @@ function App() {
           </div>
         </section>
 
-        <section className="section section-soft">
-          <div className="section-heading center section-heading--compact">
-            <p className="eyebrow">Restaurantes</p>
-            <h2>Restaurantes, sin comandas perdidas</h2>
-            <p>De la mesa a la cocina, todo en el mismo sistema.</p>
-          </div>
-          <div className="industry-grid">
-            <article className="industry-card" style={{ gridColumn: '1 / -1' }}>
-              <div className="industry-card__detail industry-card__detail--open">
-                <ul className="industry-card__features">
-                  {restauranteHighlights.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-                <a
-                  href="https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="industry-card__cta"
-                >
-                  Cotiza tu restaurante &#x2192;
-                </a>
-              </div>
-            </article>
-          </div>
-        </section>
-
         <section id="personalizacion" className="section">
           <div className="feature-showcase">
             <div className="feature-copy">
@@ -803,6 +775,13 @@ function App() {
           </div>
         </section>
 
+        <PricingSection
+          onSelectPlan={handleSelectPlan}
+          onAddToCart={handleAddToCart}
+          isAnnual={isAnnual}
+          onToggleAnnual={() => setIsAnnual(prev => !prev)}
+        />
+
         <section className="section">
           <div className="section-heading center">
             <p className="eyebrow">Facturación</p>
@@ -821,15 +800,26 @@ function App() {
             <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-strong)' }}>
               +$149 MXN/mes · disponible en todos los planes
             </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
+              <button
+                className="btn btn-outline"
+                onClick={() => handleAddToCart({ id: 'cfdi-addon', name: 'Facturación CFDI 4.0', price: 149, type: 'accessory' })}
+              >
+                Agregar al carrito
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  handleAddToCart({ id: 'cfdi-addon', name: 'Facturación CFDI 4.0', price: 149, type: 'accessory' });
+                  setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
+                  setIsCheckoutOpen(true);
+                }}
+              >
+                Contratar ahora
+              </button>
+            </div>
           </div>
         </section>
-
-        <PricingSection
-          onSelectPlan={handleSelectPlan}
-          onAddToCart={handleAddToCart}
-          isAnnual={isAnnual}
-          onToggleAnnual={() => setIsAnnual(prev => !prev)}
-        />
 
         <section id="faq" className="section">
           <div className="section-heading center">

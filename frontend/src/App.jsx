@@ -436,7 +436,7 @@ function App() {
     <div className="site-shell">
       <header className="topbar">
         <div className="brand brand-real">
-          <img src={ankodeLogo} alt="ankode" className="brand-logo" style={{ height: '32px', width: 'auto' }} />
+          <img src={ankodeLogo} alt="ankode" className="brand-logo" style={{ height: '42px', width: 'auto' }} />
         </div>
 
         <nav className="topnav">
@@ -800,7 +800,7 @@ function App() {
             <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-strong)' }}>
               +$149 MXN/mes · disponible en todos los planes
             </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
               <button
                 className="btn btn-outline"
                 onClick={() => handleAddToCart({ id: 'cfdi-addon', name: 'Facturación CFDI 4.0', price: 149, type: 'accessory' })}

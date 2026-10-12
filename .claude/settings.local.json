@@ -27,7 +27,11 @@
       "Bash(node ./node_modules/vite/bin/vite.js --host)",
       "Bash(npx vite *)",
       "Bash(grep -n -B1 -A5 \"^html,$\" src/App.css src/index.css)",
-      "Bash(grep -n \"^\\\\.soft-card {$\\\\|^\\\\.industry-grid {$\" src/App.css)"
+      "Bash(grep -n \"^\\\\.soft-card {$\\\\|^\\\\.industry-grid {$\" src/App.css)",
+      "Bash(grep -oE \"^[.#a-zA-Z][a-zA-Z0-9._#, -]*\\\\s*\\\\{\" src/index.css)",
+      "Bash(sed 's/\\\\s*{$//')",
+      "Read(//tmp/**)",
+      "Bash(grep -oE \"^[.#a-zA-Z][a-zA-Z0-9._#, -]*\\\\s*\\\\{\" src/App.css)"
     ]
   }
 }

@@ -1,9 +1,9 @@
 export const LEGAL = {
   terms: `TÉRMINOS Y CONDICIONES DE USO Y CONTRATACIÓN — ANKODE
-Última actualización: abril 2026
+Última actualización: octubre 2026
 
 1. IDENTIDAD DE LA EMPRESA
-El presente sitio web, el sistema informático de Punto de Venta (SaaS) y el servicio de desarrollo de páginas web denominados comercialmente "Ankode", son operados por Alejandro Flores Delgado, persona física con actividad empresarial, con domicilio fiscal en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México, y correo de contacto técnico y comercial: ankodemx@gmail.com.
+El presente sitio web, el sistema informático de Punto de Venta (SaaS) y el servicio de desarrollo de páginas web denominados comercialmente "Ankode", son operados por Alejandro Flores Delgado, persona física con actividad empresarial, con domicilio fiscal en Ixtapaluca, Estado de México, y correo de contacto técnico y comercial: ankodemx@gmail.com.
 
 2. ACEPTACIÓN DE LOS TÉRMINOS
 La creación de una cuenta de usuario, la descarga del software, la firma de propuestas comerciales, el pago de la tarifa de configuración inicial (setup) o la contratación de cualquiera de las suscripciones de Ankode implica la aceptación expresa, total y sin reservas de estos Términos y Condiciones por parte del Cliente.
@@ -59,10 +59,10 @@ Ankode se reserva el derecho de actualizar estos Términos y Condiciones, notifi
 Estos Términos y Condiciones se rigen por las leyes federales de los Estados Unidos Mexicanos. Las partes se someten a la jurisdicción de los tribunales competentes en la Ciudad de México o el Estado de México.`,
 
   privacy: `AVISO DE PRIVACIDAD — ANKODE
-Última actualización: abril 2026
+Última actualización: octubre 2026
 
 1. RESPONSABLE DEL TRATAMIENTO DE DATOS PERSONALES
-Alejandro Flores Delgado (en lo sucesivo "Ankode"), con domicilio en Av. Paseo de los Pinos CS 350, Arbolada Paseo de los Pinos, Ixtapaluca, Estado de México, y correo de contacto ankodemx@gmail.com, es el Responsable del uso, tratamiento y protección de sus datos personales de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
+Alejandro Flores Delgado (en lo sucesivo "Ankode"), con domicilio en Ixtapaluca, Estado de México, y correo de contacto ankodemx@gmail.com, es el Responsable del uso, tratamiento y protección de sus datos personales de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
 
 2. DATOS PERSONALES RECABADOS Y FINALIDADES
 Recabamos sus datos de identificación, contacto, fiscales y de facturación (nombre, teléfono, correo electrónico, RFC, dirección del negocio y tokens de pago cifrados a través de Openpay) para las siguientes finalidades:
@@ -80,12 +80,23 @@ Rol de Encargado del Tratamiento: El Cliente (la PyME) es el único "Responsable
 Para cumplir con los servicios, Ankode comparte datos personales con:
 - Openpay, S.A. de C.V. (México): Procesamiento y validación de transacciones de pago (Certificación PCI DSS).
 - Hostinger International Ltd. (Chipre/EUA): Proveedor de infraestructura de servidores VPS y almacenamiento de bases de datos cifradas.
+- Proveedores de inteligencia artificial (actualmente DeepSeek y, en proceso de migración, Anthropic): procesan la información que el Cliente consulta a través del asistente de IA del sistema (por ejemplo productos, ventas e inventario) para generar respuestas. No usamos esos datos para otros fines.
+- Facturapi (México): proveedor autorizado de certificación (PAC) para el timbrado de facturas CFDI, únicamente cuando el Cliente activa la facturación electrónica; recibe los datos fiscales necesarios para emitir el comprobante.
 
 5. MEDIDAS DE SEGURIDAD
 Ankode cuenta con medidas de seguridad que incluyen cifrado de transferencias mediante protocolo SSL (https), aislamiento de bases de datos bajo arquitectura multi-tenant y copias de seguridad periódicas para evitar el acceso no autorizado, robo o alteración de su información.
 
 6. EJERCICIO DE DERECHOS ARCO
-Usted tiene derecho a ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) sobre sus datos personales enviando una solicitud por escrito a ankodemx@gmail.com, adjuntando identificación oficial vigente y descripción clara del derecho que desea ejercer, de conformidad con la LFPDPPP. Responderemos en un plazo no mayor a 20 días hábiles.`,
+Usted tiene derecho a ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) sobre sus datos personales enviando una solicitud por escrito a ankodemx@gmail.com, adjuntando identificación oficial vigente y descripción clara del derecho que desea ejercer, de conformidad con la LFPDPPP. Responderemos en un plazo no mayor a 20 días hábiles.
+
+7. CONSERVACIÓN DE DATOS
+Conservamos sus datos mientras su cuenta esté activa y, tras la cancelación, durante el plazo indicado en nuestra Política de Cancelación, salvo que una obligación legal o fiscal exija conservarlos por más tiempo.
+
+8. LIMITACIÓN DEL USO O DIVULGACIÓN
+Puede limitar el uso o divulgación de sus datos, o revocar su consentimiento, escribiendo a ankodemx@gmail.com.
+
+9. CAMBIOS AL AVISO
+Cualquier cambio se notificará por correo electrónico y se publicará en esta página.`,
 
   cancellation: `POLÍTICA DE CANCELACIÓN Y SUSPENSIÓN — ANKODE
 Última actualización: abril 2026

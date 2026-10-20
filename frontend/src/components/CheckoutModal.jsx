@@ -602,8 +602,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
             {/* Support info */}
             <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4, marginBottom: 0 }}>
               ¿Necesitas ayuda?{' '}
-              <a href="mailto:ankodemx@gmail.com" style={{ color: 'var(--muted)' }}>
-                ankodemx@gmail.com
+              <a href="mailto:soporte@ankode.cloud" style={{ color: 'var(--muted)' }}>
+                soporte@ankode.cloud
               </a>
             </p>
           </>

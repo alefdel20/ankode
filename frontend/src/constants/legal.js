@@ -3,7 +3,7 @@ export const LEGAL = {
 Última actualización: octubre 2026
 
 1. IDENTIDAD DE LA EMPRESA
-El presente sitio web, el sistema informático de Punto de Venta (SaaS) y el servicio de desarrollo de páginas web denominados comercialmente "Ankode", son operados por Alejandro Flores Delgado, persona física con actividad empresarial, con domicilio fiscal en Ixtapaluca, Estado de México, y correo de contacto técnico y comercial: ankodemx@gmail.com.
+El presente sitio web, el sistema informático de Punto de Venta (SaaS) y el servicio de desarrollo de páginas web denominados comercialmente "Ankode", son operados por Alejandro Flores Delgado, persona física con actividad empresarial, con domicilio fiscal en Ixtapaluca, Estado de México, y correo de contacto técnico y comercial: soporte@ankode.cloud.
 
 2. ACEPTACIÓN DE LOS TÉRMINOS
 La creación de una cuenta de usuario, la descarga del software, la firma de propuestas comerciales, el pago de la tarifa de configuración inicial (setup) o la contratación de cualquiera de las suscripciones de Ankode implica la aceptación expresa, total y sin reservas de estos Términos y Condiciones por parte del Cliente.
@@ -62,7 +62,7 @@ Estos Términos y Condiciones se rigen por las leyes federales de los Estados Un
 Última actualización: octubre 2026
 
 1. RESPONSABLE DEL TRATAMIENTO DE DATOS PERSONALES
-Alejandro Flores Delgado (en lo sucesivo "Ankode"), con domicilio en Ixtapaluca, Estado de México, y correo de contacto ankodemx@gmail.com, es el Responsable del uso, tratamiento y protección de sus datos personales de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
+Alejandro Flores Delgado (en lo sucesivo "Ankode"), con domicilio en Ixtapaluca, Estado de México, y correo de contacto soporte@ankode.cloud, es el Responsable del uso, tratamiento y protección de sus datos personales de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
 
 2. DATOS PERSONALES RECABADOS Y FINALIDADES
 Recabamos sus datos de identificación, contacto, fiscales y de facturación (nombre, teléfono, correo electrónico, RFC, dirección del negocio y tokens de pago cifrados a través de Openpay) para las siguientes finalidades:
@@ -87,13 +87,13 @@ Para cumplir con los servicios, Ankode comparte datos personales con:
 Ankode cuenta con medidas de seguridad que incluyen cifrado de transferencias mediante protocolo SSL (https), aislamiento de bases de datos bajo arquitectura multi-tenant y copias de seguridad periódicas para evitar el acceso no autorizado, robo o alteración de su información.
 
 6. EJERCICIO DE DERECHOS ARCO
-Usted tiene derecho a ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) sobre sus datos personales enviando una solicitud por escrito a ankodemx@gmail.com, adjuntando identificación oficial vigente y descripción clara del derecho que desea ejercer, de conformidad con la LFPDPPP. Responderemos en un plazo no mayor a 20 días hábiles.
+Usted tiene derecho a ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) sobre sus datos personales enviando una solicitud por escrito a soporte@ankode.cloud, adjuntando identificación oficial vigente y descripción clara del derecho que desea ejercer, de conformidad con la LFPDPPP. Responderemos en un plazo no mayor a 20 días hábiles.
 
 7. CONSERVACIÓN DE DATOS
 Conservamos sus datos mientras su cuenta esté activa y, tras la cancelación, durante el plazo indicado en nuestra Política de Cancelación, salvo que una obligación legal o fiscal exija conservarlos por más tiempo.
 
 8. LIMITACIÓN DEL USO O DIVULGACIÓN
-Puede limitar el uso o divulgación de sus datos, o revocar su consentimiento, escribiendo a ankodemx@gmail.com.
+Puede limitar el uso o divulgación de sus datos, o revocar su consentimiento, escribiendo a soporte@ankode.cloud.
 
 9. CAMBIOS AL AVISO
 Cualquier cambio se notificará por correo electrónico y se publicará en esta página.`,
@@ -102,7 +102,7 @@ Cualquier cambio se notificará por correo electrónico y se publicará en esta 
 Última actualización: abril 2026
 
 1. CANCELACIÓN POR EL CLIENTE
-El Cliente puede solicitar la cancelación de su suscripción (tanto del sistema POS Ankode como del servicio de hosting y mantenimiento web) en cualquier momento directamente desde su panel de administración o mediante comunicación escrita a ankodemx@gmail.com.
+El Cliente puede solicitar la cancelación de su suscripción (tanto del sistema POS Ankode como del servicio de hosting y mantenimiento web) en cualquier momento directamente desde su panel de administración o mediante comunicación escrita a soporte@ankode.cloud.
 
 2. PLAZOS DE PREAVISO Y CARGOS AUTOMÁTICOS
 Para evitar la renovación e inicio de un nuevo periodo de facturación, se requiere que la cancelación se solicite con al menos 48 horas de anticipación a la fecha de corte. La cancelación surtirá efectos al finalizar el último día del periodo de facturación que se encuentre pagado (mensual o anual).
@@ -122,7 +122,7 @@ Transferencia de dominios: Si el dominio (.com.mx) fue registrado por Ankode, el
 El Cliente acepta que es su entera responsabilidad exportar su información antes de la fecha efectiva de cancelación. Una vez finalizado el periodo contratado, Ankode mantendrá resguardada la base de datos por un plazo máximo de 10 días naturales. Transcurrido este plazo, Ankode procederá a la eliminación definitiva de toda la información de los servidores sin responsabilidad alguna de recuperación de datos.
 
 7. SOPORTE PARA CANCELACIONES
-Para aclaraciones o apoyo en el proceso de cancelación: ankodemx@gmail.com y WhatsApp oficial, lunes a viernes de 9:00 a 18:00 hrs.`,
+Para aclaraciones o apoyo en el proceso de cancelación: soporte@ankode.cloud y WhatsApp oficial, lunes a viernes de 9:00 a 18:00 hrs.`,
 };
 
 export const WEB_TERMS = [

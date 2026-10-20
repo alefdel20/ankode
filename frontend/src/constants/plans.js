@@ -76,5 +76,5 @@ export const TERMS = {
     'Al contratar plan anual pagas 10 mensualidades y recibes 12 meses de servicio (2 meses gratis — ahorro del 16.7%)',
   dataPolicy:
     'Los datos de tarjeta son tokenizados directamente por Openpay. Ankode nunca almacena datos de pago.',
-  supportEmail: 'ankodemx@gmail.com',
+  supportEmail: 'soporte@ankode.cloud',
 };

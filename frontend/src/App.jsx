@@ -14,7 +14,7 @@ import WebPlansSection from './components/landing/WebPlansSection';
 
 const CONTACT = {
   whatsapp: "525515133527",
-  email: "ankodemx@gmail.com",
+  email: "soporte@ankode.cloud",
 };
 
 const cleanWhatsAppNumber = CONTACT.whatsapp.replace(/\D/g, "");

@@ -208,7 +208,7 @@ export default function WebSuccessScreen() {
           </p>
           <p style={{ ...styles.sub, marginTop: 16 }}>
             Si no recibes nada en 10 minutos, escríbenos a{' '}
-            <a href="mailto:ankodemx@gmail.com" style={styles.supportLink}>ankodemx@gmail.com</a>
+            <a href="mailto:soporte@ankode.cloud" style={styles.supportLink}>soporte@ankode.cloud</a>
           </p>
           <a href={WA_LINK} target="_blank" rel="noreferrer" style={styles.btnGreen}>
             Contactar por WhatsApp
@@ -228,7 +228,7 @@ export default function WebSuccessScreen() {
         <h2 style={{ ...styles.title, color: COLORS.error }}>Hubo un problema con tu pago</h2>
         <p style={styles.sub}>
           Si el cargo fue aplicado contáctanos a{' '}
-          <a href="mailto:ankodemx@gmail.com" style={styles.supportLink}>ankodemx@gmail.com</a>
+          <a href="mailto:soporte@ankode.cloud" style={styles.supportLink}>soporte@ankode.cloud</a>
         </p>
         <a href="/paginas-web" style={styles.btnGreen}>Intentar de nuevo</a>
       </div>

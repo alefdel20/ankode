@@ -40,28 +40,6 @@ export const PLANS = [
       'Hasta 3 sucursales incluidas',
     ],
   },
-  {
-    id: 'enterprise',
-    name: 'Enterprise',
-    monthlyPrice: 999,
-    annualPrice: 9990,
-    annualSaving: 1998,
-    includedBranches: 5,
-    extraBranchPrice: 99,
-    badge: 'Completo',
-    features: [
-        'POS & Ventas',
-        'Inventario',
-        'Crédito y Cobranza',
-        'Finanzas y Reportes',
-        'Gestión de Usuarios (5 roles)',
-        'Multi-empresa',
-        'Soporte técnico',
-        'Reportes avanzados y análisis de tendencias',
-        'Hasta 5 sucursales incluidas',
-        'Precio preferencial por sucursal extra: +$99/mes',
-    ],
-  },
 ];
 
 export const TERMS = {

@@ -1,972 +1,360 @@
-import "./App.css";
-import ankodeLogo from "./assets/ankode-logo.png";
-import shotVentasRetail from "./assets/screenshots/ventas-retail.png";
-import shotCocinaKds from "./assets/screenshots/cocina-kds.png";
-import shotComandaMesa from "./assets/screenshots/comanda-mesa.png";
-import shotDashboard from "./assets/screenshots/dashboard.png";
-import shotKits from "./assets/screenshots/kits.png";
-import { useState } from 'react';
-import { PLANS } from './constants/plans';
-import PricingSection from './components/PricingSection';
-import CheckoutModal from './components/CheckoutModal';
-import WebPlansSection from './components/landing/WebPlansSection';
+import "./Landing.css";
+import { useState } from "react";
+import videoVenta from "./assets/videos/venta-real.mp4";
+import posterVenta from "./assets/videos/venta-real-poster.webp";
+import videoOnboarding from "./assets/videos/onboarding.mp4";
+import posterOnboarding from "./assets/videos/onboarding-poster.webp";
+import videoRestaurante from "./assets/videos/restaurante.mp4";
+import posterRestaurante from "./assets/videos/restaurante-poster.webp";
+import videoVeterinaria from "./assets/videos/veterinaria.mp4";
+import posterVeterinaria from "./assets/videos/veterinaria-poster.webp";
+import ankodeLogo from "./assets/ankode-logo-oficial.png";
+import CheckoutModal from "./components/CheckoutModal";
 
+// Agente de WhatsApp que da la demo; si falla, él mismo canaliza con una persona.
+const WA_AGENT = "525515133527";
+const wa = (number, text) => `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+const DEMO_URL = wa(WA_AGENT, "Hola, quiero ver la demo de Ankode POS");
 
-const CONTACT = {
-  whatsapp: "525515133527",
-  email: "soporte@ankode.cloud",
-};
-
-const cleanWhatsAppNumber = CONTACT.whatsapp.replace(/\D/g, "");
-
-const buildWhatsAppLink = (message) =>
-  `https://wa.me/${cleanWhatsAppNumber}?text=${encodeURIComponent(message)}`;
-
-const buildMailtoLink = (subject, body) =>
-  `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-const demoLink = buildWhatsAppLink("Hola, quiero solicitar una demo de ankode.");
-const contactEmailLink = buildMailtoLink(
-  "Quiero información de ankode",
-  "Hola, me gustaría recibir información sobre ankode y agendar una demo."
-);
-
-const moduleCards = [
-  { title: "Ventas", icon: "sales", desc: "Registra cada venta, aplica descuentos, gestiona métodos de pago y genera tu corte de caja diario." },
-  { title: "Inventario", icon: "inventory", desc: "Controla tu stock en tiempo real, recibe alertas de productos bajos y lleva el historial de movimientos." },
-  { title: "Proveedores", icon: "suppliers", desc: "Administra tus proveedores, registra órdenes de compra y da seguimiento a reabastecimientos." },
-  { title: "Crédito y cobranza", icon: "credit", desc: "Vende a crédito, lleva el saldo de cada cliente y envía recordatorios de pago automáticos." },
-  { title: "Finanzas básicas", icon: "finance", desc: "Visualiza ingresos, egresos y utilidad de tu negocio en reportes claros por período." },
-  { title: "Recordatorios", icon: "reminders", desc: "Programa y automatiza recordatorios para clientes con pagos pendientes o citas próximas." },
-  { title: "Soporte remoto", icon: "support", desc: "Accede a soporte técnico sin necesidad de visitas presenciales — resolvemos desde donde estás." },
-  { title: "Roles y accesos", icon: "access", desc: "Asigna permisos específicos a cada usuario: Admin, Cajero, Almacén, Vendedor y Gerente." },
+const STEPS = [
+  ["Escríbenos por WhatsApp", "Nuestro asistente te muestra el sistema en tu celular y resuelve tus dudas."],
+  ["Arma tu catálogo", "Entras con un catálogo precargado que puedes modificar, o agregas tus propios productos."],
+  ["Cobra tu primera venta", "Caja, inventario y factura ya vienen conectados desde el primer ticket."],
 ];
 
-const benefits = [
-  {
-    title: "Más control",
-    text: "Ten una visión más clara de ventas, inventario y operación sin depender de procesos manuales.",
-  },
-  {
-    title: "Más orden",
-    text: "Centraliza tareas clave en un solo sistema y reduce la dispersión entre herramientas.",
-  },
-  {
-    title: "Más adaptación",
-    text: "Si tu negocio necesita algo distinto, ankode puede ajustarse a tu operación real.",
-  },
+const FEATURES = [
+  ["Ventas rápidas", "Cobro con código de barras, efectivo, tarjeta o SPEI."],
+  ["Inventario en tiempo real", "Stock por sucursal y alerta de stock bajo en cada producto."],
+  ["Crédito y cobranza", "Sabes quién te debe, cuánto y desde cuándo."],
+  ["Combos y promociones", "Arma kits con descuento y remata lo que se mueve lento."],
+  ["Reportes", "Ventas, utilidad bruta y productos más vendidos."],
+  ["Equipo y sucursales", "Cinco roles de usuario y varias sucursales en el mismo sistema."],
 ];
 
-const steps = [
-  "Conocemos tu operación",
-  "Revisamos lo que necesitas controlar",
-  "Configuramos una propuesta acorde a tu negocio",
-  "Te acompañamos en la implementación",
+const COMPARE = [
+  ["Inventario al momento", "Se cuenta a mano", "Se captura aparte", "Baja con cada venta"],
+  ["Corte de caja", "Suma manual", "Fórmulas propias", "Diario y automático"],
+  ["Quién te debe", "Apuntes sueltos", "Otra hoja", "Crédito y cobranza"],
+  ["Factura CFDI 4.0", "Otro sistema", "Otro sistema", "Desde el ticket, incluida"],
+  ["Utilidad bruta", "Difícil de saber", "Si armas el reporte", "Reporte listo"],
 ];
 
-const faqs = [
+const PLANS = [
   {
-    q: "¿Sirve para cualquier negocio?",
-    a: "Está pensado para adaptarse a distintos giros, especialmente veterinaria y retail.",
-  },
-  {
-    q: "¿Es difícil de usar?",
-    a: "No. La idea es que sea práctico y claro para la operación diaria.",
-  },
-  {
-    q: "¿Ya está listo para restaurantes?",
-    a: "Sí, puede configurarse para la operación de este giro.",
-  },
-  {
-    q: "¿Se puede ajustar a mi proceso?",
-    a: "Sí. Esa es una de las ideas principales detrás de ankode.",
-  },
-];
-
-const giros = [
-  {
-    id: 'tienda',
-    emoji: '🏪',
-    title: 'Tienda',
-    desc: 'Controla tu inventario, ventas y cobranza desde un solo lugar. Ideal para tiendas de abarrotes, misceláneas y comercios en general.',
-    features: [
-      'Ventas rápidas con código de barras',
-      'Control de inventario por sucursal',
-      'Crédito a clientes con cobranza integrada',
-      'Corte de caja diario',
-      'Reportes de utilidad bruta',
-      'Compatible con facturación CFDI 4.0 (add-on)',
+    id: "basico",
+    name: "Básico",
+    monthly: "$349",
+    annual: "$3,490",
+    items: [
+      "1 sucursal incluida (sucursal extra: +$149 al mes)",
+      "POS, inventario, crédito y cobranza, reportes y 5 roles",
+      "Factura CFDI 4.0 con 100 timbres al mes",
+      "Onboarding con catálogo precargado",
     ],
-    cta: {
-      label: 'Solicitar información',
-      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20tienda',
-    },
   },
   {
-    id: 'papeleria',
-    emoji: '📋',
-    title: 'Papelería',
-    desc: 'Gestiona productos, ventas al mostrador y control de stock para tu papelería con rapidez y orden.',
-    features: [
-      'Catálogo de productos ilimitado',
-      'Ventas al mostrador',
-      'Control de stock con alertas de mínimos',
-      'Historial de compras por cliente',
-      'Reportes de inventario exportables',
-      'Compatible con facturación CFDI 4.0 (add-on)',
+    id: "premium",
+    name: "Premium",
+    monthly: "$699",
+    annual: "$6,990",
+    dark: true,
+    items: [
+      "3 sucursales incluidas (sucursal extra: +$129 al mes)",
+      "Todo lo del Básico, con 300 timbres al mes",
+      "Reportes por período y análisis de tendencias",
+      "Alertas de tu negocio en tu WhatsApp",
+      ["Tablero financiero por sucursal", "Próximamente"],
     ],
-    cta: {
-      label: 'Solicitar información',
-      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20papelería',
-    },
-  },
-  {
-    id: 'tlapaleria',
-    emoji: '🔧',
-    title: 'Tlapalería',
-    desc: 'Lleva el control de tu inventario variado, ventas y proveedores en un sistema pensado para ferreterías y tlapalerías.',
-    features: [
-      'Gestión de proveedores',
-      'Reabastecimiento con orden de compra',
-      'Múltiples listas de precios',
-      'Inventario por unidad o bulto',
-      'Control de cuentas por cobrar',
-      'Compatible con facturación CFDI 4.0 (add-on)',
-    ],
-    cta: {
-      label: 'Solicitar información',
-      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20información%20sobre%20Ankode%20para%20tlapalería',
-    },
-  },
-  {
-    id: 'restaurante',
-    emoji: '🍽️',
-    title: 'Restaurante',
-    desc: 'Controla mesas, comandas y cocina desde un solo sistema. Ideal para restaurantes y fondas.',
-    features: [
-      'Plano de salón con estado de mesas en tiempo real',
-      'Comandas digitales directo a cocina',
-      'Pantalla KDS para el equipo de cocina',
-      'Modificadores de platillos (sin pepino, extra queso)',
-      'División de cuenta y propina integrada',
-      'Comandas digitales a pantalla de cocina (KDS)',
-      "Rol especializado 'Cocina', separado de caja",
-      'Combos y paquetes con precio especial',
-      'Control de insumos ligado al inventario',
-    ],
-    cta: {
-      label: 'Agendar demo gratis',
-      href: 'https://wa.me/525515133527?text=Hola%2C%20quiero%20una%20demo%20de%20Ankode%20para%20restaurante',
-    },
-  },
-  {
-    id: 'veterinaria',
-    emoji: '🐾',
-    title: 'Veterinaria & Clínicas',
-    desc: 'Expediente clínico conectado a tu punto de venta.',
-    features: [
-      'Expediente por paciente, vinculado al dueño',
-      'Historial de citas y eventos preventivos',
-      'Recetas y seguimiento de tratamiento',
-      'Rol clínico independiente del área de caja',
-      'Compatible con facturación CFDI 4.0 (add-on)',
-    ],
-    comingSoon: true,
-    cta: {
-      label: 'Próximamente',
-      href: null,
-    },
   },
 ];
 
-const screenshots = [
-  { src: shotVentasRetail, caption: 'Ventas · Retail' },
-  { src: shotCocinaKds, caption: 'Cocina · Pantalla en vivo (KDS)' },
-  { src: shotComandaMesa, caption: 'Comanda digital' },
-  { src: shotDashboard, caption: 'Reportes y resumen operativo' },
-  { src: shotKits, caption: 'Combos y kits' },
+const GIROS = [
+  {
+    id: "retail",
+    tag: "Listo para usar hoy",
+    title: "Retail: tiendas, papelerías y tlapalerías",
+    text: "Venta por código de barras, inventario, crédito a clientes y factura desde el ticket. Es el módulo listo para producción.",
+    clips: [
+      { src: videoVenta, poster: posterVenta, height: 476, caption: "Venta: cobro en efectivo, cambio y ticket al instante.", label: "Grabación real de una venta: dos productos en el carrito, cobro de $65 con $100 en efectivo, cambio de $35 y ticket generado" },
+      { src: videoOnboarding, poster: posterOnboarding, height: 558, caption: "Alta de una papelería: 48 productos listos. Revisión acelerada ×4.", label: "Grabación real del alta de una papelería: revisa los precios del catálogo precargado, confirma 48 productos y entra a Ventas" },
+    ],
+  },
+  {
+    id: "beta",
+    tag: "Beta abierta",
+    title: "Restaurantes y veterinarias",
+    text: "Entra con precio de lanzamiento: durante la beta pagas lo mismo que en Retail ($349 o $699 al mes). Pruébalos antes que nadie y ayúdanos a mejorarlos.",
+    clips: [
+      { src: videoRestaurante, poster: posterRestaurante, height: 380, caption: "Restaurante: comanda, pantalla de cocina, dividir cuenta y cobro. Acelerado ×2.", label: "Grabación real del módulo de restaurante: se agrega una bebida a la comanda de la mesa 1, se envía a cocina, la pantalla de cocina la marca como lista, se divide la cuenta y se cobra" },
+      { src: videoVeterinaria, poster: posterVeterinaria, height: 396, caption: "Veterinaria: consultas, recetas y carnet del paciente.", label: "Grabación real del módulo de veterinaria: lista de consultas y recetas, nueva consulta y carnet veterinario del paciente con su historial" },
+    ],
+  },
 ];
 
-function CartIcon({ count }) {
+// Pendientes de Ale, fuera de la página hasta confirmarlos:
+// - FAQ: ¿funciona sin internet?, ¿puedo pasar mi inventario?, ¿qué lector e impresora necesito?
+// - Testimonios reales de clientes del POS (no inventar).
+// - Qué alertas de WhatsApp se envían hoy (los mensajes de abajo son ilustrativos).
+const FAQ = [
+  ["¿Quién me atiende por WhatsApp?", "Un asistente automático responde tus dudas y te da la demo al momento. Si no logra resolver algo, te canaliza con una persona de nuestro equipo."],
+  ["¿Tengo que tramitar algo ante el SAT para facturar?", "No. El timbrado se hace por medio de un PAC certificado y tú no manejas ese proceso."],
+  ["¿Hay contrato forzoso?", "No, cancelas cuando quieras."],
+  ["¿Cuántas facturas incluye mi plan?", "El Básico incluye 100 timbres al mes y el Premium 300. Si te pasas, cada timbre extra cuesta $1."],
+  ["¿En cuánto tiempo puedo empezar a vender?", "Puedes empezar a operar en unos 5 a 15 minutos. Entras con un catálogo precargado que puedes modificar, o agregas tus propios productos."],
+  ["No soy de tecnología, ¿me dejan solo?", "No. Todos los planes incluyen soporte técnico y te acompañamos durante la implementación."],
+  ["¿Ya está listo para restaurantes y veterinarias?", "Están en beta abierta: puedes usarlos y ayudarnos a mejorarlos. El módulo de tiendas ya está listo para producción. Durante la beta pagas el mismo precio que en Retail."],
+];
+
+function WhatsAppIcon() {
   return (
-    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-label="Carrito de compras"
-      >
-        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <path d="M16 10a4 4 0 0 1-8 0" />
-      </svg>
-      {count > 0 && (
-        <span
-          style={{
-            position: 'absolute',
-            top: -8,
-            right: -8,
-            background: 'var(--purple)',
-            color: 'white',
-            borderRadius: '999px',
-            fontSize: '0.68rem',
-            fontWeight: 800,
-            minWidth: 18,
-            height: 18,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0 4px',
-          }}
-        >
-          {count}
-        </span>
-      )}
-    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3.5 20.5l1.3-4.1A8.5 8.5 0 1 1 8 19.6z" />
+      <path d="M9 9.5c.3 2.3 2.2 4.4 4.6 5l1.3-1.3 2 1-.4 1.6c-3.8.3-8-3.6-8-7.6l1.6-.5 1 2z" />
+    </svg>
   );
 }
 
-function ModuleIcon({ name }) {
-  const stroke = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.8",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-  };
-
-  switch (name) {
-    case "sales":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...stroke} d="M4 7h16" />
-          <path {...stroke} d="M7 7V5h10v2" />
-          <rect {...stroke} x="5" y="7" width="14" height="12" rx="2" />
-          <path {...stroke} d="M10 12h4" />
-        </svg>
-      );
-    case "inventory":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...stroke} d="M3 7 12 3l9 4-9 4-9-4Z" />
-          <path {...stroke} d="M3 12l9 4 9-4" />
-          <path {...stroke} d="M3 17l9 4 9-4" />
-        </svg>
-      );
-    case "suppliers":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle {...stroke} cx="8" cy="8" r="3" />
-          <circle {...stroke} cx="16" cy="8" r="3" />
-          <path {...stroke} d="M3 19c1.5-3 4-4.5 7-4.5s5.5 1.5 7 4.5" />
-          <path {...stroke} d="M11 11h2" />
-        </svg>
-      );
-    case "credit":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect {...stroke} x="3" y="6" width="18" height="12" rx="2" />
-          <path {...stroke} d="M3 10h18" />
-          <path {...stroke} d="M7 14h4" />
-        </svg>
-      );
-    case "finance":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...stroke} d="M4 19h16" />
-          <path {...stroke} d="M7 15V9" />
-          <path {...stroke} d="M12 15V5" />
-          <path {...stroke} d="M17 15v-3" />
-        </svg>
-      );
-    case "reminders":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...stroke} d="M7 9a5 5 0 0 1 10 0v4l2 2H5l2-2Z" />
-          <path {...stroke} d="M10 18a2 2 0 0 0 4 0" />
-        </svg>
-      );
-    case "support":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...stroke} d="M4 12a8 8 0 1 1 16 0" />
-          <rect {...stroke} x="3" y="12" width="4" height="6" rx="1" />
-          <rect {...stroke} x="17" y="12" width="4" height="6" rx="1" />
-          <path {...stroke} d="M12 20h3" />
-        </svg>
-      );
-    case "access":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect {...stroke} x="4" y="11" width="16" height="9" rx="2" />
-          <path {...stroke} d="M8 11V8a4 4 0 0 1 8 0v3" />
-          <circle {...stroke} cx="12" cy="15" r="1" />
-        </svg>
-      );
-    default:
-      return null;
-  }
+function CheckIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 8.5l3.2 3L13 4.5" />
+    </svg>
+  );
 }
 
-function CartDrawer({ cart, onClose, onRemoveItem, onCheckout, cartWarning }) {
-  const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+function PlusIcon() {
   return (
-    <>
-      <div
-        onClick={onClose}
-        style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)',
-          zIndex: 999,
-        }}
-      />
-      <div className="cart-drawer">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h3 style={{ margin: 0 }}>Tu carrito</h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer' }}>×</button>
-        </div>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+      <path d="M10 4v12M4 10h12" />
+    </svg>
+  );
+}
 
-        {cart.length === 0 ? (
-          <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: 40 }}>Tu carrito está vacío.</p>
-        ) : (
-          <div style={{ flex: 1, overflowY: 'auto' }}>
-            {cartWarning && (
-              <div style={{
-                background: '#fff3cd',
-                border: '1px solid #ffc107',
-                borderRadius: '8px',
-                padding: '10px 14px',
-                marginBottom: '12px',
-                color: '#856404',
-                fontSize: '0.85rem',
-                lineHeight: 1.4
-              }}>
-                ⚠️ {cartWarning}
-              </div>
-            )}
-            {cart.map(item => (
-              <div key={item.id} style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '12px 0', borderBottom: '1px solid var(--border)',
-              }}>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{item.name}</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>
-                    ${item.price.toLocaleString('es-MX')} × {item.qty}
-                  </div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <strong style={{ color: 'var(--purple)' }}>
-                    ${(item.price * item.qty).toLocaleString('es-MX')}
-                  </strong>
-                  <button
-                    onClick={() => onRemoveItem(item.id)}
-                    style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '1.1rem' }}
-                  >🗑️</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {cart.length > 0 && (
-          <div style={{ marginTop: 24, borderTop: '2px solid var(--border)', paddingTop: 16 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-              <strong>Total</strong>
-              <strong style={{ color: 'var(--purple)', fontSize: '1.2rem' }}>
-                ${total.toLocaleString('es-MX')} MXN
-              </strong>
-            </div>
-            <button
-              className="btn btn-primary"
-              style={{ width: '100%', cursor: 'pointer' }}
-              onClick={() => { onClose(); onCheckout(); }}
-            >
-              Proceder al pago
-            </button>
-          </div>
-        )}
-      </div>
-    </>
+// Clip mudo en bucle; con "reducir movimiento" no arranca solo y muestra controles.
+function Clip({ src, poster, width, height, label }) {
+  const still = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return (
+    <video src={src} poster={poster} width={width} height={height} muted loop playsInline preload="metadata"
+      autoPlay={!still} controls={still} aria-label={label} />
   );
 }
 
 function App() {
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutPlan, setCheckoutPlan] = useState(null);
   const [isAnnual, setIsAnnual] = useState(false);
-  const [activeModule, setActiveModule] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartWarning, setCartWarning] = useState('');
-  const [activeGiro, setActiveGiro] = useState(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
-
-  const handleAddToCart = (item) => {
-    setCartWarning('');
-    if (item.type === 'plan') {
-      const existingPlan = cart.find((c) => c.type === 'plan');
-      if (existingPlan) {
-        setCartWarning('Solo puedes tener un plan de suscripción en el carrito. Elimina el plan actual para agregar otro.');
-        setIsCartOpen(true);
-        return;
-      }
-    }
-    setCart((prev) => {
-      const existing = prev.find((c) => c.id === item.id);
-      if (existing) {
-        return prev.map((c) => c.id === item.id ? { ...c, qty: c.qty + 1 } : c);
-      }
-      return [...prev, { ...item, qty: 1 }];
-    });
-  };
-
-  const handleRemoveFromCart = (id) => {
-    setCart(prev => prev.filter(item => item.id !== id));
-  };
-
-  const handleSelectPlan = (planId, hardwareFee = null) => {
-    const plan = PLANS.find(p => p.id === planId) || null;
-    if (plan && hardwareFee) {
-      setSelectedPlan({ ...plan, overrideAmount: hardwareFee });
-    } else {
-      setSelectedPlan(plan);
-    }
-    setIsCheckoutOpen(true);
-  };
-
-  const handleSubmitPayment = async (formData) => {
-    console.log('Payment submitted:', formData);
-    setIsCheckoutOpen(false);
-  };
+  const [giro, setGiro] = useState("retail");
 
   return (
-    <div className="site-shell">
-      <header className="topbar">
-        <div className="brand brand-real">
-          <img src={ankodeLogo} alt="ankode" className="brand-logo" style={{ height: '42px', width: 'auto' }} />
-        </div>
-
-        <nav className="topnav">
-          <a href="#modulos">Módulos</a>
-          <a href="#giros">Por giro</a>
-          <a href="#personalizacion">Personalización</a>
-          <a href="#faq">Preguntas frecuentes</a>
-          <a href="/paginas-web">Páginas web</a>
-          <a href="#planes">Planes</a>
+    <div className="lp">
+      <header className="lp-top"><div className="lp-wrap lp-nav">
+        <a href="/" className="lp-logo"><img src={ankodeLogo} width="850" height="294" alt="ankode" /></a>
+        <nav className="lp-nav-links" aria-label="Secciones">
+          <a href="#que">Qué incluye</a>
+          <a href="#giros">Giros</a>
+          <a href="#precios">Precios</a>
+          <a href="#faq">Preguntas</a>
+          <a href={DEMO_URL} className="lp-btn lp-btn--lime lp-btn--pill">Pedir demo por WhatsApp</a>
         </nav>
-
-        <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button
-            className="btn btn-light cart-btn"
-            aria-label="Ver carrito"
-            onClick={() => setIsCartOpen(prev => !prev)}
-            style={{ padding: '0 16px', gap: 8 }}
-          >
-            <CartIcon count={cartCount} />
-            {cartCount > 0 && <span style={{ fontSize: '0.88rem', fontWeight: 700 }}>Carrito</span>}
-          </button>
-          <a href={demoLink} className="btn btn-secondary" target="_blank" rel="noreferrer">
-            Solicitar demo
-          </a>
-          <button
-            className="hamburger-btn"
-            aria-label="Abrir menú"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <span />
-          </button>
-        </div>
-      </header>
-
-      {isMobileMenuOpen && (
-        <>
-          <div className="mobile-nav-overlay" onClick={() => setIsMobileMenuOpen(false)} />
-          <nav className="mobile-nav">
-            <button className="mobile-nav-close" aria-label="Cerrar menú" onClick={() => setIsMobileMenuOpen(false)}>×</button>
-            <a href="#modulos" onClick={() => setIsMobileMenuOpen(false)}>Módulos</a>
-            <a href="#giros" onClick={() => setIsMobileMenuOpen(false)}>Por giro</a>
-            <a href="#personalizacion" onClick={() => setIsMobileMenuOpen(false)}>Personalización</a>
-            <a href="#faq" onClick={() => setIsMobileMenuOpen(false)}>Preguntas frecuentes</a>
-            <a href="/paginas-web" onClick={() => setIsMobileMenuOpen(false)}>Páginas web</a>
-            <a href="#planes" onClick={() => setIsMobileMenuOpen(false)}>Planes</a>
-            <a href={demoLink} target="_blank" rel="noreferrer" onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--purple)', fontWeight: 700 }}>Solicitar demo</a>
-          </nav>
-        </>
-      )}
+      </div></header>
 
       <main>
-        <section className="hero">
-          <div className="hero-copy">
-            <p className="eyebrow">POS adaptable para negocios reales</p>
-            <h1>
-              Controla tu negocio desde <span className="highlight">un solo sistema</span>
-            </h1>
-            <p className="hero-text">
-              Ventas, inventario, proveedores y operación diaria en una solución
-              pensada para la realidad de tu negocio.
-            </p>
-
-            <div className="hero-actions">
-              <a href={demoLink} className="btn btn-primary" target="_blank" rel="noreferrer">
-                Solicitar demo
-              </a>
-              <a href="#modulos" className="btn btn-light">
-                Ver cómo funciona
-              </a>
-              <a href="#planes" className="btn btn-primary">Ver planes y precios</a>
-            </div>
-
-            <div className="hero-microcopy">
-              <span>Multiempresa</span>
-              <span>Roles y accesos</span>
-              <span>Soporte remoto</span>
+        <section className="lp-wrap lp-hero">
+          <div>
+            <h1>Tu tienda sin el cuaderno.</h1>
+            <p className="lp-hero-for">Punto de venta para <mark>tiendas, papelerías y tlapalerías.</mark></p>
+            <p className="lp-hero-copy">Cobras, sabes qué te queda en el estante, controlas lo que te deben y facturas CFDI 4.0 desde el mismo ticket. Hecho en México, con soporte directo del desarrollador.</p>
+            <ul className="lp-chips">
+              <li>Operando en 5 a 15 minutos</li>
+              <li>Catálogo precargado</li>
+              <li>Factura CFDI incluida</li>
+            </ul>
+            <div className="lp-hero-cta">
+              <a href={DEMO_URL} className="lp-btn lp-btn--purple"><WhatsAppIcon />Ver demo en mi celular</a>
+              <small>Desde $349 al mes, con IVA y factura incluidos</small>
             </div>
           </div>
 
-          <div className="hero-visual">
-            <div className="dashboard-card">
-              <div className="dashboard-top">
-                <span />
-                <span />
-                <span />
-              </div>
-
-              <div className="dashboard-body">
-                <div className="metric-grid">
-                  <div className="metric-card metric-main">
-                    <small>Ventas del día</small>
-                    <strong>$12,480</strong>
-                  </div>
-                  <div className="metric-card">
-                    <small>Inventario</small>
-                    <strong>128 productos</strong>
-                  </div>
-                  <div className="metric-card">
-                    <small>Crédito activo</small>
-                    <strong>18 clientes</strong>
-                  </div>
-                </div>
-
-                <div className="table-card">
-                  <div className="table-head">
-                    <span>Producto</span>
-                    <span>Stock</span>
-                    <span>Estado</span>
-                  </div>
-                  <div className="table-row">
-                    <span>Alimento premium</span>
-                    <span>24</span>
-                    <span className="ok">OK</span>
-                  </div>
-                  <div className="table-row">
-                    <span>Antiparasitario</span>
-                    <span>8</span>
-                    <span className="warn">Bajo</span>
-                  </div>
-                  <div className="table-row">
-                    <span>Collar clínico</span>
-                    <span>15</span>
-                    <span className="ok">OK</span>
-                  </div>
-                </div>
-              </div>
+          <div className="lp-ticket-stage">
+            <div className="lp-ticket" role="img" aria-label="Ticket de venta de ejemplo de una tlapalería: total $238.00, con factura CFDI 4.0 lista desde el ticket">
+              <div className="lp-ticket-store">Tlapalería El Tornillo</div>
+              <div className="lp-ticket-meta">Ticket de venta · ejemplo</div>
+              <hr />
+              <div className="lp-ticket-row"><span>1 × Chapa de perilla</span><span>$189.00</span></div>
+              <div className="lp-ticket-row"><span>3 × Lija de agua #120</span><span>$27.00</span></div>
+              <div className="lp-ticket-row"><span>1 × Cinta de aislar</span><span>$22.00</span></div>
+              <hr />
+              <div className="lp-ticket-total"><span>Total</span><span>$238.00</span></div>
+              <div className="lp-ticket-cfdi">Factura CFDI 4.0 lista desde este ticket</div>
             </div>
-
-            <div className="floating-note note-green">Operación más clara</div>
-            <div className="floating-note note-purple">Control en un solo lugar</div>
           </div>
         </section>
 
-        <section id="modulos" className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Módulos principales</p>
-            <h2>Todo lo importante para operar mejor.</h2>
-            <p>
-              ankode reúne funciones clave para ayudarte a trabajar con más
-              orden, más control y menos fricción.
-            </p>
+        <section className="lp-band">
+          <div className="lp-wrap">
+            <h2>Lo que cambia desde la primera semana.</h2>
+            <div className="lp-band-cols">
+              <div><h3>Antes</h3><p>Cuaderno, Excel y la memoria. Al cierre no sabes si cuadró la caja ni qué producto se acabó.</p></div>
+              <div><h3>Con Ankode</h3><p>Corte de caja diario, inventario que baja solo con cada venta y reporte de utilidad bruta cuando lo necesitas.</p></div>
+              <div><h3>Y si te piden factura</h3><p>La generas ahí mismo, con timbrado vía PAC. No tienes que tramitar nada ante el SAT por tu cuenta. Incluye 100 timbres al mes en Básico y 300 en Premium.</p></div>
+            </div>
           </div>
+        </section>
 
-          <div className="modules-grid">
-            {moduleCards.map((item) => (
-              <article
-                key={item.title}
-                className="module-tile"
-                style={{
-                  cursor: 'pointer',
-                  border: activeModule === item.title ? '1.5px solid var(--purple)' : '1.5px solid transparent',
-                  transition: 'border 0.2s ease',
-                }}
-                onClick={() => setActiveModule(prev => prev === item.title ? null : item.title)}
-              >
-                <div className="module-icon">
-                  <ModuleIcon name={item.icon} />
-                </div>
-                <span>{item.title}</span>
-                {activeModule === item.title && (
-                  <p style={{ fontSize: '0.88rem', color: 'var(--muted)', margin: '8px 0 0', lineHeight: 1.5 }}>
-                    {item.desc}
-                  </p>
-                )}
-              </article>
+        <section id="empieza" className="lp-wrap lp-section">
+          <h2 className="lp-h2">Vendiendo en 5 a 15 minutos.</h2>
+          <ol className="lp-steps">
+            {STEPS.map(([title, text]) => (
+              <li key={title}><h3>{title}</h3><p>{text}</p></li>
             ))}
+          </ol>
+          <figure className="lp-shot">
+            <Clip src={videoOnboarding} poster={posterOnboarding} width="720" height="558" label="Grabación real del alta de una papelería: revisa los precios del catálogo precargado, confirma 48 productos y entra a Ventas" />
+            <figcaption>Alta real de una papelería: 48 productos listos para vender. La revisión del catálogo va acelerada ×4.</figcaption>
+          </figure>
+        </section>
+
+        <section id="que" className="lp-wrap lp-section">
+          <h2 className="lp-h2">¿Qué incluye?, sin letras chiquitas.</h2>
+          <figure className="lp-shot">
+            <Clip src={videoVenta} poster={posterVenta} width="720" height="476" label="Grabación real de una venta: dos productos en el carrito, cobro de $65 con $100 en efectivo, cambio de $35 y ticket generado" />
+            <figcaption>Venta real en el módulo Retail: cobro en efectivo, cambio y ticket al instante.</figcaption>
+          </figure>
+          <dl className="lp-features">
+            {FEATURES.map(([title, text]) => (
+              <div key={title}><dt>{title}</dt><dd>{text}</dd></div>
+            ))}
+          </dl>
+        </section>
+
+        <section id="comparar" className="lp-wrap lp-section">
+          <h2 className="lp-h2">Cuaderno, Excel o Ankode.</h2>
+          <div className="lp-compare-scroll" tabIndex={0} role="region" aria-label="Comparación entre cuaderno, Excel y Ankode">
+            <table className="lp-compare">
+              <thead>
+                <tr><th scope="col"><span className="sr-only">Tarea</span></th><th scope="col">Cuaderno</th><th scope="col">Excel</th><th scope="col" className="is-us">Ankode</th></tr>
+              </thead>
+              <tbody>
+                {COMPARE.map(([task, book, excel, us]) => (
+                  <tr key={task}><th scope="row">{task}</th><td>{book}</td><td>{excel}</td><td className="is-us">{us}</td></tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
-        <section className="section split-section">
-          <div className="split-copy">
-            <p className="eyebrow">Problema</p>
-            <h2>No todos los negocios pueden trabajar con un sistema genérico.</h2>
-            <p className="text-justify">
-              Muchos terminan adaptándose al software, usando procesos incómodos
-              o herramientas separadas para poder operar.
-            </p>
-          </div>
-
-          <div className="problem-stack">
-            <article className="soft-card">
-              <h3>Procesos dispersos</h3>
-              <p className="text-justify">Ventas, inventario y control interno repartidos entre varias herramientas.</p>
-            </article>
-            <article className="soft-card">
-              <h3>Sistemas rígidos</h3>
-              <p className="text-justify">No se ajustan a la forma real en que trabaja tu negocio.</p>
-            </article>
-            <article className="soft-card">
-              <h3>Tiempo perdido</h3>
-              <p className="text-justify">Seguimientos manuales, menos claridad y más margen de error.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="giros" className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Por giro</p>
-            <h2>Una solución para tu tipo de negocio.</h2>
-            <p>
-              ankode se adapta a la operación de distintos comercios. Encuentra el tuyo.
-            </p>
-          </div>
-          <div className="industry-grid">
-            {giros.map((giro) => {
-              const isOpen = activeGiro === giro.id;
+        <section id="giros" className="lp-wrap lp-section">
+          <div className="lp-giro-tabs" role="tablist" aria-label="Giros">
+            {GIROS.map((g) => {
+              const selected = giro === g.id;
               return (
-                <article
-                  key={giro.id}
-                  className={`industry-card industry-card--accordion${isOpen ? ' industry-card--open' : ''}`}
-                  style={{ padding: 0, cursor: 'pointer' }}
-                  onClick={() => setActiveGiro(isOpen ? null : giro.id)}
-                >
-                  <div style={{
-                    fontSize: '4rem',
-                    textAlign: 'center',
-                    padding: '28px 0 12px',
-                    background: 'var(--bg-soft)',
-                    borderRadius: '16px 16px 0 0',
-                  }}>
-                    {giro.emoji}
-                  </div>
-                  <div style={{ padding: 24 }}>
-                    <div className="industry-card__header">
-                      <h3 style={{ margin: '0 0 10px', fontSize: '1.18rem' }}>{giro.title}</h3>
-                      <span className={`industry-card__chevron${isOpen ? ' industry-card__chevron--open' : ''}`}>▾</span>
-                    </div>
-                    <p className="text-justify" style={{ color: 'var(--muted)', margin: 0 }}>{giro.desc}</p>
-
-                    <div className={`industry-card__detail${isOpen ? ' industry-card__detail--open' : ''}`}>
-                      <ul className="industry-card__features">
-                        {giro.features.map((f) => (
-                          <li key={f}>{f}</li>
-                        ))}
-                      </ul>
-                      {giro.comingSoon ? (
-                        <span className="pill" style={{ marginTop: 16 }}>
-                          {giro.cta.label}
-                        </span>
-                      ) : giro.cta && (
-                        <a
-                          href={giro.cta.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="industry-card__cta"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {giro.cta.label} &#x2192;
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </article>
+                <div key={g.id} id={`tab-${g.id}`} role="tab" tabIndex={0} aria-selected={selected} aria-controls="giro-videos"
+                  className={`lp-giro lp-giro--${g.id}`} onClick={() => setGiro(g.id)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setGiro(g.id); } }}>
+                  <span className={`lp-tag ${g.id === "retail" ? "lp-tag--lime" : "lp-tag--soft"}`}>{g.tag}</span>
+                  <h3>{g.title}</h3>
+                  <p>{g.text}</p>
+                  <span className="lp-giro-hint">{selected ? "Viendo sus videos" : "Ver sus videos"}</span>
+                </div>
               );
             })}
           </div>
+          <div id="giro-videos" role="tabpanel" aria-labelledby={`tab-${giro}`} className="lp-giro-videos">
+            {GIROS.find((g) => g.id === giro).clips.map((c) => (
+              <figure key={c.src} className="lp-shot">
+                <Clip src={c.src} poster={c.poster} width="720" height={c.height} label={c.label} />
+                <figcaption>{c.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
-        <section id="personalizacion" className="section">
-          <div className="feature-showcase">
-            <div className="feature-copy">
-              <p className="eyebrow">Personalización</p>
-              <h2>Ankode se adapta a tu negocio, no al revés.</h2>
-              <p className="text-justify">
-                Una de las principales ventajas de ankode es que puede ajustarse
-                a la forma en que realmente trabajas.
-              </p>
+        <section className="lp-wrap lp-section">
+          <div className="lp-premium">
+            <div>
+              <span className="lp-tag lp-tag--lime">Solo en Premium</span>
+              <h2>Tu negocio te avisa en WhatsApp.</h2>
+              <p>Recibe las alertas importantes sin abrir el sistema. Con varias sucursales, el dueño se entera de lo que pasa en cada una.</p>
             </div>
-
-            <div className="feature-points">
-              <div className="point-card">
-                <strong>Configuración</strong>
-                <p className="text-justify">Según tu operación real.</p>
-              </div>
-              <div className="point-card">
-                <strong>Roles y accesos</strong>
-                <p className="text-justify">De acuerdo con tu equipo.</p>
-              </div>
-              <div className="point-card">
-                <strong>Evolución</strong>
-                <p className="text-justify">Conforme crece tu negocio.</p>
-              </div>
+            <div className="lp-chat">
+              <div className="lp-chat-note">Ejemplo ilustrativo</div>
+              <div className="lp-bubble"><b>Alerta Ankode</b> · Sucursal Centro: quedan 5 piezas de Cinta de aislar.</div>
+              <div className="lp-bubble"><b>Alerta Ankode</b> · Sucursal Norte: un cliente pasó de su fecha de pago.</div>
             </div>
           </div>
         </section>
 
-        <section className="section benefits-layout">
-          <div className="section-heading">
-            <p className="eyebrow">Beneficios</p>
-            <h2>Más control para tomar mejores decisiones.</h2>
-            <p className="text-justify">
-              Tener información más clara te ayuda a operar mejor y crecer con
-              más orden.
-            </p>
+        <section id="precios" className="lp-wrap lp-section">
+          <h2 className="lp-h2">Precios públicos. IVA incluido.</h2>
+          <p className="lp-lead">Sin contrato forzoso: cancelas cuando quieras. Timbres extra: $1 cada uno cuando pases el tope del mes.</p>
+          <div className="lp-billing" role="radiogroup" aria-label="Forma de pago">
+            <button type="button" role="radio" aria-checked={!isAnnual} onClick={() => setIsAnnual(false)}>Pago mensual</button>
+            <button type="button" role="radio" aria-checked={isAnnual} onClick={() => setIsAnnual(true)}>Pago anual · 2 meses gratis</button>
           </div>
-
-          <div className="benefit-grid">
-            {benefits.map((item) => (
-              <article key={item.title} className="benefit-card">
-                <h3>{item.title}</h3>
-                <p className="text-justify">{item.text}</p>
+          <div className="lp-plans">
+            {PLANS.map((plan) => (
+              <article key={plan.name} className={`lp-plan${plan.dark ? " lp-plan--dark" : ""}`}>
+                <div className="lp-plan-name">
+                  <h3>{plan.name}</h3>
+                  {plan.dark && <span className="lp-tag lp-tag--lime">Más elegido</span>}
+                </div>
+                <div className="lp-price">{isAnnual ? plan.annual : plan.monthly}<span>{isAnnual ? " /año" : " /mes"}</span></div>
+                {isAnnual && <div className="lp-annual">2 meses gratis el primer año</div>}
+                <ul>
+                  {plan.items.map((item) => {
+                    const [text, soon] = Array.isArray(item) ? item : [item];
+                    return <li key={text}><CheckIcon /><span>{text}{soon && <em>{soon}</em>}</span></li>;
+                  })}
+                </ul>
+                <button type="button" className={`lp-btn ${plan.dark ? "lp-btn--lime" : "lp-btn--purple"} lp-plan-buy`} onClick={() => setCheckoutPlan(plan.id)}>
+                  Comprar {plan.name} {isAnnual ? "anual" : "mensual"}
+                </button>
+                <a className="lp-plan-ask" href={wa(WA_AGENT, `Hola, quiero ver la demo del plan ${plan.name} de Ankode POS`)}>Preguntar por {plan.name} en WhatsApp</a>
               </article>
             ))}
-
-            <article className="benefit-card benefit-card-large">
-              <h3>Un sistema que se adapta a tu operación.</h3>
-              <p className="text-justify">
-                ankode está pensado para ayudarte a tener más control sin
-                complicar el trabajo diario.
-              </p>
-              <ul>
-                <li>Centraliza la operación en un solo lugar</li>
-                <li>Facilita el control de inventario, ventas y seguimiento</li>
-                <li>Permite organizar accesos y funciones por usuario</li>
-              </ul>
-            </article>
           </div>
+          {isAnnual && <p className="lp-fine">Plan anual: pagas 10 mensualidades y recibes 12 meses de servicio durante el primer año.</p>}
         </section>
 
-        <section className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Cómo funciona</p>
-            <h2>Un proceso simple para comenzar.</h2>
-            <p>
-              Empezamos entendiendo tu negocio para mostrarte cómo ankode puede ayudarte.
-            </p>
-          </div>
-
-          <div className="steps-grid">
-            {steps.map((step, index) => (
-              <div key={step} className="step-card">
-                <div className="step-number">{index + 1}</div>
-                <p>{step}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <PricingSection
-          onSelectPlan={handleSelectPlan}
-          onAddToCart={handleAddToCart}
-          isAnnual={isAnnual}
-          onToggleAnnual={() => setIsAnnual(prev => !prev)}
-        />
-
-        <section className="section">
-          <div className="section-heading center">
-            <p className="eyebrow">Facturación</p>
-            <h2>Factura sin salir del ticket de venta</h2>
-            <p>
-              Agrega facturación electrónica CFDI 4.0 a cualquier plan. Timbrado
-              automático vía PAC certificado — sin manejar tú el proceso ante el SAT.
-            </p>
-          </div>
-          <div className="soft-card" style={{ maxWidth: 640, margin: '0 auto', padding: 32 }}>
-            <ul style={{ margin: '0 0 20px', paddingLeft: 18, color: 'var(--muted)', display: 'grid', gap: 8 }}>
-              <li>Timbrado automático vía PAC certificado</li>
-              <li>Factura generada desde la venta, sin recapturar datos</li>
-              <li>Compatible con personas físicas y morales</li>
-            </ul>
-            <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-strong)' }}>
-              +$149 MXN/mes · disponible en todos los planes
-            </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button
-                className="btn btn-outline"
-                onClick={() => handleAddToCart({ id: 'cfdi-addon', name: 'Facturación CFDI 4.0', price: 149, type: 'accessory' })}
-              >
-                Agregar al carrito
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  handleAddToCart({ id: 'cfdi-addon', name: 'Facturación CFDI 4.0', price: 149, type: 'accessory' });
-                  setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-                  setIsCheckoutOpen(true);
-                }}
-              >
-                Contratar ahora
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="section section-soft">
-          <div className="section-heading center">
-            <p className="eyebrow">Producto</p>
-            <h2>Así se ve por dentro</h2>
-            <p>Capturas reales del sistema, no mockups.</p>
-          </div>
-          <div className="screenshots-grid">
-            {screenshots.map((shot) => (
-              <div key={shot.caption} className="soft-card">
-                <div className="screenshot-frame">
-                  <img src={shot.src} alt={shot.caption} loading="lazy" />
-                </div>
-                <p>{shot.caption}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <WebPlansSection />
-
-        <section id="faq" className="section">
-          <div className="section-heading center">
-            <p className="eyebrow">Preguntas frecuentes</p>
-            <h2>Lo que más nos preguntan</h2>
-            <p>Resolvemos las dudas más comunes antes de empezar.</p>
-          </div>
-
-          <div className="faq-list">
-            {faqs.map((item) => (
-              <details key={item.q} className="faq-card">
-                <summary>{item.q}</summary>
-                <p className="text-justify">{item.a}</p>
+        <section id="faq" className="lp-wrap lp-section lp-faq">
+          <h2 className="lp-h2">Lo que todos preguntan.</h2>
+          <div className="lp-faq-list">
+            {FAQ.map(([q, a]) => (
+              <details key={q}>
+                <summary>{q}<PlusIcon /></summary>
+                <p>{a}</p>
               </details>
             ))}
           </div>
         </section>
 
-        <section id="cta" className="section">
-          <div className="cta-panel">
-            <h2>Deja de adaptar tu negocio al sistema.</h2>
-            <p className="text-justify" style={{ maxWidth: 560, margin: '16px auto' }}>
-              Mejor usa un sistema que pueda adaptarse a tu forma de trabajar.
-            </p>
-            <div className="hero-actions center-actions">
-              <a href={demoLink} className="btn btn-primary" target="_blank" rel="noreferrer">
-                Solicitar demo
-              </a>
-              <a href={contactEmailLink} className="btn btn-light">
-                Contactar por email
-              </a>
+        <section className="lp-wrap">
+          <div className="lp-final">
+            <div>
+              <h2>Ve el sistema funcionando en tu celular.</h2>
+              <p>Nuestro asistente de WhatsApp te lo muestra en minutos, sin compromiso.</p>
             </div>
-            <div className="contact-links">
-              <a href={demoLink} target="_blank" rel="noreferrer">WhatsApp: {CONTACT.whatsapp}</a>
-              <a href={contactEmailLink}>Email: {CONTACT.email}</a>
-            </div>
+            <a href={DEMO_URL} className="lp-btn lp-btn--ink"><WhatsAppIcon />Escribir por WhatsApp</a>
           </div>
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="footer-brand">
-          <p>
-            Sistema POS adaptable para negocios que necesitan más control, más
-            orden y una solución pensada para su operación real.
-          </p>
-        </div>
-
-        <div className="footer-columns">
-          <div>
-            <h4>Producto</h4>
-            <a href="#modulos">Módulos</a>
-            <a href="#giros">Por giro</a>
-            <a href="#personalizacion">Personalización</a>
-          </div>
-          <div>
-            <h4>Empresa</h4>
-            <a href={demoLink} target="_blank" rel="noreferrer">Solicitar demo</a>
-            <a href="#faq">Preguntas frecuentes</a>
-            <a href="/legal?doc=terms" target="_blank" rel="noreferrer">Términos y condiciones</a>
-            <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer">Cancelación</a>
-            <a href="/legal?doc=privacy" target="_blank" rel="noreferrer">Privacidad de pago</a>
-          </div>
-          <div>
-            <h4>Contacto</h4>
-            <a href={demoLink} target="_blank" rel="noreferrer">WhatsApp</a>
-            <a href={contactEmailLink}>Email</a>
-          </div>
-        </div>
-        <div style={{ gridColumn: '1 / -1', borderTop: '1px solid var(--border)', paddingTop: 20, marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: '12px 24px', color: 'var(--muted)', fontSize: '0.85rem' }}>
-          <span>© 2025 Ankode · Todos los derechos reservados</span>
-          <a href="/legal?doc=terms" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Términos y condiciones</a>
-          <a href="/legal?doc=cancellation" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Política de cancelación</a>
-          <a href="/legal?doc=privacy" target="_blank" rel="noreferrer" style={{ color: 'var(--muted)' }}>Privacidad de pago</a>
-          <span>Pagos procesados por Openpay</span>
-        </div>
+      <footer className="lp-wrap lp-foot">
+        <span>ankode.cloud · Demo por WhatsApp: 55 1513 3527 · <a href="mailto:contacto@ankode.cloud">contacto@ankode.cloud</a> · Pagos procesados por Openpay</span>
+        <nav aria-label="Otros enlaces">
+          <a href="/legal?doc=terms">Términos y condiciones</a>
+          <a href="/legal?doc=cancellation">Política de cancelación</a>
+          <a href="/legal?doc=privacy">Privacidad de pago</a>
+          <a href="/paginas-web">¿Necesitas página web? Ankode Freelance</a>
+        </nav>
       </footer>
 
-      {isCheckoutOpen && (selectedPlan || cart.length > 0) && (
+      {checkoutPlan && (
         <CheckoutModal
-          isOpen={isCheckoutOpen}
-          onClose={() => setIsCheckoutOpen(false)}
-          selectedPlan={selectedPlan?.id}
-          overrideAmount={selectedPlan?.overrideAmount}
+          isOpen
+          onClose={() => setCheckoutPlan(null)}
+          selectedPlan={checkoutPlan}
           isAnnual={isAnnual}
-          onSubmitPayment={handleSubmitPayment}
-          cart={cart}
-        />
-      )}
-
-      {isCartOpen && (
-        <CartDrawer
-          cart={cart}
-          onClose={() => setIsCartOpen(false)}
-          onRemoveItem={handleRemoveFromCart}
-          cartWarning={cartWarning}
-          onCheckout={() => {
-            setIsCartOpen(false);
-            setCartWarning('');
-            const hasHardware = cart.some(item => item.type === 'hardware');
-            const hasAccessory = cart.some(item => item.type === 'accessory');
-            const firstPlan = cart.find(item => item.type === 'plan');
-            const isPlanOnly = firstPlan && !hasHardware && !hasAccessory && cart.length === 1;
-
-            if (isPlanOnly) {
-              const planData = PLANS.find(p => p.id === firstPlan.id);
-              if (planData) setSelectedPlan(planData);
-              else setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-            } else {
-              setSelectedPlan({ id: 'cart', name: 'Carrito', monthlyPrice: 0, annualPrice: 0, extraBranchPrice: 0, includedBranches: 1 });
-            }
-            setIsCheckoutOpen(true);
-          }}
+          onSubmitPayment={() => setCheckoutPlan(null)}
         />
       )}
     </div>

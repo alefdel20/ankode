@@ -436,6 +436,8 @@ export default function CheckoutModal({ isOpen, onClose, selectedPlan, overrideA
                         ].map(opt => (
                           <option key={opt} value={opt}>{opt}</option>
                         ))}
+                        <option value="Restaurante">Restaurante (beta)</option>
+                        <option value="Veterinaria">Veterinaria (beta)</option>
                       </select>
                     </Field>
                   )}

@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+// App.css sigue global: /paginas-web y /legal usan sus clases.
+import "./App.css";
 import App from "./App.jsx";
 import Legal from "./pages/Legal.jsx";
 import PagoResultado from "./pages/PagoResultado.jsx";
